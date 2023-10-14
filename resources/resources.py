@@ -1,6 +1,7 @@
 from flask import request, Response
 from flask_restful import Resource
 from database.models import User
+from flask_jwt_extended import create_access_token
 
 class UserSignup(Resource):
     def post(self):
@@ -45,8 +46,10 @@ class UserLogin(Resource):
             if user.name != name:
                 return Response("Invalid name for the given email", status=401, mimetype="application/json")
 
-            # Return a success message
-            return Response("Login successfully", status=200, mimetype="application/json")
+            # Create an access token and return it within a response instance
+            access_token = create_access_token(identity=str(user.id))
+
+            return {"access_token": access_token}, 200
 
         except Exception as e:
             return Response(f"An error occurred during login: {e}", status=500, mimetype="application/json")
