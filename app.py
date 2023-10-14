@@ -24,16 +24,13 @@ A JSON Web Token (JWT) is a standardized method for representing claims as a com
 self-contained data structure that can be easily transmitted between parties, commonly 
 used for secure authentication and information exchange in web applications. 
 """
+
 # JWT configuration
 app.config['JWT_SECRET_KEY'] = 'bsjvhusdhg5565645'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False  # You can set an expiration time if needed
 
 # Initialize the JWTManager
 jwt = JWTManager(app)
-
-
-
-
 
 
 if __name__ == '__main__':
