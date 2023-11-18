@@ -1,2 +1,2 @@
-# -PuConnect
- PuConnect: AI based Centralized Academic and Career Networking Platform
+# PuConnect
+ PuConnect: AI-based Centralized Academic and Career Networking Platform
