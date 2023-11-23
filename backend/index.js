@@ -78,6 +78,7 @@ app.get("/hello", (req, res) => {
 // Use authentication routes with the "/auth" prefix
 app.use("/auth", authRoutes);
 
+
 // Start the server on port 3000
 app.listen(3000, () => {
     console.log("Server is running on port no 3000");
