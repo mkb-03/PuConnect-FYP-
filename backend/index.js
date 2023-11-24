@@ -21,6 +21,11 @@ require("dotenv").config();
 // Import authentication routes
 const authRoutes = require("./routes/authentication")
 
+// Import experience, project and skill routes
+const experienceRoutes = require("./routes/experience")
+const skillRoutes = require("./routes/skill")
+const projectRoutes = require("./routes/project")
+
 // Import User model
 const User = require("./models/User");
 
@@ -75,9 +80,11 @@ app.get("/hello", (req, res) => {
     res.send("Hello World");
 });
 
-// Use authentication routes with the "/auth" prefix
-app.use("/auth", authRoutes);
-
+//app.use will take two arguments. First will be the prefix to the route and second route objects.
+app.use("/auth", authRoutes)
+app.use("/experience", experienceRoutes)
+app.use("/skill", skillRoutes)
+app.use("/project", projectRoutes)
 
 // Start the server on port 3000
 app.listen(3000, () => {
