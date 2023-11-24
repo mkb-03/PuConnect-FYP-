@@ -7,16 +7,16 @@ const express = require("express");
 const passport = require("passport");
 
 // ExtractJwt module from passport-jwt for extracting JWT from the request
-const ExtractJwt = require("passport-jwt").ExtractJwt; 
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 // Strategy module from passport-jwt for defining JWT authentication strategy
 const jwtStrategy = require("passport-jwt").Strategy;
 
 // Import mongoose for MongoDB
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
 
 // Load environment variables
-require("dotenv").config(); 
+require("dotenv").config();
 
 // Import authentication routes
 const authRoutes = require("./routes/authentication")
@@ -30,16 +30,16 @@ const projectRoutes = require("./routes/project")
 const User = require("./models/User");
 
 // MongoDB connection setup
-const url = 'mongodb://localhost:27017/PuConnect'; 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then((x)=>{
+const url = 'mongodb://localhost:27017/PuConnect';
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then((x) => {
     console.log("Connected to mongoDB");
-}).catch((err)=>{
+}).catch((err) => {
     console.log("Error occured while connecting to mongo!");
     console.log(err);
 });
 
 // Create an instance of Express
-const app = express(); 
+const app = express();
 
 // Enable JSON parsing for incoming requests
 app.use(express.json());
@@ -48,26 +48,32 @@ app.use(express.json());
 //jwt_payload : {identifier: userId}
 
 const options = {
-    jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey : "herecomesthesecretkey"
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: "herecomesthesecretkey"
 }
 
 // Configure passport to use jwt strategy
-passport.use(new jwtStrategy(options, function (jwt_payload, done) {
+passport.use(new jwtStrategy(options, async function (jwt_payload, done) {
     // Find the user in the database based on the identifier in jwt_payload
-    User.findOne({ _id: jwt_payload.identifier }, function (err, user) {
-        if (err) {
-            done(err, false);
-        }
-        if(user){
+
+    try {
+        const user = await User.findOne({ _id: jwt_payload.identifier });
+
+        if (user) {
             // If user found, authentication is successful
             done(null, user);
         }
-        else{
+        else {
             // If user not found, authentication fails
             done(null, false);
         }
-    })
+    }
+    catch(err)
+    {
+        if (err) {
+            done(err, false);
+        }
+    }
 }));
 
 // Define a route for the root endpoint
