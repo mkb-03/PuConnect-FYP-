@@ -32,10 +32,10 @@ const Navbar = () => {
                 <Link className="nav-link navbarText" to="#">About Us</Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              
-                <button className="btn btn-primary" type="submit">Search</button>
-            </form>
+            <div className="d-flex" >
+                <button className=" skinButton me-2" type="submit">SignUp</button>              
+                <button className="skinButton me-2" type="submit">LogIn</button>
+            </div>
           </div>
         </div>
       </nav>
