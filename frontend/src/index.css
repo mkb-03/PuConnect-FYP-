@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* navbar color */
+.navbarBackground{
+  background-color: #85231b;
+
+}
+
+.navbarText{
+  color: white;
+  font-weight: 500;
+}
+
+/* Override Bootstrap's default hover styles for navbar items */
+.navbarBackground .navbar-nav .nav-link:hover {
+  color: #fff !important; /* Set the desired text color on hover */
+}
+
+.navbarTitle{
+  color: #fff;
+  text-shadow: #ffff;
+  font-weight: bold; 
+}
+
+.navbarBackground .navbar-brand.navbarTitle:hover {
+  color: #fff !important; /* Set the desired text color on hover */
+}
