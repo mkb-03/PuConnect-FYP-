@@ -14,7 +14,7 @@ code {
 
 /* navbar color */
 .navbarBackground{
-  background-color: #ad372c;
+  background-color: #85231b;
 
 }
 
@@ -38,16 +38,34 @@ code {
   color: #fff !important; /* Set the desired text color on hover */
 }
 
-/* Skin color button */
-.skinButton{
+/* Grey color button */
+.greyButton{
   background-color: #e5e5e5;
-  color: #85231b;
+  color: black;
   font-weight: 500;
   border-radius: 5px;
-  border: #eee098;
+  border: #e5e5e5;
   padding-left: 12px; 
   padding-right: 12px;
   padding-top: 5px;
   padding-bottom: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.brownButton{
+  background-color: #85231b;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  border: #85231b;
+  padding-left: 12px; 
+  padding-right: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add this to your CSS to style the active link */
+.activeLink {
+  color: white !important; /* Set the desired text color for the active link */
 }
