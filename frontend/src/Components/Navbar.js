@@ -39,9 +39,12 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="d-flex">
-              <button className="greyButton me-2" type="submit">
-                SignUp
-              </button>
+              <NavLink to="/signup" >
+
+                <button className="greyButton me-2" type="submit">
+                  SignUp
+                </button>
+              </NavLink>
               <button className="greyButton me-2" type="submit">
                 LogIn
               </button>
