@@ -5,8 +5,8 @@ const Home = () => {
     <>
       <section>
       <div className='background'>
-           <div className='p-5' >
-              <h4>Welcome to PuConnect</h4>
+           <div className='p-5 ms-5' >
+              <span className='welComeLine' >Welcome to PuConnect</span>
            </div>
 
         </div>

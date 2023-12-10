@@ -78,3 +78,14 @@ code {
   background-position: center; /* Center the image within the container */
   background-repeat: no-repeat; /* Do not repeat the background image */
 }
+
+.welComeLine{
+  font-size: medium;
+  font-weight: 600;
+  color: white;
+  background-color: black;
+  padding: 5px 10px 5px 10px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  
+}
