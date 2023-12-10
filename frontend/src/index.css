@@ -14,7 +14,8 @@ code {
 
 /* navbar color */
 .navbarBackground{
-  background-color: #85231b;
+  background-color: black;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -76,14 +77,15 @@ code {
   min-height: 90vh;
   background-size: cover;
   background-position: center;
+  margin-top: 2px;
 }
 
 .welComeLine{
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   color: white;
-  background-color: black;
-  padding: 5px 10px 5px 10px;
+  background-color: #85231b;
+  padding: 5px 12px 5px 12px;
   border-radius: 20px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   
@@ -91,7 +93,7 @@ code {
 
 .tagLine{
   font-family: 'Playfair Display', serif;
-  font-size: 55px;
+  font-size: 3.5rem;
   font-weight: 600;
   color: white;
   text-shadow: 2px 2px 2px #000;
@@ -101,8 +103,8 @@ code {
   font-size: 15px;
   font-weight: 400;
   color: white;
-  background-color: #85231b;
-  padding: 5px 10px 5px 10px;
+  background-color: black;
+  padding: 5px 12px 5px 12px;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
