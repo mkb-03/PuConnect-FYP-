@@ -49,7 +49,7 @@ code {
   padding-right: 12px;
   padding-top: 5px;
   padding-bottom: 5px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .brownButton{
@@ -62,7 +62,7 @@ code {
   padding-right: 12px;
   padding-top: 5px;
   padding-bottom: 5px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Add this to your CSS to style the active link */
@@ -73,6 +73,8 @@ code {
 /* Home page */
 .background{
   background-image: linear-gradient(103.24deg, rgba(0, 8, 29, 0.3) 10.83%, rgba(0, 8, 29, 0.3) 60.1%),url("./images/background.png");
-  min-height: 100vh;
-  background-repeat: no-repeat;
+  height: 90vh;
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the image within the container */
+  background-repeat: no-repeat; /* Do not repeat the background image */
 }

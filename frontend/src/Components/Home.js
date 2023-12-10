@@ -3,12 +3,14 @@ import React from 'react'
 const Home = () => {
   return (
     <>
-      <section1>
+      <section>
       <div className='background'>
-           
+           <div className='p-5' >
+              <h4>Welcome to PuConnect</h4>
+           </div>
 
         </div>
-      </section1>
+      </section>
 
     </>
   )
