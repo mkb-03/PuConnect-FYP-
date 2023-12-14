@@ -153,8 +153,7 @@ code {
 }
 
 
-input,
-select {
+input{
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
@@ -163,5 +162,40 @@ select {
   box-sizing: border-box;
 }
 
+input:hover {
+  border-color: #85231b; /* Change border color on hover */
+}
+
+input:focus {
+  outline: none; /* Remove focus outline */
+  border-color: #85231b; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(133, 35, 27, 0.5); /* Add a box shadow on focus */
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  appearance: none; /* Remove default arrow in some browsers */
+  background-color: white; /* Set background color for the dropdown */
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: #85231b; /* Change border color on hover */
+}
+
+select:focus {
+  outline: none; /* Remove focus outline */
+  border-color: #85231b; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(133, 35, 27, 0.5); /* Add a box shadow on focus */
+}
+
+select option:hover {
+  background-color: #e5e5e5; /* Change background color on hover */
+}
 
 
