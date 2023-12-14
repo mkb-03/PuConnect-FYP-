@@ -52,19 +52,38 @@ code {
   padding-bottom: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
-
+.brownColor{
+  color: #85231b;
+  font-weight: bold;
+}
 .brownButton{
   background-color: #85231b;
   color: white;
   font-weight: 400;
   border-radius: 5px;
   border: #85231b;
-  padding-left: 12px; 
-  padding-right: 12px;
+  padding-left: 15px; 
+  padding-right: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* brown button hover */
+.brownButton:hover {
+  background-color: #e5e5e5;
+  color: #85231b;
+  border: 2px solid #85231b;
+  font-weight: 500;
+}
+
+.greyButton:hover {
+  background-color: #85231b;
+  color: #e5e5e5;
+  border: 2px solid #e5e5e5;
+  font-weight: 500;
+}
+
 
 /* Add this to your CSS to style the active link */
 .activeLink {
@@ -100,7 +119,7 @@ code {
 }
 
 .getStartedButton{
-  font-size: 0.938;
+  font-size: 0.938rem;
   font-weight: 500;
   color: white;
   background-color: black;
@@ -114,3 +133,35 @@ code {
   cursor: pointer;
   text-decoration: none;
 }
+
+/* SignUpForm.css */
+
+.sign-up-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.sign-up-form {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 3px black;
+}
+
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
