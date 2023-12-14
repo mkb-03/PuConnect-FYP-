@@ -81,7 +81,7 @@ code {
 }
 
 .welComeLine{
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: white;
   background-color: #85231b;
@@ -100,7 +100,7 @@ code {
 }
 
 .getStartedButton{
-  font-size: 15px;
+  font-size: 0.938;
   font-weight: 500;
   color: white;
   background-color: black;
