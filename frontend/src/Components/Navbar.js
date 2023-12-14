@@ -1,7 +1,21 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+
+  const location = useLocation();
+
+  // List of paths where the navbar should be hidden
+  const hiddenPaths = ['/signup', '/login'];
+
+  // Check if the current path is in the hiddenPaths list
+  const isNavbarHidden = hiddenPaths.includes(location.pathname);
+
+  // Render the navbar only if it's not hidden
+  if (isNavbarHidden) {
+    return null;
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbarBackground">
