@@ -5,6 +5,7 @@ const pino = require("pino")();
 const expressPino = require("express-pino-logger");
 const { ExtractJwt, Strategy: jwtStrategy } = require("passport-jwt");
 const passport = require("passport");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -17,6 +18,15 @@ const User = require("./models/User");
 const app = express();
 
 app.use(express.json());
+
+const corsOptions = {
+  origin: 'http://localhost:3001', // Replace with your frontend's URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
