@@ -239,3 +239,8 @@ select.error-input:focus {
   color: #85231b;
   font-weight: 600;
 }
+
+/* Playfair font */
+.playFairFont{
+  font-family: 'Playfair Display', serif;
+}
