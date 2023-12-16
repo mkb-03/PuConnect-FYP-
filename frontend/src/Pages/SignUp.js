@@ -1,42 +1,89 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const SignUpForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    gender: '',
-    semester: '',
-    password: '',
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      gender: '',
+      semester: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Name is required'),
+      email: Yup.string()
+        .required('Email is required')
+        .matches(
+          /^b[CSITSE]f\d{2}[am]\d{3}$/,
+          'Invalid email format. Example: bCSf12a345'
+        ),
+      gender: Yup.string().required('Gender is required'),
+      semester: Yup.string().required('Semester is required'),
+      password: Yup.string().required('Password is required'),
+    }),
+    onSubmit: (values) => {
+      // Add your signup logic here, using values
+      console.log(values);
+    },
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your signup logic here, using formData
-    console.log(formData);
-  };
 
   return (
     <div className="sign-up-container text-center mt-5 pt-5">
-      <form className="sign-up-form" onSubmit={handleSubmit}>
+      <form className="sign-up-form" onSubmit={formik.handleSubmit}>
+        <h4 className="pb-3 brownColor">SignUp</h4>
 
-        <h4 className=' pb-3 brownColor' >SignUp</h4>
+        <input
+          placeholder="Name"
+          className="pt-2"
+          type="text"
+          name="name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {formik.touched.name && formik.errors.name && (
+          <div className="error">{formik.errors.name}</div>
+        )}
 
-        <input placeholder='Name' className='pt-2' type="text" name="name" value={formData.name} onChange={handleChange} required />
-        <input placeholder='Email' type="email" name="email" value={formData.email} onChange={handleChange} required />
+        <input
+          placeholder="Email"
+          type="email"
+          name="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className="error">{formik.errors.email}</div>
+        )}
 
-        <select name="gender" value={formData.gender} onChange={handleChange} required>
-          <option value="" disabled hidden>Gender</option>
+        <select
+          name="gender"
+          value={formik.values.gender}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        >
+          <option value="" disabled hidden>
+            Gender
+          </option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
+        {formik.touched.gender && formik.errors.gender && (
+          <div className="error">{formik.errors.gender}</div>
+        )}
 
-        <select name="semester" value={formData.semester} onChange={handleChange} required>
-          <option value="" disabled hidden>Semester</option>
+        <select
+          name="semester"
+          value={formik.values.semester}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        >
+          <option value="" disabled hidden>
+            Semester
+          </option>
           {[...Array(8).keys()].map((index) => (
             <option key={index + 1} value={(index + 1).toString()}>
               {index + 1}
@@ -44,14 +91,29 @@ const SignUpForm = () => {
           ))}
           <option value="Alumni">Alumni</option>
         </select>
+        {formik.touched.semester && formik.errors.semester && (
+          <div className="error">{formik.errors.semester}</div>
+        )}
 
-        <input placeholder='Password' type="password" name="password" value={formData.password} onChange={handleChange} required />
-        <button className='brownButton mt-2 mb-2' type="submit">SignUp</button>
+        <input
+          placeholder="Password"
+          type="password"
+          name="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {formik.touched.password && formik.errors.password && (
+          <div className="error">{formik.errors.password}</div>
+        )}
 
-        <h6 className='pt-3'>Already signed up? Login Here </h6>
+        <button className="brownButton mt-2 mb-2" type="submit">
+          SignUp
+        </button>
 
+        <h6 className="pt-3">Already signed up? Login Here </h6>
       </form>
-    </div>  
+    </div>
   );
 };
 
