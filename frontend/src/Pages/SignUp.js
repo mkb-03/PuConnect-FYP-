@@ -16,16 +16,21 @@ const SignUpForm = () => {
       email: Yup.string()
         .required('Email is required')
         .matches(
-          /^b[CSITSE]f\d{2}[am]\d{3}$/,
+          /^b(cs|it|se)f\d{2}(a|m)\d{3}@pucit\.edu\.pk$/,
           'Invalid email format. Example: bitf20a015@pucit.edu.pk'
         ),
+
       gender: Yup.string().required('Gender is required'),
       semester: Yup.string().required('Semester is required'),
       password: Yup.string().required('Password is required'),
     }),
     onSubmit: (values) => {
+
+      console.log('Form values:', values);
+      console.log('Form errors:', formik.errors);
       // Add your signup logic here, using values
       console.log(values);
+
     },
   });
 
