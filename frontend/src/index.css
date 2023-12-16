@@ -39,33 +39,31 @@ code {
   color: #fff !important; /* Set the desired text color on hover */
 }
 
-/* Grey color button */
-.greyButton{
-  background-color: #e5e5e5;
-  color: black;
-  font-weight: 500;
-  border-radius: 5px;
-  border: #e5e5e5;
-  padding-left: 12px; 
-  padding-right: 12px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-}
 .brownColor{
   color: #85231b;
   font-weight: bold;
 }
-.brownButton{
+
+
+
+/* Grey color button */
+.greyButton {
+  background-color: #e5e5e5;
+  color: black;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid #e5e5e5; /* Use 1px border */
+  padding: 5px 12px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.brownButton {
   background-color: #85231b;
   color: white;
   font-weight: 400;
   border-radius: 5px;
-  border: #85231b;
-  padding-left: 15px; 
-  padding-right: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 1px solid #85231b; /* Use 1px border */
+  padding: 5px 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -73,16 +71,19 @@ code {
 .brownButton:hover {
   background-color: #e5e5e5;
   color: #85231b;
-  border: 2px solid #85231b;
+  outline: 1px solid #85231b; /* Use 1px outline */
   font-weight: 500;
+  border-radius: 1px; /* Adjust border-radius on hover */
 }
 
 .greyButton:hover {
   background-color: #85231b;
   color: #e5e5e5;
-  border: 2px solid #e5e5e5;
+  outline: 1px solid #e5e5e5; /* Use 1px outline */
   font-weight: 500;
+  border-radius: 1px; /* Adjust border-radius on hover */
 }
+
 
 
 /* Add this to your CSS to style the active link */

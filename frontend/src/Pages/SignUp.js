@@ -138,7 +138,7 @@ const SignUp = () => {
 
         <h6 className="pt-3">Already signed up? 
           <NavLink className='ms-1 customLink' to='/login'>
-            Login here
+            LogIn here
           </NavLink>
         </h6>
       </form>
