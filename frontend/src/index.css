@@ -198,4 +198,35 @@ select option:hover {
   background-color: #e5e5e5; /* Change background color on hover */
 }
 
+/* Add this style for Formik error inputs */
+.error-input {
+  border: 1px solid #ff0000; /* Red border color for error inputs */
+}
 
+/* Add this style to position the error message close to the input field */
+.error {
+  color: #ff0000; /* Red color for error messages */
+  font-size: 0.8rem; /* Adjust the font size as needed */
+  margin-bottom: 5px;
+  text-align: left; /* Align the error message to the left */
+  font-weight: 500;
+  margin-left: 2px;
+  margin-top: -15px; /* Adjust the margin to move the error message up */
+}
+
+/* Add these styles to adjust the appearance of the input fields */
+input.error-input,
+select.error-input {
+  border: 1px solid #ff0000; /* Red border color for error inputs */
+  outline: none; /* Remove the default focus outline */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a box shadow on focus */
+}
+
+/* Add these styles for hover and focus effects on input fields */
+input.error-input:hover,
+select.error-input:hover,
+input.error-input:focus,
+select.error-input:focus {
+  border-color: #ff0000; /* Change border color on hover and focus */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a box shadow on focus */
+}

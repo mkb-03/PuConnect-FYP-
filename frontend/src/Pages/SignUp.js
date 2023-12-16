@@ -17,7 +17,7 @@ const SignUpForm = () => {
         .required('Email is required')
         .matches(
           /^b[CSITSE]f\d{2}[am]\d{3}$/,
-          'Invalid email format. Example: bCSf12a345'
+          'Invalid email format. Example: bitf20a015@pucit.edu.pk'
         ),
       gender: Yup.string().required('Gender is required'),
       semester: Yup.string().required('Semester is required'),
@@ -36,7 +36,7 @@ const SignUpForm = () => {
 
         <input
           placeholder="Name"
-          className="pt-2"
+          className={`pt-2 ${formik.touched.name && formik.errors.name ? 'error-input' : ''}`}
           type="text"
           name="name"
           value={formik.values.name}
@@ -51,6 +51,7 @@ const SignUpForm = () => {
           placeholder="Email"
           type="email"
           name="email"
+          className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -61,6 +62,7 @@ const SignUpForm = () => {
 
         <select
           name="gender"
+          className={`pt-2 ${formik.touched.gender && formik.errors.gender ? 'error-input' : ''}`}
           value={formik.values.gender}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -77,6 +79,7 @@ const SignUpForm = () => {
 
         <select
           name="semester"
+          className={`pt-2 ${formik.touched.semester && formik.errors.semester ? 'error-input' : ''}`}
           value={formik.values.semester}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -99,6 +102,7 @@ const SignUpForm = () => {
           placeholder="Password"
           type="password"
           name="password"
+          className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
