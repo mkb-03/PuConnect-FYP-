@@ -1,98 +1,74 @@
-//Import required packages and modules
-
-//import express package
 const express = require("express");
-
-// Import passport for authentication middleware
+const mongoose = require("mongoose");
+const path = require("path");
+const pino = require("pino")();
+const expressPino = require("express-pino-logger");
+const { ExtractJwt, Strategy: jwtStrategy } = require("passport-jwt");
 const passport = require("passport");
 
-// ExtractJwt module from passport-jwt for extracting JWT from the request
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-
-// Strategy module from passport-jwt for defining JWT authentication strategy
-const jwtStrategy = require("passport-jwt").Strategy;
-
-// Import mongoose for MongoDB
-const mongoose = require("mongoose");
-
-// Load environment variables
 require("dotenv").config();
 
-// Import authentication routes
-const authRoutes = require("./routes/authentication")
-
-// Import experience, project and skill routes
-const experienceRoutes = require("./routes/experience")
-const skillRoutes = require("./routes/skill")
-const projectRoutes = require("./routes/project")
-
-// Import User model
+const authRoutes = require("./routes/authentication");
+const experienceRoutes = require("./routes/experience");
+const skillRoutes = require("./routes/skill");
+const projectRoutes = require("./routes/project");
 const User = require("./models/User");
 
-// MongoDB connection setup
-const url = 'mongodb://localhost:27017/PuConnect';
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then((x) => {
-    console.log("Connected to mongoDB");
-}).catch((err) => {
-    console.log("Error occured while connecting to mongo!");
-    console.log(err);
-});
-
-// Create an instance of Express
 const app = express();
 
-// Enable JSON parsing for incoming requests
 app.use(express.json());
 
-//passport-jwt setup
-//jwt_payload : {identifier: userId}
+mongoose
+  .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    pino.info("Connected to MongoDB");
+  })
+  .catch((err) => {
+    pino.error("Error occurred while connecting to MongoDB");
+    pino.error(err);
+  });
 
 const options = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: "herecomesthesecretkey"
-}
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET || "herecomesthesecretkey",
+};
 
-// Configure passport to use jwt strategy
-passport.use(new jwtStrategy(options, async function (jwt_payload, done) {
-    // Find the user in the database based on the identifier in jwt_payload
-
+passport.use(
+  new jwtStrategy(options, async function (jwt_payload, done) {
     try {
-        const user = await User.findOne({ _id: jwt_payload.identifier });
+      const user = await User.findOne({ _id: jwt_payload.identifier });
 
-        if (user) {
-            // If user found, authentication is successful
-            done(null, user);
-        }
-        else {
-            // If user not found, authentication fails
-            done(null, false);
-        }
+      if (user) {
+        done(null, user);
+      } else {
+        done(null, false);
+      }
+    } catch (err) {
+      done(err, false);
     }
-    catch(err)
-    {
-        if (err) {
-            done(err, false);
-        }
-    }
-}));
+  })
+);
 
-// Define a route for the root endpoint
-app.get("/", (req, res) => {
-    res.send("I am working");
+const logger = expressPino({ logger: pino });
+app.use(logger);
+
+app.use("/auth", authRoutes);
+app.use("/experience", experienceRoutes);
+app.use("/skill", skillRoutes);
+app.use("/project", projectRoutes);
+
+// Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+
+// Handle React routing, return all requests to React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
-// Define a route for a "/hello" endpoint
-app.get("/hello", (req, res) => {
-    res.send("Hello World");
-});
-
-//app.use will take two arguments. First will be the prefix to the route and second route objects.
-app.use("/auth", authRoutes)
-app.use("/experience", experienceRoutes)
-app.use("/skill", skillRoutes)
-app.use("/project", projectRoutes)
-
-// Start the server on port 3000
-app.listen(3000, () => {
-    console.log("Server is running on port no 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  pino.info(`Server is running on port ${port}`);
 });

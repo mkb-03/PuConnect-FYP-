@@ -51,7 +51,7 @@ const SignUpForm = () => {
         <h6 className='pt-3'>Already signed up? Login Here </h6>
 
       </form>
-    </div>
+    </div>  
   );
 };
 
