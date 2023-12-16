@@ -59,9 +59,12 @@ const Navbar = () => {
                   SignUp
                 </button>
               </NavLink>
-              <button className="greyButton me-2" type="submit">
-                LogIn
-              </button>
+              
+              <NavLink to="/login" >
+                <button className="greyButton me-2" type="submit">
+                  LogIn
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>
