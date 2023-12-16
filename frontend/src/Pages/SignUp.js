@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-const SignUpForm = () => {
+const SignUp = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -24,13 +24,28 @@ const SignUpForm = () => {
       semester: Yup.string().required('Semester is required'),
       password: Yup.string().required('Password is required'),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      try {
+        const response = await fetch('http://localhost:3000/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
 
-      console.log('Form values:', values);
-      console.log('Form errors:', formik.errors);
-      // Add your signup logic here, using values
-      console.log(values);
-
+        if (!response.ok) {
+          // Handle error response
+          const errorData = await response.json();
+          console.error('Error:', errorData.err);
+        } else {
+          // Registration successful
+          const userData = await response.json();
+          console.log('User registered successfully:', userData);
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
     },
   });
 
@@ -126,4 +141,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUp;
