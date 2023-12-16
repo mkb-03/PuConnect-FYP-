@@ -230,3 +230,12 @@ select.error-input:focus {
   border-color: #ff0000; /* Change border color on hover and focus */
   box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a box shadow on focus */
 }
+
+
+/* custom color of link */
+
+
+.customLink {
+  color: #85231b;
+  font-weight: 600;
+}

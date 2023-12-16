@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -135,7 +136,11 @@ const SignUp = () => {
           SignUp
         </button>
 
-        <h6 className="pt-3">Already signed up? Login Here </h6>
+        <h6 className="pt-3">Already signed up? 
+          <NavLink className='ms-1 customLink' to='/login'>
+            Login here
+          </NavLink>
+        </h6>
       </form>
     </div>
   );
