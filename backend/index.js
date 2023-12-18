@@ -31,7 +31,6 @@ app.use(cors(corsOptions));
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
   })
   .then(() => {
     pino.info("Connected to MongoDB");
