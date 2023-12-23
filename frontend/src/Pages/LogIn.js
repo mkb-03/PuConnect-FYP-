@@ -1,3 +1,5 @@
+// Login.js
+
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -44,7 +46,7 @@ const Login = () => {
           // Login successful
           const userData = await response.json();
           console.log('User logged in successfully:', userData);
-          setAlertMessage('Login Successfull.');
+          setAlertMessage('Login Successful.');
           setShowSuccessAlert(true);
           // Redirect to the home page after 1 second (you can use setTimeout here)
           setTimeout(() => {
@@ -76,30 +78,30 @@ const Login = () => {
           <h4 className="pb-3 brownColor">LogIn</h4>
 
           <input
-            placeholder="Email"
-            type="email"
-            name="email"
-            className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.email && formik.errors.email && (
-            <div className="error">{formik.errors.email}</div>
-          )}
+          placeholder="Email"
+          type="email"
+          name="email"
+          className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className="error">{formik.errors.email}</div>
+        )}
 
-          <input
-            placeholder="Password"
-            type="password"
-            name="password"
-            className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.password && formik.errors.password && (
-            <div className="error">{formik.errors.password}</div>
-          )}
+        <input
+          placeholder="Password"
+          type="password"
+          name="password"
+          className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {formik.touched.password && formik.errors.password && (
+          <div className="error">{formik.errors.password}</div>
+        )}
 
           <button className="brownButton mt-2 mb-2" type="submit">
             Login
