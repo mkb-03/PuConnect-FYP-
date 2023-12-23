@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -43,6 +44,7 @@ const SignUp = () => {
           // Registration successful
           const userData = await response.json();
           console.log('User registered successfully:', userData);
+          navigate('/home ');
         }
       } catch (error) {
         console.error('Error:', error.message);
@@ -136,7 +138,7 @@ const SignUp = () => {
           SignUp
         </button>
 
-        <h6 className="pt-3">Already signed up? 
+        <h6 className="pt-3">Already signed up?
           <NavLink className='ms-1 customLink' to='/login'>
             LogIn here
           </NavLink>

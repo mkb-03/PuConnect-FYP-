@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -36,6 +37,7 @@ const Login = () => {
           // Login successful
           const userData = await response.json();
           console.log('User logged in successfully:', userData);
+          navigate('/home ');
         }
       } catch (error) {
         console.error('Error:', error.message);
