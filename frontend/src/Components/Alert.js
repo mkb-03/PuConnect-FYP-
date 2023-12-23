@@ -7,7 +7,7 @@ const Alert = ({ message, type, onClose }) => {
     const timer = setTimeout(() => {
       setShow(false);
       onClose(); // Callback to perform any necessary actions after the alert is closed
-    }, 1000); // Adjust the duration as needed
+    }, 2000); // Adjust the duration as needed
 
     return () => clearTimeout(timer);
   }, [onClose]);

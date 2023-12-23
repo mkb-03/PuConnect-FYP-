@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import Alert from '../Components/Alert';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -33,60 +38,81 @@ const Login = () => {
           // Handle error response
           const errorData = await response.json();
           console.error('Error:', errorData.err);
+          setAlertMessage('Login failed. Please check your credentials.');
+          setShowErrorAlert(true);
         } else {
           // Login successful
           const userData = await response.json();
           console.log('User logged in successfully:', userData);
-          navigate('/home ');
+          setAlertMessage('Login Successfull.');
+          setShowSuccessAlert(true);
+          // Redirect to the home page after 1 second (you can use setTimeout here)
+          setTimeout(() => {
+            navigate('/home');
+          }, 1000);
         }
       } catch (error) {
         console.error('Error:', error.message);
+        setAlertMessage('An error occurred. Please try again.');
+        setShowErrorAlert(true);
       }
     },
   });
 
   return (
-    <div className="sign-up-container text-center mt-5 pt-5">
-      <form className="sign-up-form pt-3" onSubmit={formik.handleSubmit}>
-        <h4 className="pb-3 brownColor">LogIn</h4>
+    <div>
+      {/* Show success alert */}
+      {showSuccessAlert && (
+        <Alert type="success" message={alertMessage} onClose={() => setShowSuccessAlert(false)} />
+      )}
 
-        <input
-          placeholder="Email"
-          type="email"
-          name="email"
-          className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className="error">{formik.errors.email}</div>
-        )}
+      {/* Show error alert */}
+      {showErrorAlert && (
+        <Alert type="danger" message={alertMessage} onClose={() => setShowErrorAlert(false)} />
+      )}
 
-        <input
-          placeholder="Password"
-          type="password"
-          name="password"
-          className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div className="error">{formik.errors.password}</div>
-        )}
+      <div className="sign-up-container text-center mt-5 pt-5">
+        <form className="sign-up-form pt-3" onSubmit={formik.handleSubmit}>
+          <h4 className="pb-3 brownColor">LogIn</h4>
 
-        <button className="brownButton mt-2 mb-2" type="submit">
-          Login
-        </button>
+          <input
+            placeholder="Email"
+            type="email"
+            name="email"
+            className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className="error">{formik.errors.email}</div>
+          )}
 
-        <h6 className="pt-3">
-          Not registered yet? 
-          <NavLink className='ms-1 customLink' to='/signup'>
-            SignUp here
-          </NavLink>
-        </h6>
-      </form>
+          <input
+            placeholder="Password"
+            type="password"
+            name="password"
+            className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className="error">{formik.errors.password}</div>
+          )}
+
+          <button className="brownButton mt-2 mb-2" type="submit">
+            Login
+          </button>
+
+          <h6 className="pt-3">
+            Not registered yet?
+            <NavLink className='ms-1 customLink' to='/signup'>
+              SignUp here
+            </NavLink>
+          </h6>
+        </form>
+      </div>
     </div>
   );
 };
