@@ -11,7 +11,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbarBackground">
+    <nav className="navbar navbar-expand-lg navbar-dark navbarBackground">
       <div className="container-fluid">
         <Link className="navbar-brand navbarTitle activeLink" to="/">
           PuConnect
@@ -27,7 +27,7 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link navbarText activeLink" to="/">
@@ -46,13 +46,13 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="d-flex">
-            <Link to="/signup">
-              <button className="greyButton me-2" type="submit">
+            <Link to="/signup" className="me-2">
+              <button className="greyButton " type="submit">
                 SignUp
               </button>
             </Link>
             <Link to="/login">
-              <button className="greyButton me-2" type="submit">
+              <button className="greyButton" type="submit">
                 LogIn
               </button>
             </Link>
