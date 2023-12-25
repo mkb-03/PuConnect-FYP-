@@ -54,8 +54,8 @@ const SignUp = () => {
         } else {
           // Registration successful
           const userData = await response.json();
-          console.log('Registeration successfull:', userData);
-          setAlertMessage('Registeration Successfull.');
+          console.log('SignUp successful:', userData);
+          setAlertMessage('SignUp Successfull.');
           setShowSuccessAlert(true);
           navigate('/login ');
         }
