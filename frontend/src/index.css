@@ -1,16 +1,8 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+body, html {
+  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 /* navbar color */
 .navbarBackground{
@@ -18,6 +10,7 @@ code {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 
 }
+
 
 .navbarText{
   color: white;
@@ -91,13 +84,13 @@ code {
   color: white !important; /* Set the desired text color for the active link */
 }
 
-/* Home page */
-.background{
-  background-image: linear-gradient(103.24deg, rgba(0, 8, 29, 0.3) 10.83%, rgba(0, 8, 29, 0.3) 60.1%),url("./images/background.png");
-  min-height: 92vh;
+/* Landing page */
+
+.background {
+  background-image: linear-gradient(103.24deg, rgba(0, 8, 29, 0.3) 10.83%, rgba(0, 8, 29, 0.3) 60.1%), url("./images/background.png");
+  min-height: 91vh; /* Adjust the min-height based on your design */
   background-size: cover;
   background-position: center;
-  /* margin-top: 2px; */
 }
 
 .welComeLine{
@@ -244,4 +237,160 @@ select.error-input:focus {
 /* Playfair font */
 .playFairFont{
   font-family: 'Playfair Display', serif;
+}
+
+
+
+/* Media queries for responsive design */
+@media (max-width:300px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+
+  }
+
+  h4 {
+    font-size: 0.888rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.7777rem;
+
+  }
+
+  .background {
+    min-height: 88vh; 
+  }
+
+  .welComeLine{
+    font-size: 0.9rem;
+  }
+  
+  .tagLine{
+    font-size: 2rem;
+    text-align: center;
+    margin-left: -100px;
+  }
+  
+  .getStartedButton{
+    font-size: 0.8rem;
+    padding: 5px 12px 5px 12px;
+    margin-left: 30px;
+  }
+
+  /* Grey color button */
+.greyButton {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.brownButton {
+
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+}
+
+
+@media (max-width:480px) and (min-width:300px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.789rem;
+
+  }
+
+  .background {
+    min-height: 88vh;
+  }
+
+  .welComeLine{
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  
+  .tagLine{
+    font-size: 2rem;
+    text-align: center;
+    margin-left: -80px;
+    text-shadow: 2.5px 2px 2px #000;
+  }
+  
+  .getStartedButton{
+    font-size: 0.8rem;
+    padding: 5px 12px 5px 12px;
+    margin-left: 45px;
+  }
+
+}
+
+@media (max-width:768px) and (min-width:480px) {
+
+  h2 {
+    font-size: 2rem;
+
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 15px;
+
+  }
+  .background {
+    min-height: 100vh; 
+  }
+
+  .welComeLine{
+    font-size: 0.9rem;
+  }
+  
+  .tagLine{
+    font-size: 2rem;
+  }
+  
+  .getStartedButton{
+    font-size: 0.938rem;
+    padding: 5px 12px 5px 12px;
+ 
+  }
+
+}
+
+@media(min-width:768px) {
+  
+  p {
+    font-size: 0.8888rem;
+
+  }
 }

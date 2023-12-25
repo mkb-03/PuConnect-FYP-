@@ -12,7 +12,7 @@ const LandingPage = () => {
                 <span className="welComeLine">Welcome to PuConnect</span>
               </div>
               <div className="col-md-6 ps-3 pt-4 ms-5">
-                <span className="tagLine">Your Networking Gateway</span>
+                <h1 className="tagLine">Your Networking Gateway</h1>
               </div>
               <div className="col-md-6 ps-4 pt-4 ms-5">
                 <Link  to="/signup" className='pointerCursor'>
