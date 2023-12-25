@@ -3,21 +3,28 @@ const router = express.Router();
 const passport = require("passport");
 const Post = require('../models/Post');
 
-router.post("/create", passport.authenticate("jwt", {session:false}), async (req, res) =>{
+
+//Route to create a post
+router.post("/create", passport.authenticate("jwt", { session: false }), async (req, res) => {
 
     // 1. Identify the user who is calling it
     const user = req.user;
 
     // 2. Create the post object
-    let {userId, description, picturePath} = req.body;
-    userId = user._id
+    const { description, picturePath } = req.body;
 
-
-    if(!description){
-        return res.status(402).json({err: "Invalid details"})
+    if (!description) {
+        return res.status(402).json({ err: "Description should not be empty!" })
     }
 
-    const postObj = {userId, description, picturePath};
+    const postObj = {
+        userId: user._id,
+        userName: user.name,
+        description,
+        picturePath,
+        userPicturePath: "",
+        likes: {},
+    };
 
     const post = await Post.create(postObj);
 
@@ -25,6 +32,161 @@ router.post("/create", passport.authenticate("jwt", {session:false}), async (req
     return res.status(200).json(post);
 
 });
+
+
+//Route to view all feed posts
+router.get("/getAll", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const loggedInUserId = req.user._id;
+
+        // Find all posts except those of the logged-in user
+        const posts = await Post.find({ userId: { $ne: loggedInUserId } });
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+});
+
+// Route to view posts of the logged-in user
+router.get("/get", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const loggedInUserId = req.user._id;
+
+        // Find all posts of the logged-in user
+        const posts = await Post.find({ userId: loggedInUserId });
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+});
+
+// Route to like a post
+// This route take "post id" as a parameter
+router.patch("/like/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const id  = req.params.id;
+        const userId = req.user._id;
+        const post = await Post.findById(id);
+        const isLiked = post.likes.get(userId);
+    
+        if (isLiked) {
+          post.likes.delete(userId);
+        } else {
+          post.likes.set(userId, true);
+        }
+    
+        const updatedPost = await Post.findByIdAndUpdate(
+          id,
+          { likes: post.likes },
+          { new: true }
+        );
+    
+        res.status(200).json(updatedPost);
+      } catch (err) {
+        res.status(404).json({ message: err.message });
+      }
+});
+
+//Route to comment a post
+router.post("/comment/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+
+        // Check if the post exists
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Extract comment data from the request body
+        const { text } = req.body;
+
+        // Create a new comment object
+        const newComment = {
+            userId: userId,
+            text: text,
+        };
+
+        // Add the comment to the post's comments array
+        post.comments.push(newComment);
+
+        // Save the updated post with the new comment
+        const updatedPost = await post.save();
+
+        res.status(201).json(updatedPost);
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
+// Route to delete a post
+router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+
+        // Check if the post exists
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Check if the user is the owner of the post
+        if (post.userId.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You do not have permission to delete this post" });
+        }
+
+        // Delete the post
+        await Post.findByIdAndDelete(postId);
+
+        res.status(200).json({ message: "Post deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+//Route to update a post
+router.patch("/update/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+
+        // Check if the post exists
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        // Check if the user is the owner of the post
+        if (post.userId.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You do not have permission to update this post" });
+        }
+
+        // Update the post
+        const { description, picturePath } = req.body;
+        if (description) {
+            post.description = description;
+        }
+        if (picturePath) {
+            post.picturePath = picturePath;
+        }
+
+        // Save the updated post
+        const updatedPost = await post.save();
+
+        res.status(200).json(updatedPost);
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
+
+
 
 
 module.exports = router;
