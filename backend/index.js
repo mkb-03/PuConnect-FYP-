@@ -13,6 +13,7 @@ const authRoutes = require("./routes/authentication");
 const experienceRoutes = require("./routes/experience");
 const skillRoutes = require("./routes/skill");
 const projectRoutes = require("./routes/project");
+const postRoutes = require("./routes/post");
 const User = require("./models/User");
 
 const app = express();
@@ -68,6 +69,7 @@ app.use("/auth", authRoutes);
 app.use("/experience", experienceRoutes);
 app.use("/skill", skillRoutes);
 app.use("/project", projectRoutes);
+app.use("/post", postRoutes)
 
 // Serve static files from the React build folder
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
