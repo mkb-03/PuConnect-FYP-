@@ -80,26 +80,26 @@ const Login = () => {
           placeholder="Email"
           type="email"
           name="email"
-          className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
+          className={`pt-2 mt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
         {formik.touched.email && formik.errors.email && (
-          <div className="error">{formik.errors.email}</div>
+          <div className="error mt-1">{formik.errors.email}</div>
         )}
 
         <input
           placeholder="Password"
           type="password"
           name="password"
-          className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
+          className={`pt-2 mt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
           value={formik.values.password}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
         {formik.touched.password && formik.errors.password && (
-          <div className="error">{formik.errors.password}</div>
+          <div className="error mt-1">{formik.errors.password}</div>
         )}
 
           <button className="brownButton mt-2 mb-2" type="submit">
