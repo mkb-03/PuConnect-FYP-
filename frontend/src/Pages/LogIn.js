@@ -1,4 +1,3 @@
-// Login.js
 
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -46,7 +45,7 @@ const Login = () => {
           // Login successful
           const userData = await response.json();
           console.log('User logged in successfully:', userData);
-          setAlertMessage('Login Successful.');
+          setAlertMessage('Login Successfull.');
           setShowSuccessAlert(true);
           // Redirect to the home page after 1 second (you can use setTimeout here)
           setTimeout(() => {

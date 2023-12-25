@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,6 +7,10 @@ import Alert from '../Components/Alert';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -42,110 +46,132 @@ const SignUp = () => {
           // Handle error response
           const errorData = await response.json();
           console.error('Error:', errorData.err);
+          if (response.status === 402) {
+            // User with this email already exists
+            setAlertMessage('SignUp Failed! A user with this email already exists.');
+            setShowErrorAlert(true);
+          }
         } else {
           // Registration successful
           const userData = await response.json();
-          console.log('User registered successfully:', userData);
-          navigate('/home ');
+          console.log('Registeration successfull:', userData);
+          setAlertMessage('Registeration Successfull.');
+          setShowSuccessAlert(true);
+          navigate('/login ');
         }
       } catch (error) {
         console.error('Error:', error.message);
+        setAlertMessage('SignUp Failed! An error occurred. Please try again.');
+        setShowErrorAlert(true);
       }
     },
   });
 
   return (
-    <div className="sign-up-container text-center mt-5 pt-5">
-      <form className="sign-up-form" onSubmit={formik.handleSubmit}>
-        <h4 className="pb-3 brownColor">SignUp</h4>
+    <div>
 
-        <input
-          placeholder="Name"
-          className={`pt-2 ${formik.touched.name && formik.errors.name ? 'error-input' : ''}`}
-          type="text"
-          name="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.name && formik.errors.name && (
-          <div className="error">{formik.errors.name}</div>
-        )}
+      {/* Show success alert */}
+      {showSuccessAlert && (
+        <Alert type="success" message={alertMessage} onClose={() => setShowSuccessAlert(false)} />
+      )}
 
-        <input
-          placeholder="Email"
-          type="email"
-          name="email"
-          className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className="error">{formik.errors.email}</div>
-        )}
+      {/* Show error alert */}
+      {showErrorAlert && (
+        <Alert type="danger" message={alertMessage} onClose={() => setShowErrorAlert(false)} />
+      )}
 
-        <select
-          name="gender"
-          className={`pt-2 ${formik.touched.gender && formik.errors.gender ? 'error-input' : ''}`}
-          value={formik.values.gender}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        >
-          <option value="" disabled hidden>
-            Gender
-          </option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        {formik.touched.gender && formik.errors.gender && (
-          <div className="error">{formik.errors.gender}</div>
-        )}
+      <div className="sign-up-container text-center mt-5 pt-5">
+        <form className="sign-up-form" onSubmit={formik.handleSubmit}>
+          <h4 className="pb-3 brownColor">SignUp</h4>
 
-        <select
-          name="semester"
-          className={`pt-2 ${formik.touched.semester && formik.errors.semester ? 'error-input' : ''}`}
-          value={formik.values.semester}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        >
-          <option value="" disabled hidden>
-            Semester
-          </option>
-          {[...Array(8).keys()].map((index) => (
-            <option key={index + 1} value={(index + 1).toString()}>
-              {index + 1}
+          <input
+            placeholder="Name"
+            className={`pt-2 ${formik.touched.name && formik.errors.name ? 'error-input' : ''}`}
+            type="text"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.name && formik.errors.name && (
+            <div className="error">{formik.errors.name}</div>
+          )}
+
+          <input
+            placeholder="Email"
+            type="email"
+            name="email"
+            className={`pt-2 ${formik.touched.email && formik.errors.email ? 'error-input' : ''}`}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className="error">{formik.errors.email}</div>
+          )}
+
+          <select
+            name="gender"
+            className={`pt-2 ${formik.touched.gender && formik.errors.gender ? 'error-input' : ''}`}
+            value={formik.values.gender}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value="" disabled hidden>
+              Gender
             </option>
-          ))}
-          <option value="Alumni">Alumni</option>
-        </select>
-        {formik.touched.semester && formik.errors.semester && (
-          <div className="error">{formik.errors.semester}</div>
-        )}
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          {formik.touched.gender && formik.errors.gender && (
+            <div className="error">{formik.errors.gender}</div>
+          )}
 
-        <input
-          placeholder="Password"
-          type="password"
-          name="password"
-          className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div className="error">{formik.errors.password}</div>
-        )}
+          <select
+            name="semester"
+            className={`pt-2 ${formik.touched.semester && formik.errors.semester ? 'error-input' : ''}`}
+            value={formik.values.semester}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          >
+            <option value="" disabled hidden>
+              Semester
+            </option>
+            {[...Array(8).keys()].map((index) => (
+              <option key={index + 1} value={(index + 1).toString()}>
+                {index + 1}
+              </option>
+            ))}
+            <option value="Alumni">Alumni</option>
+          </select>
+          {formik.touched.semester && formik.errors.semester && (
+            <div className="error">{formik.errors.semester}</div>
+          )}
 
-        <button className="brownButton mt-2 mb-2" type="submit">
-          SignUp
-        </button>
+          <input
+            placeholder="Password"
+            type="password"
+            name="password"
+            className={`pt-2 ${formik.touched.password && formik.errors.password ? 'error-input' : ''}`}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className="error">{formik.errors.password}</div>
+          )}
 
-        <h6 className="pt-3">Already signed up?
-          <NavLink className='ms-1 customLink' to='/login'>
-            LogIn here
-          </NavLink>
-        </h6>
-      </form>
+          <button className="brownButton mt-2 mb-2" type="submit">
+            SignUp
+          </button>
+
+          <h6 className="pt-3">Already signed up?
+            <NavLink className='ms-1 customLink' to='/login'>
+              LogIn here
+            </NavLink>
+          </h6>
+        </form>
+      </div>
     </div>
   );
 };
