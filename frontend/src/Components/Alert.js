@@ -1,4 +1,3 @@
-// Alert.js
 
 import React, { useState, useEffect } from 'react';
 
@@ -16,7 +15,7 @@ const Alert = ({ message, type, onClose }) => {
 
     return (
         show && (
-            <div className={`alert alert-${type} alert-dismissible fade show`} style={{ borderRadius: 0 }} role="alert">
+            <div className={`alert alert-${type} alert-dismissible fade show`} style={{ borderRadius: 0, fontWeight: 500 }} role="alert">
                 {message}
             </div>
         )
