@@ -1,16 +1,8 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+body, html {
+  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 /* navbar color */
 .navbarBackground{
@@ -18,6 +10,7 @@ code {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 
 }
+
 
 .navbarText{
   color: white;
@@ -39,49 +32,69 @@ code {
   color: #fff !important; /* Set the desired text color on hover */
 }
 
+.brownColor{
+  color: #85231b;
+  font-weight: bold;
+}
+
+
+
 /* Grey color button */
-.greyButton{
+.greyButton {
   background-color: #e5e5e5;
   color: black;
   font-weight: 500;
   border-radius: 5px;
-  border: #e5e5e5;
-  padding-left: 12px; 
-  padding-right: 12px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 1px solid #e5e5e5; /* Use 1px border */
+  padding: 5px 12px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.brownButton{
+.brownButton {
   background-color: #85231b;
   color: white;
   font-weight: 400;
   border-radius: 5px;
-  border: #85231b;
-  padding-left: 12px; 
-  padding-right: 12px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border: 1px solid #85231b; /* Use 1px border */
+  padding: 5px 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* brown button hover */
+.brownButton:hover {
+  background-color: #e5e5e5;
+  color: #85231b;
+  outline: 1px solid #85231b; /* Use 1px outline */
+  font-weight: 500;
+  border-radius: 1px; /* Adjust border-radius on hover */
+}
+
+.greyButton:hover {
+  background-color: #85231b;
+  color: #e5e5e5;
+  outline: 1px solid #e5e5e5; /* Use 1px outline */
+  font-weight: 500;
+  border-radius: 1px; /* Adjust border-radius on hover */
+}
+
+
 
 /* Add this to your CSS to style the active link */
 .activeLink {
   color: white !important; /* Set the desired text color for the active link */
 }
 
-/* Home page */
-.background{
-  background-image: linear-gradient(103.24deg, rgba(0, 8, 29, 0.3) 10.83%, rgba(0, 8, 29, 0.3) 60.1%),url("./images/background.png");
-  min-height: 90vh;
+/* Landing page */
+
+.background {
+  background-image: linear-gradient(103.24deg, rgba(0, 8, 29, 0.3) 10.83%, rgba(0, 8, 29, 0.3) 60.1%), url("./images/background.png");
+  min-height: 91vh; /* Adjust the min-height based on your design */
   background-size: cover;
   background-position: center;
-  margin-top: 2px;
 }
 
 .welComeLine{
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: white;
   background-color: #85231b;
@@ -100,11 +113,263 @@ code {
 }
 
 .getStartedButton{
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 0.938rem;
+  font-weight: 500;
   color: white;
   background-color: black;
   padding: 5px 12px 5px 12px;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* CursorPointer */
+.pointerCursor {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* SignUpForm.css */
+
+.sign-up-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.sign-up-form {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 3px black;
+}
+
+
+input{
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input:hover {
+  border-color: #85231b; /* Change border color on hover */
+}
+
+input:focus {
+  outline: none; /* Remove focus outline */
+  border-color: #85231b; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(133, 35, 27, 0.5); /* Add a box shadow on focus */
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  appearance: none; /* Remove default arrow in some browsers */
+  background-color: white; /* Set background color for the dropdown */
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: #85231b; /* Change border color on hover */
+}
+
+select:focus {
+  outline: none; /* Remove focus outline */
+  border-color: #85231b; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(133, 35, 27, 0.5); /* Add a box shadow on focus */
+}
+
+select option:hover {
+  background-color: #e5e5e5; /* Change background color on hover */
+}
+
+/* Add this style for Formik error inputs */
+.error-input {
+  border: 1px solid #ff0000; /* Red border color for error inputs */
+}
+
+/* Add this style to position the error message close to the input field */
+.error {
+  color: #ff0000; /* Red color for error messages */
+  font-size: 0.8rem; /* Adjust the font size as needed */
+  margin-bottom: 5px;
+  text-align: left; /* Align the error message to the left */
+  font-weight: 500;
+  margin-left: 2px;
+  margin-top: -15px; /* Adjust the margin to move the error message up */
+}
+
+/* Add these styles to adjust the appearance of the input fields */
+input.error-input,
+select.error-input {
+  border: 1px solid #ff0000; /* Red border color for error inputs */
+  outline: none; /* Remove the default focus outline */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a box shadow on focus */
+}
+
+/* Add these styles for hover and focus effects on input fields */
+input.error-input:hover,
+select.error-input:hover,
+input.error-input:focus,
+select.error-input:focus {
+  border-color: #ff0000; /* Change border color on hover and focus */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a box shadow on focus */
+}
+
+
+/* custom color of link */
+
+
+.customLink {
+  color: #85231b;
+  font-weight: 600;
+}
+
+/* Playfair font */
+.playFairFont{
+  font-family: 'Playfair Display', serif;
+}
+
+
+
+/* Media queries for responsive design */
+
+@media (max-width:480px) and (min-width:320px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.789rem;
+
+  }
+
+  .background {
+    min-height: 88vh;
+  }
+
+  .welComeLine{
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  
+  .tagLine{
+    font-size: 2rem;
+    text-align: center;
+    margin-left: -80px;
+    text-shadow: 2.5px 2px 2px #000;
+  }
+  
+  .getStartedButton{
+    font-size: 0.8rem;
+    padding: 5px 12px 5px 12px;
+    margin-left: 45px;
+  }
+    /* Grey color button */
+.greyButton {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.brownButton {
+
+  padding: 4px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.sign-up-container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 80px;
+}
+
+}
+
+@media (max-width:768px) and (min-width:480px) {
+
+  h2 {
+    font-size: 2rem;
+
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 15px;
+
+  }
+  .background {
+    min-height: 100vh; 
+  }
+
+  .welComeLine{
+    font-size: .9rem;
+  }
+  
+  .tagLine{
+    font-size: 2.3rem;
+  }
+  
+  .getStartedButton{
+    font-size: 0.8rem;
+    padding: 5px 12px 5px 12px;
+ 
+  }
+
+  .greyButton {
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+  
+  .brownButton {
+  
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  .sign-up-container {
+   
+    margin-bottom: 100px;
+  }
+
+}
+
+@media(min-width:768px) {
+  
+  p {
+    font-size: 0.8888rem;
+
+  }
 }
