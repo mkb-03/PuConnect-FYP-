@@ -242,66 +242,8 @@ select.error-input:focus {
 
 
 /* Media queries for responsive design */
-@media (max-width:300px) {
-  h1 {
-    font-size: 1.5rem;
-  }
 
-  h2 {
-    font-size: 1.5rem;
-
-  }
-
-  h4 {
-    font-size: 0.888rem;
-  }
-
-  h5 {
-    font-size: 1rem;
-  }
-
-  p {
-    font-size: 0.7777rem;
-
-  }
-
-  .background {
-    min-height: 88vh; 
-  }
-
-  .welComeLine{
-    font-size: 0.9rem;
-  }
-  
-  .tagLine{
-    font-size: 2rem;
-    text-align: center;
-    margin-left: -100px;
-  }
-  
-  .getStartedButton{
-    font-size: 0.8rem;
-    padding: 5px 12px 5px 12px;
-    margin-left: 30px;
-  }
-
-  /* Grey color button */
-.greyButton {
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 3px;
-}
-
-.brownButton {
-
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 5px;
-}
-}
-
-
-@media (max-width:480px) and (min-width:300px) {
+@media (max-width:480px) and (min-width:320px) {
   h1 {
     font-size: 2rem;
   }
@@ -359,6 +301,12 @@ select.error-input:focus {
   border-radius: 5px;
 }
 
+.sign-up-container {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 80px;
+}
+
 }
 
 @media (max-width:768px) and (min-width:480px) {
@@ -409,6 +357,11 @@ select.error-input:focus {
     padding: 4px 10px;
     font-size: 14px;
     border-radius: 5px;
+  }
+
+  .sign-up-container {
+   
+    margin-bottom: 100px;
   }
 
 }
