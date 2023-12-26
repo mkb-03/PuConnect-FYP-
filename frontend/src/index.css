@@ -345,6 +345,19 @@ select.error-input:focus {
     padding: 5px 12px 5px 12px;
     margin-left: 45px;
   }
+    /* Grey color button */
+.greyButton {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.brownButton {
+
+  padding: 4px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+}
 
 }
 
@@ -372,17 +385,30 @@ select.error-input:focus {
   }
 
   .welComeLine{
-    font-size: 0.9rem;
+    font-size: .9rem;
   }
   
   .tagLine{
-    font-size: 2rem;
+    font-size: 2.3rem;
   }
   
   .getStartedButton{
-    font-size: 0.938rem;
+    font-size: 0.8rem;
     padding: 5px 12px 5px 12px;
  
+  }
+
+  .greyButton {
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+  
+  .brownButton {
+  
+    padding: 4px 10px;
+    font-size: 14px;
+    border-radius: 5px;
   }
 
 }
