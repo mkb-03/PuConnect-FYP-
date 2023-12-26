@@ -6,56 +6,73 @@ const mongoose = require("mongoose");
 //2.Then convert schema into model
 
 const UserSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         required: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
     },
-    gender:{
+    gender: {
         type: String,
         required: true,
     },
-    semester:{
+    semester: {
         type: String,
         required: true,
     },
-    rollNo:{
+    rollNo: {
         type: String,
         required: true,
     },
-    batch:{
+    batch: {
         type: String,
         required: true,
     },
-    degree:{
+    degree: {
         type: String,
         required: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
-    experiences:[
+    experiences: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Experience",
         },
     ],
-    projects:[
+    projects: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Project",
         },
     ],
-    skills:[
+    skills: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Skill",
         },
     ],
+
+    sentRequest: [{
+        friendId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        friendEmail: { type: String, default: '' }  
+    }],
+
+    request: [{
+        friendId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        friendEmail: { type: String, default: '' }
+    }],
+
+    friendsList: [{
+        friendId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        friendEmail: { type: String, default: '' }
+    }],
+    
+    totalRequest: { type: Number, default: 0 }
 });
 
 const User = new mongoose.model("User", UserSchema);
