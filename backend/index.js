@@ -22,6 +22,8 @@ require("dotenv").config();
 const authRoutes = require("./routes/authentication")
 
 const profilePicRoutes = require("./routes/profilePicture")
+const jobPostingRoutes = require("./routes/jobPostings");
+
 
 // Import User model
 const User = require("./models/User");
@@ -83,6 +85,9 @@ app.use("/auth", authRoutes);
 
 // Use profile picture routes with the /profile-picture prefix
 app.use("/profile-picture", profilePicRoutes)
+
+// Use job postings routes with the /job-postings prefix
+app.use("/job-postings", jobPostingRoutes);
 
 // Start the server on port 3000
 app.listen(3000, () => {
