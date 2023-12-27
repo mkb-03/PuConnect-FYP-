@@ -1,18 +1,15 @@
-// routes/profilePicture.js
 const express = require('express');
 const router = express.Router();
 const ProfilePicture = require('../models/ProfilePicture');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = path.join(__dirname, '../uploads'); // Create an 'uploads' directory in your project
+const uploadDir = path.join(__dirname, '../uploads');
 
-// Ensure the 'uploads' directory exists
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
-// Route to get profile picture by user ID
 router.get('/:userId', async (req, res) => {
   try {
     const profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
@@ -28,7 +25,6 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// Route to update or create profile picture
 router.post('/:userId', async (req, res) => {
   const { imageUrl } = req.body;
 
@@ -40,17 +36,34 @@ router.post('/:userId', async (req, res) => {
         userId: req.params.userId,
         imageUrl: saveImage(req.params.userId, imageUrl),
       });
-
-      await profilePicture.save();
     } else {
       // Delete the existing file before updating the URL
-      if (profilePicture.imageUrl) {
-        deleteImage(profilePicture.userId);
-      }
-
+      deleteImage(req.params.userId, profilePicture.imageUrl);
       profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
-      await profilePicture.save();
     }
+
+    await profilePicture.save();
+    res.json(profilePicture);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.put('/:userId', async (req, res) => {
+  const { imageUrl } = req.body;
+
+  try {
+    let profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+
+    if (!profilePicture) {
+      return res.status(404).json({ message: 'Profile picture not found' });
+    }
+
+    // Delete the existing file before updating the URL
+    deleteImage(req.params.userId, profilePicture.imageUrl);
+    profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
+    await profilePicture.save();
 
     res.json(profilePicture);
   } catch (err) {
@@ -59,22 +72,37 @@ router.post('/:userId', async (req, res) => {
   }
 });
 
-// Function to save image to the server
+router.delete('/:userId', async (req, res) => {
+  try {
+    const profilePicture = await ProfilePicture.findOneAndDelete({ userId: req.params.userId });
+
+    if (!profilePicture) {
+      return res.status(404).json({ message: 'Profile picture not found' });
+    }
+
+    // Delete the existing file
+    deleteImage(req.params.userId, profilePicture.imageUrl);
+
+    res.json({ message: 'Profile picture deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 const saveImage = (userId, base64Image) => {
   const imageData = base64Image.split(';base64,').pop();
   const imagePath = path.join(uploadDir, `${userId}_${Date.now()}.png`);
 
   fs.writeFileSync(imagePath, imageData, { encoding: 'base64' });
 
-  return imagePath.replace(path.join(__dirname, '../'), ''); // Save the relative path in the database
+  return imagePath.replace(path.join(__dirname, '../'), '');
 };
 
-// Function to delete an image from the server
-const deleteImage = (userId) => {
-  const profilePicture = ProfilePicture.findOne({ userId });
-  if (profilePicture && profilePicture.imageUrl) {
-    const imagePath = path.join(__dirname, '../', profilePicture.imageUrl);
-    fs.unlinkSync(imagePath);
+const deleteImage = (userId, imagePath) => {
+  if (imagePath) {
+    const fullPath = path.join(__dirname, '../', imagePath);
+    fs.unlinkSync(fullPath);
   }
 };
 
