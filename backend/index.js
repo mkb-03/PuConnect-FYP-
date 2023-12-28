@@ -26,14 +26,9 @@ const cors = require("cors");
 require("dotenv").config(); 
 
 // Import authentication routes
-const authRoutes = require("./routes/authentication");
+const authRoutes = require("./routes/authentication")
 
-const experienceRoutes = require("./routes/experience");
-const skillRoutes = require("./routes/skill");
-const projectRoutes = require("./routes/project");
-const postRoutes = require("./routes/post");
-const connectionRoutes = require("./routes/connection");
-const profilePicRoutes = require("./routes/profilePicture");
+const profilePicRoutes = require("./routes/profilePicture")
 
 // Import User model
 const User = require("./models/User");
@@ -91,23 +86,13 @@ const logger = expressPino({ logger: pino });
 app.use(logger);
 
 app.use("/auth", authRoutes);
-app.use("/experience", experienceRoutes);
-app.use("/skill", skillRoutes);
-app.use("/project", projectRoutes);
-app.use("/post", postRoutes)
-app.use("/connection", connectionRoutes);
 
-// Serve static files from the React build folder
-app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+// Use profile picture routes with the /profile-picture prefix
+app.use("/profile-picture", profilePicRoutes)
 
-// Handle React routing, return all requests to React app
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  pino.info(`Server is running on port ${port}`);
+// Start the server on port 3000
+app.listen(3000, () => {
+    console.log("Server is running on port no 3000");
 });
 
 

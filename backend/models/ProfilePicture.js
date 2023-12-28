@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const profilePictureSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the respective User 
+    ref: 'User', 
     required: true,
   },
   imageUrl: {
