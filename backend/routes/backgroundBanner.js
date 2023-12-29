@@ -1,24 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const ProfilePicture = require('../models/ProfilePicture');
+const BackgroundBanner = require('../models/BackgroundBanner');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = path.join(__dirname, '../uploads/profile-pictures');
+const uploadDir = path.join(__dirname, '../uploads/bg-banners');
 
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 router.get('/:userId', async (req, res) => {
   try {
-    const profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+    const backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
+    if (!backgroundBanner) {
+      return res.status(404).json({ message: 'Background banner not found' });
     }
 
-    res.json(profilePicture);
+    res.json(backgroundBanner);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -29,21 +29,21 @@ router.post('/:userId', async (req, res) => {
   const { imageUrl } = req.body;
 
   try {
-    let profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+    let backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
 
-    if (!profilePicture) {
-      profilePicture = new ProfilePicture({
+    if (!backgroundBanner) {
+      backgroundBanner = new BackgroundBanner({
         userId: req.params.userId,
         imageUrl: saveImage(req.params.userId, imageUrl),
       });
     } else {
       // Delete the existing file before updating the URL
-      deleteImage(req.params.userId, profilePicture.imageUrl);
-      profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
+      deleteImage(req.params.userId, backgroundBanner.imageUrl);
+      backgroundBanner.imageUrl = saveImage(req.params.userId, imageUrl);
     }
 
-    await profilePicture.save();
-    res.json(profilePicture);
+    await backgroundBanner.save();
+    res.json(backgroundBanner);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -54,18 +54,18 @@ router.put('/:userId', async (req, res) => {
   const { imageUrl } = req.body;
 
   try {
-    let profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+    let backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
+    if (!backgroundBanner) {
+      return res.status(404).json({ message: 'Background banner not found' });
     }
 
     // Delete the existing file before updating the URL
-    deleteImage(req.params.userId, profilePicture.imageUrl);
-    profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
-    await profilePicture.save();
+    deleteImage(req.params.userId, backgroundBanner.imageUrl);
+    backgroundBanner.imageUrl = saveImage(req.params.userId, imageUrl);
+    await backgroundBanner.save();
 
-    res.json(profilePicture);
+    res.json(backgroundBanner);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -74,16 +74,16 @@ router.put('/:userId', async (req, res) => {
 
 router.delete('/:userId', async (req, res) => {
   try {
-    const profilePicture = await ProfilePicture.findOneAndDelete({ userId: req.params.userId });
+    const backgroundBanner = await BackgroundBanner.findOneAndDelete({ userId: req.params.userId });
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
+    if (!backgroundBanner) {
+      return res.status(404).json({ message: 'Background banner not found' });
     }
 
     // Delete the existing file
-    deleteImage(req.params.userId, profilePicture.imageUrl);
+    deleteImage(req.params.userId, backgroundBanner.imageUrl);
 
-    res.json({ message: 'Profile picture deleted successfully' });
+    res.json({ message: 'Background banner deleted successfully' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Internal Server Error' });
