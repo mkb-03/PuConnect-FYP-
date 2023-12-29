@@ -1,10 +1,28 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../Redux Toolkit/authSlice';
 
 const Navbar = () => {
   const location = useLocation();
   const hiddenPaths = ['/signup', '/login'];
   const isNavbarHidden = hiddenPaths.includes(location.pathname);
+
+    // Access authentication state from Redux store
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+    // Access user information if needed
+    const user = useSelector((state) => state.auth.user);
+  
+    // Dispatch the logout action
+    const dispatch = useDispatch();
+  
+    const handleLogout = () => {
+      // Dispatch the logout action
+      dispatch(logout());
+  
+      // Redirect or perform additional logout actions if needed
+    };
 
   if (isNavbarHidden) {
     return null;
@@ -46,16 +64,33 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="d-flex">
-            <Link to="/signup" className="me-2">
-              <button className="greyButton " type="submit">
-                SignUp
+          {isAuthenticated ? (
+            <>
+              {/* Render message button and logout link for authenticated users */}
+              <Link to="/messages" className="me-2">
+                <button className="greyButton" type="button">
+                  Messages
+                </button>
+              </Link>
+              <button className="greyButton" type="button" onClick={handleLogout}>
+                Logout
               </button>
-            </Link>
-            <Link to="/login">
-              <button className="greyButton" type="submit">
-                LogIn
-              </button>
-            </Link>
+            </>
+          ) : (
+            <>
+              {/* Render signup and login buttons for non-authenticated users */}
+              <Link to="/signup" className="me-2">
+                <button className="greyButton" type="button">
+                  SignUp
+                </button>
+              </Link>
+              <Link to="/login">
+                <button className="greyButton" type="button">
+                  LogIn
+                </button>
+              </Link>
+            </>
+          )}
           </div>
         </div>
       </div>

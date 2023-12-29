@@ -4,8 +4,11 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Alert from '../Components/Alert';
+import { useDispatch } from 'react-redux';
+import { login } from '../Redux Toolkit/authSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
@@ -45,6 +48,10 @@ const Login = () => {
           // Login successful
           const userData = await response.json();
           console.log('User logged in successfully:', userData);
+
+          // Dispatch the login action with user data
+          dispatch(login(userData));
+          
           setAlertMessage('LogIn Successful.');
           setShowSuccessAlert(true);
           // Redirect to the home page after 1 second (you can use setTimeout here)
