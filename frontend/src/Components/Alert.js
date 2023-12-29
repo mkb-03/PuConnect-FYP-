@@ -7,11 +7,11 @@ const Alert = ({ message, type, onClose }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShow(false);
-            onClose(); // Callback to perform any necessary actions after the alert is closed
+            // onClose(); // Callback to perform any necessary actions after the alert is closed
         }, 2000); // Adjust the duration as needed
 
         return () => clearTimeout(timer);
-    }, [onClose]);
+    }, []);
 
     return (
         show && (

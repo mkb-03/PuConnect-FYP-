@@ -42,17 +42,17 @@ const Login = () => {
           // Handle error response
           const errorData = await response.json();
           console.error('Error:', errorData.err);
-          setAlertMessage('LogIn failed. Please check your credentials.');
+          setAlertMessage('Login failed. Please check your credentials.');
           setShowErrorAlert(true);
         } else {
           // Login successful
           const userData = await response.json();
-          console.log('User logged in successfully:', userData);
+          console.log('Login successful:', userData);
 
           // Dispatch the login action with user data
           dispatch(login(userData));
           
-          setAlertMessage('LogIn Successful.');
+          setAlertMessage('Login successful.');
           setShowSuccessAlert(true);
           // Redirect to the home page after 1 second (you can use setTimeout here)
           setTimeout(() => {

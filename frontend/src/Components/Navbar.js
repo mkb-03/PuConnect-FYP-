@@ -5,6 +5,7 @@ import { login, logout } from '../Redux Toolkit/authSlice';
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const hiddenPaths = ['/signup', '/login'];
   const isNavbarHidden = hiddenPaths.includes(location.pathname);
 
@@ -22,6 +23,7 @@ const Navbar = () => {
       dispatch(logout());
   
       // Redirect or perform additional logout actions if needed
+      navigate('/login');
     };
 
   if (isNavbarHidden) {
@@ -48,7 +50,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link navbarText activeLink" to="/">
+              <Link className="nav-link navbarText activeLink" to="/home">
                 Home
               </Link>
             </li>
