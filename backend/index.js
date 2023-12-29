@@ -32,8 +32,9 @@ const skillRoutes = require("./routes/skill");
 const projectRoutes = require("./routes/project");
 const postRoutes = require("./routes/post");
 const connectionRoutes = require("./routes/connection")
-
 const profilePicRoutes = require("./routes/profilePicture")
+const jobPostingRoutes = require("./routes/jobPostings")
+const backgroundBannerRoutes = require("./routes/backgroundBanner")
 
 // Import User model
 const User = require("./models/User");
@@ -96,9 +97,9 @@ app.use("/skill", skillRoutes);
 app.use("/project", projectRoutes);
 app.use("/post", postRoutes)
 app.use("/connection", connectionRoutes);
-
-// Use profile picture routes with the /profile-picture prefix
 app.use("/profile-picture", profilePicRoutes)
+app.use("/job-postings", jobPostingRoutes)
+app.use("/bg-banner", backgroundBannerRoutes)
 
 // Serve static files from the React build folder
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
@@ -112,25 +113,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   pino.info(`Server is running on port ${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
