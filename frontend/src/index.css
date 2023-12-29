@@ -307,6 +307,12 @@ select.error-input:focus {
   margin-bottom: 80px;
 }
 
+.homeBackground{
+  background-color: #f2f2f2;
+  min-height: 100vh;
+}
+
+
 }
 
 @media (max-width:768px) and (min-width:480px) {
