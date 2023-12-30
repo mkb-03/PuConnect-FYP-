@@ -1,18 +1,28 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import Alert from '../Components/Alert';
 import { useDispatch } from 'react-redux';
 import { login } from '../Redux Toolkit/authSlice';
 
 const Login = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [showLoginFirstAlert, setShowLoginFirstAlert] = useState(false);
+
+  useEffect(() => {
+    // Show login first alert when redirected from a protected route
+    if (!isAuthenticated && navigate) {
+      setShowLoginFirstAlert(true);
+    }
+  }, [isAuthenticated, navigate]);
 
   const formik = useFormik({
     initialValues: {
@@ -69,6 +79,15 @@ const Login = () => {
 
   return (
     <div>
+      {/* Show login first alert */}
+      {showLoginFirstAlert && (
+        <Alert
+          type="danger"
+          message="Please login first."
+          onClose={() => setShowLoginFirstAlert(false)}
+        />
+      )}
+
       {/* Show success alert */}
       {showSuccessAlert && (
         <Alert type="success" message={alertMessage} onClose={() => setShowSuccessAlert(false)} />
