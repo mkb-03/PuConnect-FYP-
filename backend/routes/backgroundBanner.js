@@ -10,6 +10,10 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
+// Use Multer middleware for handling file uploads
+const multer = require('multer');
+const upload = multer({ dest: uploadDir });
+
 router.get('/:userId', async (req, res) => {
   try {
     const backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
@@ -25,21 +29,24 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-router.post('/:userId', async (req, res) => {
-  const { imageUrl } = req.body;
+// Use multer middleware to handle file upload in the post route
+router.post('/:userId', upload.single('image'), async (req, res) => {
+  const { userId } = req.params;
 
   try {
-    let backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
+    const { filename } = req.file;
+    const imageUrl = saveImage(userId, filename);
+
+    let backgroundBanner = await BackgroundBanner.findOne({ userId });
 
     if (!backgroundBanner) {
       backgroundBanner = new BackgroundBanner({
-        userId: req.params.userId,
-        imageUrl: saveImage(req.params.userId, imageUrl),
+        userId,
+        imageUrl,
       });
     } else {
-      // Delete the existing file before updating the URL
-      deleteImage(req.params.userId, backgroundBanner.imageUrl);
-      backgroundBanner.imageUrl = saveImage(req.params.userId, imageUrl);
+      deleteImage(userId, backgroundBanner.imageUrl);
+      backgroundBanner.imageUrl = imageUrl;
     }
 
     await backgroundBanner.save();
@@ -49,6 +56,7 @@ router.post('/:userId', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 router.put('/:userId', async (req, res) => {
   const { imageUrl } = req.body;
