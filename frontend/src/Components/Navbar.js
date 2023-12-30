@@ -56,12 +56,12 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link navbarText activeLink" to="/contact">
-                Contact Us
+                Jobs
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link navbarText activeLink" to="/about">
-                About Us
+                Profile
               </Link>
             </li>
           </ul>
