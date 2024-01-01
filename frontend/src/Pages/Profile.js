@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../Redux Toolkit/authSlice';
+import CustomModal from '../Components/CustomModal';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const [userId, setUserId] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
       setUserId(user._id);
     }
   }, [user]);
-
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -58,11 +59,30 @@ const Profile = () => {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Banner</button>
-      {/* Your profile content goes here */}
+      <div
+        className="d-inline-block p-2 bg-primary text-white"
+        style={{ cursor: 'pointer' }}
+        onClick={openModal}
+      >
+        Choose image
+      </div>
+
+      <CustomModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        handleFileChange={handleFileChange}
+        handleUpload={handleUpload}
+      />
     </>
   );
 };

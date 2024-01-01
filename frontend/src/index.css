@@ -239,6 +239,14 @@ select.error-input:focus {
   font-family: 'Playfair Display', serif;
 }
 
+/* Example styling for the "show" class */
+.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
 
 
 /* Media queries for responsive design */
@@ -311,6 +319,8 @@ select.error-input:focus {
   background-color: #f2f2f2;
   min-height: 100vh;
 }
+
+
 
 
 }
