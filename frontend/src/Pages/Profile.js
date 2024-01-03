@@ -9,6 +9,7 @@ const Profile = () => {
   const [userId, setUserId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bannerImage, setBannerImage] = useState({ imageUrl: null }); // Initialize with a default value
 
   useEffect(() => {
     if (user) {
@@ -56,9 +57,12 @@ const Profile = () => {
 
         // Fetch the banner image URL separately
         const bannerImageResponse = await fetch(`http://localhost:3000/bg-banner/${userId}`);
-        const bannerImage = await bannerImageResponse.json();
+        const fetchedBannerImage = await bannerImageResponse.json();
 
-        console.log('Banner uploaded Successfully', bannerImage.imageUrl);
+        // Update the banner image state
+        setBannerImage(fetchedBannerImage);
+
+        console.log('Banner uploaded Successfully', fetchedBannerImage.imageUrl);
 
       } else {
         console.error('Error uploading banner', response.statusText);
@@ -70,12 +74,11 @@ const Profile = () => {
 
 
   useEffect(() => {
-    // Log the banner image URL after the user state is updated
     if (user && user.bannerImageUrl) {
-      console.log('Banner Image URL:', `http://localhost:3000/${user.bannerImageUrl}`);
-      
+      console.log('User Banner Image URL:', user.bannerImageUrl);
+      console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
     }
-  }, [user]);
+  }, [user, bannerImage]);
 
   useEffect(() => {
     // Log "nothing" if user state is still undefined
@@ -94,10 +97,10 @@ const Profile = () => {
 
   return (
     <>
-      
+
       {/* Display the user's banner image */}
       {user && user.bannerImageUrl && (
-        <img src={`http://localhost:3000/${user.bannerImageUrl}`} alt="User Banner" />
+        <img src={`http://localhost:3000/${bannerImage.imageUrl}`} alt="User Banner" />
       )}
 
       <div
@@ -119,4 +122,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
