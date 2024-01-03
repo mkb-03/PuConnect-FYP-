@@ -50,6 +50,10 @@ const Profile = () => {
 
         // Dispatch the login action with the updated user object
         dispatch(login(updatedUser));
+
+        // Update the local state with the new user object
+        setUserId(updatedUser._id);
+
         console.log('Banner uploaded successfully', updatedUser);
       } else {
         console.error('Error uploading banner', response.statusText);
@@ -69,6 +73,11 @@ const Profile = () => {
 
   return (
     <>
+      {/* Display the user's banner image */}
+      {user && user.bannerImageUrl && (
+        <img src={`http://localhost:3000/${user.bannerImageUrl}`} alt="User Banner" />
+      )}
+
       <div
         className="d-inline-block p-2 bg-primary text-white"
         style={{ cursor: 'pointer' }}
