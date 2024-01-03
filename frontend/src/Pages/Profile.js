@@ -63,6 +63,8 @@ const Profile = () => {
         setBannerImage(fetchedBannerImage);
 
         console.log('Banner uploaded Successfully', fetchedBannerImage.imageUrl);
+        console.log('Complete Image URL:', `http://localhost:3000/${fetchedBannerImage.imageUrl}`);
+
 
       } else {
         console.error('Error uploading banner', response.statusText);
@@ -71,15 +73,14 @@ const Profile = () => {
       console.error('Error uploading banner', error);
     }
   };
-
+ 
 
   useEffect(() => {
     if (user && user.bannerImageUrl) {
       console.log('User Banner Image URL:', user.bannerImageUrl);
       console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
 
-      console.log('Complete Image URL:', `http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}`);
-
+      
     }
   }, [user, bannerImage]);
 
