@@ -80,6 +80,7 @@ const Profile = () => {
     }
   }, [user, bannerImage]);
 
+
   useEffect(() => {
     // Log "nothing" if user state is still undefined
     if (!user) {
@@ -99,9 +100,11 @@ const Profile = () => {
     <>
 
       {/* Display the user's banner image */}
-      {user && user.bannerImageUrl && (
+      {/* Display the user's banner image */}
+      {bannerImage.imageUrl && (
         <img src={`http://localhost:3000/${bannerImage.imageUrl}`} alt="User Banner" />
       )}
+
 
       <div
         className="d-inline-block p-2 bg-primary text-white"
