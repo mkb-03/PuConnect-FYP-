@@ -77,6 +77,9 @@ const Profile = () => {
     if (user && user.bannerImageUrl) {
       console.log('User Banner Image URL:', user.bannerImageUrl);
       console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
+
+      console.log('Complete Image URL:', `http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}`);
+
     }
   }, [user, bannerImage]);
 
@@ -100,10 +103,10 @@ const Profile = () => {
     <>
 
       {/* Display the user's banner image */}
-      {/* Display the user's banner image */}
       {bannerImage.imageUrl && (
-        <img src={`http://localhost:3000/${bannerImage.imageUrl}`} alt="User Banner" />
+        <img src={`http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}`} alt="User Banner" />
       )}
+
 
 
       <div
