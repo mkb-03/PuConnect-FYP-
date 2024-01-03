@@ -26,16 +26,16 @@ const Profile = () => {
       console.error('No file selected');
       return;
     }
-
+  
     if (!userId) {
       console.error('User ID is undefined');
       return;
     }
-
+  
     try {
       const formData = new FormData();
       formData.append('image', selectedFile);
-
+  
       const response = await fetch(`http://localhost:3000/bg-banner/${userId}`, {
         method: 'POST',
         body: formData,
@@ -43,18 +43,17 @@ const Profile = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
+  
       if (response.ok) {
         // Assuming your API returns the updated user object
         const updatedUser = await response.json();
-
+        
+        console.log('Banner uploaded successfully', updatedUser);
         // Dispatch the login action with the updated user object
         dispatch(login(updatedUser));
-
+  
         // Update the local state with the new user object
         setUserId(updatedUser._id);
-
-        console.log('Banner uploaded successfully', updatedUser);
       } else {
         console.error('Error uploading banner', response.statusText);
       }
@@ -62,6 +61,17 @@ const Profile = () => {
       console.error('Error uploading banner', error);
     }
   };
+
+  useEffect(() => {
+    // Log the banner image URL after the user state is updated
+    if (user && user.bannerImageUrl) {
+      console.log('Banner Image URL:', `http://localhost:3000/${user.bannerImageUrl}`);
+    }
+    else
+    {
+      console.log("nothing");
+    }
+  }, [user]);
 
   const openModal = () => {
     setIsModalOpen(true);
