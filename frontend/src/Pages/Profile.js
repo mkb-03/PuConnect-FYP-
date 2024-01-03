@@ -75,14 +75,19 @@ const Profile = () => {
   };
  
 
-  useEffect(() => {
-    if (user && user.bannerImageUrl) {
-      console.log('User Banner Image URL:', user.bannerImageUrl);
-      console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
+  // useEffect(() => {
+  //   if (user && user.bannerImageUrl) {
+  //     console.log('User Banner Image URL:', user.bannerImageUrl);
+  //     console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
 
       
-    }
-  }, [user, bannerImage]);
+  //   }
+  // }, [user, bannerImage]);
+
+  useEffect(() => {
+    console.log('Constructed Image URL:', bannerImage.imageUrl ? `http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}` : 'Image URL is null');
+  }, [bannerImage]);
+  
 
 
   useEffect(() => {

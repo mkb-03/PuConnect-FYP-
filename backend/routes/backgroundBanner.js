@@ -100,11 +100,19 @@ router.delete('/:userId', async (req, res) => {
 
 const saveImage = (userId, base64Image) => {
   const imageData = base64Image.split(';base64,').pop();
-  const imagePath = path.join(uploadDir, `${userId}_${Date.now()}.png`);
+  const imageName = `${userId}_${Date.now()}.png`;
+  const imagePath = path.join(uploadDir, imageName);
 
+  // Write the image file to the server
   fs.writeFileSync(imagePath, imageData, { encoding: 'base64' });
 
-  return imagePath.replace(path.join(__dirname, '../'), '');
+  // Replace backslashes with forward slashes in the image path
+  const normalizedImagePath = imagePath.replace(/\\/g, '/');
+
+  // Construct the relative URL from the server root
+  const relativeImageUrl = normalizedImagePath.replace(path.join(__dirname, '../'), '');
+
+  return relativeImageUrl;
 };
 
 const deleteImage = (userId, imagePath) => {
