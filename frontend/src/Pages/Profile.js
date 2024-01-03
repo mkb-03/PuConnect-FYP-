@@ -47,13 +47,19 @@ const Profile = () => {
       if (response.ok) {
         // Assuming your API returns the updated user object
         const updatedUser = await response.json();
-        
-        console.log('Banner uploaded successfully', updatedUser);
+  
         // Dispatch the login action with the updated user object
         dispatch(login(updatedUser));
   
         // Update the local state with the new user object
         setUserId(updatedUser._id);
+  
+        // Fetch the banner image URL separately
+        const bannerImageResponse = await fetch(`http://localhost:3000/bg-banner/${userId}`);
+        const bannerImage = await bannerImageResponse.json();
+  
+        console.log('Banner uploaded Successfully', bannerImage.imageUrl);
+  
       } else {
         console.error('Error uploading banner', response.statusText);
       }
@@ -61,14 +67,18 @@ const Profile = () => {
       console.error('Error uploading banner', error);
     }
   };
+  
 
   useEffect(() => {
     // Log the banner image URL after the user state is updated
     if (user && user.bannerImageUrl) {
       console.log('Banner Image URL:', `http://localhost:3000/${user.bannerImageUrl}`);
     }
-    else
-    {
+  }, [user]);
+
+  useEffect(() => {
+    // Log "nothing" if user state is still undefined
+    if (!user) {
       console.log("nothing");
     }
   }, [user]);
@@ -107,3 +117,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
