@@ -1,125 +1,124 @@
 const express = require('express');
 const router = express.Router();
 const BackgroundBanner = require('../models/BackgroundBanner');
-const path = require('path');
-const fs = require('fs');
+const passport = require("passport");
+const multer = require('multer'); 
 
-const uploadDir = path.join(__dirname, '../uploads/bg-banners');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
 
-// Use Multer middleware for handling file uploads
-const multer = require('multer');
-const upload = multer({ dest: uploadDir });
-
-router.get('/:userId', async (req, res) => {
+//Route for adding a background banner
+router.post('/add', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
   try {
-    const backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!backgroundBanner) {
-      return res.status(404).json({ message: 'Background banner not found' });
-    }
+      // 2. Check if an image file is provided
+      if (!req.file) {
+          return res.status(400).json({ error: 'Please provide an image file' });
+      }
 
-    res.json(backgroundBanner);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 3. Create the profile picture object
+      const imageBuffer = req.file.buffer.toString('base64');
+      const backgroundBannerObj = {
+          userId: user._id,
+          bg_image: imageBuffer,
+      };
+
+      // 4. Save the profile picture directly to the database
+      const backgroundBanner = await BackgroundBanner.create(backgroundBannerObj);
+
+      // 5. Return a response
+      return res.status(200).json(backgroundBanner);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-// Use multer middleware to handle file upload in the post route
-router.post('/:userId', upload.single('image'), async (req, res) => {
-  const { userId } = req.params;
-
+// Route for removing a background banner
+router.delete('/remove', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    const { filename } = req.file;
-    const imageUrl = saveImage(userId, filename);
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    let backgroundBanner = await BackgroundBanner.findOne({ userId });
+      // 2. Find the latest profile picture for the user
+      const latestBackgroundBanner = await BackgroundBanner.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    if (!backgroundBanner) {
-      backgroundBanner = new BackgroundBanner({
-        userId,
-        imageUrl,
-      });
-    } else {
-      deleteImage(userId, backgroundBanner.imageUrl);
-      backgroundBanner.imageUrl = imageUrl;
-    }
+      // 3. Check if a profile picture is found
+      if (!latestBackgroundBanner) {
+          return res.status(404).json({ error: 'Background Banner not found' });
+      }
 
-    await backgroundBanner.save();
-    res.json(backgroundBanner);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 4. Delete the profile picture from the database
+      await BackgroundBanner.deleteOne({ _id: latestBackgroundBanner._id });
+
+      // 5. Return a response
+      return res.status(200).json({ message: 'Background Banner removed successfully' });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-
-router.put('/:userId', async (req, res) => {
-  const { imageUrl } = req.body;
-
+// Route for getting the latest background banner
+router.get('/get', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    let backgroundBanner = await BackgroundBanner.findOne({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!backgroundBanner) {
-      return res.status(404).json({ message: 'Background banner not found' });
-    }
+      // 2. Find the latest background banner for the user
+      const latestBackgroundBanner = await BackgroundBanner.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    // Delete the existing file before updating the URL
-    deleteImage(req.params.userId, backgroundBanner.imageUrl);
-    backgroundBanner.imageUrl = saveImage(req.params.userId, imageUrl);
-    await backgroundBanner.save();
+      // 3. Check if a background banner is found
+      if (!latestBackgroundBanner) {
+          return res.status(404).json({ error: 'background banner not found' });
+      }
 
-    res.json(backgroundBanner);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 4. Return the profile picture data
+      return res.status(200).json(latestBackgroundBanner);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-router.delete('/:userId', async (req, res) => {
+// Route for updating a user's background banner
+router.put('/update', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
   try {
-    const backgroundBanner = await BackgroundBanner.findOneAndDelete({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!backgroundBanner) {
-      return res.status(404).json({ message: 'Background banner not found' });
-    }
+      // 2. Check if an image file is provided
+      if (!req.file) {
+          return res.status(400).json({ error: 'Please provide an image file' });
+      }
 
-    // Delete the existing file
-    deleteImage(req.params.userId, backgroundBanner.imageUrl);
+      // 3. Find the latest background banner for the user
+      const latestBackgroundBanner = await BackgroundBanner.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    res.json({ message: 'Background banner deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 4. Create the background banner object
+      const imageBuffer = req.file.buffer.toString('base64');
+      const backgroundBannerObj = {
+          userId: user._id,
+          bg_image: imageBuffer,
+      };
+
+      // 5. If a background banner exists, update it; otherwise, create a new one
+      if (latestBackgroundBanner) {
+          await BackgroundBanner.findByIdAndUpdate(latestBackgroundBanner._id, backgroundBannerObj);
+      } else {
+          await BackgroundBanner.create(backgroundBannerObj);
+      }
+
+      // 6. Return a response
+      return res.status(200).json({ message: 'Profile picture updated successfully' });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-const saveImage = (userId, base64Image) => {
-  const imageData = base64Image.split(';base64,').pop();
-  const imageName = `${userId}_${Date.now()}.png`;
-  const imagePath = path.join(uploadDir, imageName);
-
-  // Write the image file to the server
-  fs.writeFileSync(imagePath, imageData, { encoding: 'base64' });
-
-  // Replace backslashes with forward slashes in the image path
-  const normalizedImagePath = imagePath.replace(/\\/g, '/');
-
-  // Construct the relative URL from the server root
-  const relativeImageUrl = normalizedImagePath.replace(path.join(__dirname, '../'), '');
-
-  return relativeImageUrl;
-};
-
-const deleteImage = (userId, imagePath) => {
-  if (imagePath) {
-    const fullPath = path.join(__dirname, '../', imagePath);
-    fs.unlinkSync(fullPath);
-  }
-};
 
 module.exports = router;
