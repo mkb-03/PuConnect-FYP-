@@ -113,40 +113,9 @@ app.get("*", (req, res) => {
 });
 
 
-// Additional functions for updating image URLs can be added here if needed
-async function updateImageUrls() {
-  try {
-    // Logic for updating image URLs
-    // For example, you can iterate over users and update their image URLs
-    const users = await User.find();
-    
-    for (const user of users) {
-      // Fetch the banner image URL separately
-      const bannerImageResponse = await fetch(`http://localhost:3000/bg-banner/${user._id}`);
-      const fetchedBannerImage = await bannerImageResponse.json();
-
-      // Update the banner image state
-      await BackgroundBanner.findOneAndUpdate(
-        { userId: user._id },
-        { imageUrl: fetchedBannerImage.imageUrl },
-        { new: true }
-      );
-
-      console.log(`Updated image URL for user with ID: ${user._id}`);
-    }
-
-    console.log('Image URLs updated successfully');
-  } catch (error) {
-    console.error('Error updating image URLs', error);
-  }
-}
-
 // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, async () => {
   pino.info(`Server is running on port ${port}`);
-
-  // Call the function to update image URLs when the server starts
-  await updateImageUrls();
 });
 

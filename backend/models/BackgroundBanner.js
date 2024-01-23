@@ -6,7 +6,7 @@ const backgroundBannerSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  imageUrl: {
+  bg_image: {
     type: String,
     required: true,
   },
