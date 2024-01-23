@@ -120,7 +120,7 @@ const Profile = () => {
         style={{ cursor: 'pointer' }}
         onClick={openModal}
       >
-        Choose image
+        Choose an image
       </div>
 
       <CustomModal
