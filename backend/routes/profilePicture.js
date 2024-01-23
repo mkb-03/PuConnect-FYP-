@@ -1,109 +1,123 @@
 const express = require('express');
 const router = express.Router();
 const ProfilePicture = require('../models/ProfilePicture');
-const path = require('path');
-const fs = require('fs');
+const passport = require("passport");
+const multer = require('multer'); 
 
-const uploadDir = path.join(__dirname, '../uploads/profile-pictures');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-router.get('/:userId', async (req, res) => {
+// Route for adding a profile picture
+router.post('/add', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
   try {
-    const profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
-    }
+      // 2. Check if an image file is provided
+      if (!req.file) {
+          return res.status(400).json({ error: 'Please provide an image file' });
+      }
 
-    res.json(profilePicture);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 3. Create the profile picture object
+      const imageBuffer = req.file.buffer.toString('base64');
+      const profilePictureObj = {
+          userId: user._id,
+          image: imageBuffer,
+      };
+
+      // 4. Save the profile picture directly to the database
+      const profilePicture = await ProfilePicture.create(profilePictureObj);
+
+      // 5. Return a response
+      return res.status(200).json(profilePicture);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-router.post('/:userId', async (req, res) => {
-  const { imageUrl } = req.body;
-
+// Route for removing a profile picture
+router.delete('/remove', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    let profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!profilePicture) {
-      profilePicture = new ProfilePicture({
-        userId: req.params.userId,
-        imageUrl: saveImage(req.params.userId, imageUrl),
-      });
-    } else {
-      // Delete the existing file before updating the URL
-      deleteImage(req.params.userId, profilePicture.imageUrl);
-      profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
-    }
+      // 2. Find the latest profile picture for the user
+      const latestProfilePicture = await ProfilePicture.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    await profilePicture.save();
-    res.json(profilePicture);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 3. Check if a profile picture is found
+      if (!latestProfilePicture) {
+          return res.status(404).json({ error: 'Profile picture not found' });
+      }
+
+      // 4. Delete the profile picture from the database
+      await ProfilePicture.deleteOne({ _id: latestProfilePicture._id });
+
+      // 5. Return a response
+      return res.status(200).json({ message: 'Profile picture removed successfully' });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-router.put('/:userId', async (req, res) => {
-  const { imageUrl } = req.body;
-
+// Route for getting the latest profile picture
+router.get('/get', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    let profilePicture = await ProfilePicture.findOne({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
-    }
+      // 2. Find the latest profile picture for the user
+      const latestProfilePicture = await ProfilePicture.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    // Delete the existing file before updating the URL
-    deleteImage(req.params.userId, profilePicture.imageUrl);
-    profilePicture.imageUrl = saveImage(req.params.userId, imageUrl);
-    await profilePicture.save();
+      // 3. Check if a profile picture is found
+      if (!latestProfilePicture) {
+          return res.status(404).json({ error: 'Profile picture not found' });
+      }
 
-    res.json(profilePicture);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 4. Return the profile picture data
+      return res.status(200).json(latestProfilePicture);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-router.delete('/:userId', async (req, res) => {
+// Route for updating a user's profile picture
+router.put('/update', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
   try {
-    const profilePicture = await ProfilePicture.findOneAndDelete({ userId: req.params.userId });
+      // 1. Identify the user who is calling it
+      const user = req.user;
 
-    if (!profilePicture) {
-      return res.status(404).json({ message: 'Profile picture not found' });
-    }
+      // 2. Check if an image file is provided
+      if (!req.file) {
+          return res.status(400).json({ error: 'Please provide an image file' });
+      }
 
-    // Delete the existing file
-    deleteImage(req.params.userId, profilePicture.imageUrl);
+      // 3. Find the latest profile picture for the user
+      const latestProfilePicture = await ProfilePicture.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
-    res.json({ message: 'Profile picture deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+      // 4. Create the profile picture object
+      const imageBuffer = req.file.buffer.toString('base64');
+      const profilePictureObj = {
+          userId: user._id,
+          image: imageBuffer,
+      };
+
+      // 5. If a profile picture exists, update it; otherwise, create a new one
+      if (latestProfilePicture) {
+          await ProfilePicture.findByIdAndUpdate(latestProfilePicture._id, profilePictureObj);
+      } else {
+          await ProfilePicture.create(profilePictureObj);
+      }
+
+      // 6. Return a response
+      return res.status(200).json({ message: 'Profile picture updated successfully' });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-const saveImage = (userId, base64Image) => {
-  const imageData = base64Image.split(';base64,').pop();
-  const imagePath = path.join(uploadDir, `${userId}_${Date.now()}.png`);
-
-  fs.writeFileSync(imagePath, imageData, { encoding: 'base64' });
-
-  return imagePath.replace(path.join(__dirname, '../'), '');
-};
-
-const deleteImage = (userId, imagePath) => {
-  if (imagePath) {
-    const fullPath = path.join(__dirname, '../', imagePath);
-    fs.unlinkSync(fullPath);
-  }
-};
 
 module.exports = router;

@@ -6,7 +6,7 @@ const profilePictureSchema = new mongoose.Schema({
     ref: 'User', 
     required: true,
   },
-  imageUrl: {
+  image: {
     type: String,
     required: true,
   },
