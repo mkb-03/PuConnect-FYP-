@@ -1,8 +1,8 @@
-// ProfilePage.js
+// Profile.js
 import React from 'react';
 import BackgroundBanner from '../Components/BackgroundBanner';
 
-const ProfilePage = () => {
+const Profile = () => {
   return (
     <div>
       <h1>Profile Page</h1>
@@ -13,4 +13,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Profile;
