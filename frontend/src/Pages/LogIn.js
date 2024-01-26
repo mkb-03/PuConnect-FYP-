@@ -60,7 +60,7 @@ const Login = () => {
           console.log('Login successful:', userData);
 
           // Dispatch the login action with user data
-          dispatch(login(userData));
+          dispatch(login({ user: userData, token: userData.token }));
           
           setAlertMessage('Login successful.');
           setShowSuccessAlert(true);

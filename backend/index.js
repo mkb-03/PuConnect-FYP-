@@ -1,31 +1,15 @@
-//Import required packages and modules
-
-//import express package
 const express = require("express");
-
-// Import mongoose for MongoDB
-const mongoose = require("mongoose"); 
-
+const mongoose = require("mongoose");
 const path = require("path");
 const pino = require("pino")();
-const fetch = require('isomorphic-fetch');
-
 const expressPino = require("express-pino-logger");
-
-// Import passport for authentication middleware
 const passport = require("passport");
-
-// ExtractJwt module from passport-jwt for extracting JWT from the request
-const ExtractJwt = require("passport-jwt").ExtractJwt; 
-
-// Strategy module from passport-jwt for defining JWT authentication strategy
-const jwtStrategy = require("passport-jwt").Strategy;
-
-
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const cors = require("cors");
+const cookieParser = require('cookie-parser'); // Added
 
 // Load environment variables
-require("dotenv").config(); 
+require("dotenv").config();
 
 // Import authentication routes
 const authRoutes = require("./routes/authentication");
@@ -43,21 +27,19 @@ const User = require("./models/User");
 const BackgroundBanner = require("./models/BackgroundBanner");
 
 // Create an instance of Express
-const app = express(); 
+const app = express();
 
 // Enable JSON parsing for incoming requests
 app.use(express.json());
 
-
 const corsOptions = {
-  origin: 'http://localhost:3001', // Replace with your frontend's URL
+  origin: 'http://localhost:3001',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-
-
+app.use(cookieParser()); // Added
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
     useNewUrlParser: true,
@@ -70,13 +52,13 @@ mongoose
     pino.error(err);
   });
 
-const options = {
+const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET || "herecomesthesecretkey",
 };
 
 passport.use(
-  new jwtStrategy(options, async function (jwt_payload, done) {
+  new JwtStrategy(jwtOptions, async function (jwt_payload, done) {
     try {
       const user = await User.findOne({ _id: jwt_payload.identifier });
 
@@ -112,10 +94,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
-
 // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, async () => {
   pino.info(`Server is running on port ${port}`);
 });
-

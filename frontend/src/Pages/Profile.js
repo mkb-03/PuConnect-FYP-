@@ -1,136 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../Redux Toolkit/authSlice';
-import CustomModal from '../Components/CustomModal';
+import { useNavigate } from 'react-router-dom';
+import UploadImageComponent from '../Components/UploadImageComponent';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const Profile = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const [userId, setUserId] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bannerImage, setBannerImage] = useState({ imageUrl: null }); // Initialize with a default value
+const ProfilePage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const token = useSelector((state) => state.auth.token);
+  const serverBaseUrl = 'http://localhost:3000';
 
-  useEffect(() => {
-    if (user) {
-      setUserId(user._id);
-    }
-  }, [user]);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      console.error('No file selected');
-      return;
-    }
-
-    if (!userId) {
-      console.error('User ID is undefined');
-      return;
-    }
-
+  const handleImageUpload = async (formData, endpoint) => {
     try {
-      const formData = new FormData();
-      formData.append('image', selectedFile);
+      setLoading(true);
 
-      const response = await fetch(`http://localhost:3000/bg-banner/${userId}`, {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post(`${serverBaseUrl}/${endpoint}`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      if (response.ok) {
-        // Assuming your API returns the updated user object
-        const updatedUser = await response.json();
-
-        // Dispatch the login action with the updated user object
-        dispatch(login(updatedUser));
-
-        // Update the local state with the new user object
-        setUserId(updatedUser._id);
-
-        // Fetch the banner image URL separately
-        const bannerImageResponse = await fetch(`http://localhost:3000/bg-banner/${userId}`);
-        const fetchedBannerImage = await bannerImageResponse.json();
-
-        // Update the banner image state
-        setBannerImage(fetchedBannerImage);
-
-        console.log('Banner uploaded Successfully', fetchedBannerImage.imageUrl);
-        console.log('Complete Image URL:', `http://localhost:3000/${fetchedBannerImage.imageUrl}`);
-
-
-      } else {
-        console.error('Error uploading banner', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error uploading banner', error);
-    }
-  };
- 
-
-  // useEffect(() => {
-  //   if (user && user.bannerImageUrl) {
-  //     console.log('User Banner Image URL:', user.bannerImageUrl);
-  //     console.log('Fetched Banner Image URL:', bannerImage.imageUrl);
-
+      setSuccessMessage(`${endpoint} uploaded successfully`);
+      console.log(response.data);
       
-  //   }
-  // }, [user, bannerImage]);
-
-  useEffect(() => {
-    console.log('Constructed Image URL:', bannerImage.imageUrl ? `http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}` : 'Image URL is null');
-  }, [bannerImage]);
-  
-
-
-  useEffect(() => {
-    // Log "nothing" if user state is still undefined
-    if (!user) {
-      console.log("nothing");
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login if unauthorized
+        navigate('/login');
+      } else {
+        setErrorMessage(`Error uploading ${endpoint}. Please try again.`);
+        console.error(error);
+      }
+    } finally {
+      setLoading(false);
     }
-  }, [user]);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
-    <>
+    <div>
+      <h1>Profile Page</h1>
 
-      {/* Display the user's banner image */}
-      {bannerImage.imageUrl && (
-        <img src={`http://localhost:3000/${bannerImage.imageUrl.replace(/\\/g, '/')}`} alt="User Banner" />
-      )}
-
-
-
-      <div
-        className="d-inline-block p-2 bg-primary text-white"
-        style={{ cursor: 'pointer' }}
-        onClick={openModal}
-      >
-        Choose an image
-      </div>
-
-      <CustomModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        handleFileChange={handleFileChange}
-        handleUpload={handleUpload}
+      {/* Banner Upload */}
+      <UploadImageComponent
+        type="Banner"
+        onUpload={(formData) => handleImageUpload(formData, 'bg-banner/add')}
+        loading={loading}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
       />
-    </>
+
+      {/* Profile Picture Upload */}
+      <UploadImageComponent
+        type="Profile"
+        onUpload={(formData) => handleImageUpload(formData, 'profile-picture/update')}
+        loading={loading}
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+      />
+    </div>
   );
 };
 
-export default Profile;
+export default ProfilePage;
