@@ -13,7 +13,7 @@ const BackgroundBanner = () => {
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const serverBaseUrl = 'http://localhost:3000';
-
+    
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
@@ -23,6 +23,7 @@ const BackgroundBanner = () => {
           },
         });
 
+        console.log("Getting: ", response.data);
         setBannerData(response.data);
       } catch (error) {
         console.error('Error fetching banner data:', error);
@@ -44,6 +45,10 @@ const BackgroundBanner = () => {
 
       setSuccessMessage(`${endpoint} uploaded successfully`);
       setBannerData(response.data);
+
+      console.log('Updated Banner Data:', response.data);
+
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/login');
@@ -91,7 +96,7 @@ const BackgroundBanner = () => {
         src={
           bannerData && bannerData.bg_image && !bannerData.isDefault
             ? `data:image/png;base64,${bannerData.bg_image}`
-            : '../images/defaultBanner.jpg'
+            : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
         }
         alt="Background Banner"
         style={{ maxWidth: '100%', marginBottom: '20px', cursor: 'pointer' }}

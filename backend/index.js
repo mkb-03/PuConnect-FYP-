@@ -35,6 +35,7 @@ app.use(express.json());
 
 const corsOptions = {
   origin: 'http://localhost:3001',
+  allowedHeaders: ['Content-Type', 'Authorization'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
@@ -100,6 +101,7 @@ app.use("/connection", connectionRoutes);
 app.use("/profile-picture", profilePicRoutes)
 app.use("/job-postings", jobPostingRoutes)
 app.use("/bg-banner", backgroundBannerRoutes)
+
 
 // Serve static files from the React build folder
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));

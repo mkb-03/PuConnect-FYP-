@@ -59,12 +59,14 @@ router.get('/get', passport.authenticate('jwt', { session: false }), async (req,
             return res.status(200).json(defaultBanner);
         }
 
+
         return res.status(200).json(latestBackgroundBanner);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 router.put('/update', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
     try {
         const user = req.user;
@@ -79,6 +81,7 @@ router.put('/update', passport.authenticate('jwt', { session: false }), upload.s
         const backgroundBannerObj = {
             userId: user._id,
             bg_image: imageBuffer,
+            isDefault: false
         };
 
         if (latestBackgroundBanner) {
