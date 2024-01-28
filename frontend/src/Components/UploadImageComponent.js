@@ -21,11 +21,14 @@ const UploadImageComponent = ({ type, onUpload }) => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
     // Perform any additional checks or validations if needed
     if (image) {
       const formData = new FormData();
       formData.append('image', image);
+
+      // Clear the input field after successful upload
+      e.target.value = '';
 
       // Call the provided onUpload function with the image data
       onUpload(formData);

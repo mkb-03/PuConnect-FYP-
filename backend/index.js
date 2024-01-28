@@ -26,6 +26,7 @@ const backgroundBannerRoutes = require("./routes/backgroundBanner")
 const User = require("./models/User");
 const BackgroundBanner = require("./models/BackgroundBanner");
 
+
 // Create an instance of Express
 const app = express();
 
@@ -44,8 +45,22 @@ mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
     useNewUrlParser: true,
   })
-  .then(() => {
+  .then(async () => {
+    try {
+      const defaultBanner = new BackgroundBanner({
+        userId: user._id,
+        bg_image: '/backend/image/defaultBanner.jpg',
+        isDefault: true,
+      });
+      await defaultBanner.save();
+      pino.info('Default Banner saved successfully');
+    } catch (error) {
+      pino.error('Error saving default Banner');
+      pino.error(error);
+    }
+
     pino.info("Connected to MongoDB");
+
   })
   .catch((err) => {
     pino.error("Error occurred while connecting to MongoDB");

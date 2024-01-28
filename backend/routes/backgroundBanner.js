@@ -51,10 +51,12 @@ router.delete('/remove', passport.authenticate('jwt', { session: false }), async
 router.get('/get', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         const user = req.user;
+
         const latestBackgroundBanner = await BackgroundBanner.findOne({ userId: user._id }).sort({ createdAt: -1 });
 
         if (!latestBackgroundBanner) {
-            return res.status(404).json({ error: 'Background Banner not found' });
+            const defaultBanner = await BackgroundBanner.findOrCreateDefault(user._id);
+            return res.status(200).json(defaultBanner);
         }
 
         return res.status(200).json(latestBackgroundBanner);
@@ -63,7 +65,6 @@ router.get('/get', passport.authenticate('jwt', { session: false }), async (req,
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 router.put('/update', passport.authenticate('jwt', { session: false }), upload.single('image'), async (req, res) => {
     try {
         const user = req.user;
