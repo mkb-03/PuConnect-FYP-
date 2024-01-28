@@ -99,7 +99,7 @@ const BackgroundBanner = () => {
             : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
         }
         alt="Background Banner"
-        style={{ minWidth: '100%', marginBottom: '20px', cursor: 'pointer' }}
+        style={{ maxWidth: '100%', marginBottom: '20px', cursor: 'pointer' }}
         onClick={handleDefaultBannerClick}
       />
 
