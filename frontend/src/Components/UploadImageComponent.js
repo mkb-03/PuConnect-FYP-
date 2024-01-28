@@ -8,9 +8,8 @@ const UploadImageComponent = ({ type, onUpload }) => {
     const selectedImage = e.target.files[0];
 
     if (selectedImage) {
-      const fileSize = selectedImage.size / (1024 * 1024); // Convert to MB
+      const fileSize = selectedImage.size / (1024 * 1024);
 
-      // Check file type and size
       if (['image/jpeg', 'image/png'].includes(selectedImage.type) && fileSize <= 5) {
         setImage(selectedImage);
         setError(null);
@@ -22,15 +21,11 @@ const UploadImageComponent = ({ type, onUpload }) => {
   };
 
   const handleUpload = (e) => {
-    // Perform any additional checks or validations if needed
     if (image) {
       const formData = new FormData();
       formData.append('image', image);
 
-      // Clear the input field after successful upload
       e.target.value = '';
-
-      // Call the provided onUpload function with the image data
       onUpload(formData);
     } else {
       setError('Please select a valid image before uploading.');
