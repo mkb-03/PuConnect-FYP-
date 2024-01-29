@@ -1,20 +1,19 @@
-// BackgroundBanner.js
 import React, { useState, useEffect } from 'react';
 import UploadImageComponent from './UploadImageComponent';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const BackgroundBanner = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [bannerData, setBannerData] = useState(null); // Added state to store banner data
+  const [bannerData, setBannerData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const serverBaseUrl = 'http://localhost:3000';
-
-  // Fetch banner data when the component mounts
+    
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
@@ -24,39 +23,34 @@ const BackgroundBanner = () => {
           },
         });
 
+        console.log("Getting: ", response.data);
         setBannerData(response.data);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching banner data:', error);
       }
     };
 
     fetchBannerData();
-  }, [token]);
+  }, [token, successMessage]); // Added successMessage as a dependency
 
   const handleImageUpload = async (formData, endpoint) => {
     try {
       setLoading(true);
 
-      const response = await axios.post(`${serverBaseUrl}/${endpoint}`, formData, {
+      const response = await axios.put(`${serverBaseUrl}/${endpoint}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       setSuccessMessage(`${endpoint} uploaded successfully`);
-      console.log(response.data);
+      setBannerData(response.data);
 
-      // Fetch updated banner data after successful upload
-      const updatedResponse = await axios.get(`${serverBaseUrl}/bg-banner/get`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      console.log('Updated Banner Data:', response.data);
 
-      setBannerData(updatedResponse.data);
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        // Redirect to login if unauthorized
         navigate('/login');
       } else {
         setErrorMessage(`Error uploading ${endpoint}. Please try again.`);
@@ -78,12 +72,9 @@ const BackgroundBanner = () => {
       });
 
       setSuccessMessage('Background Banner removed successfully');
-
-      // Set banner data to null after successful removal
       setBannerData(null);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        // Redirect to login if unauthorized
         navigate('/login');
       } else {
         setErrorMessage('Error removing Background Banner. Please try again.');
@@ -94,25 +85,70 @@ const BackgroundBanner = () => {
     }
   };
 
+  const handleDefaultBannerClick = () => {
+    setShowModal(true);
+  };
+
   return (
     <div>
-      {/* Banner Upload */}
-      <UploadImageComponent
-        type="Banner"
-        onUpload={(formData) => handleImageUpload(formData, 'bg-banner/add')}
-        loading={loading}
-        successMessage={successMessage}
-        errorMessage={errorMessage}
+      <img
+        key={bannerData?.bg_image} // Ensure key changes when the image changes
+        src={
+          bannerData && bannerData.bg_image && !bannerData.isDefault
+            ? `data:image/png;base64,${bannerData.bg_image}`
+            : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
+        }
+        alt="Background Banner"
+        style={{ maxWidth: '100%', marginBottom: '20px', cursor: 'pointer' }}
+        onClick={handleDefaultBannerClick}
       />
 
-      {/* Display Banner Image if available */}
-      {bannerData && <img src={`data:image/png;base64,${bannerData.bg_image}`} alt="Background Banner" />}
-
-      {/* Remove Banner Button */}
-      {bannerData && (
-        <button onClick={handleRemoveBanner} disabled={loading}>
-          Remove Background Banner
-        </button>
+     {/* Bootstrap Modal */}
+     {showModal && (
+        <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Upload Background Banner</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => setShowModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <UploadImageComponent
+                  type="Banner"
+                  onUpload={(formData) => handleImageUpload(formData, 'bg-banner/update')}
+                  loading={loading}
+                  successMessage={successMessage}
+                  errorMessage={errorMessage}
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Save
+                </button>
+                {bannerData && !bannerData.isDefault && (
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={handleRemoveBanner}
+                    disabled={loading}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

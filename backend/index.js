@@ -26,6 +26,7 @@ const backgroundBannerRoutes = require("./routes/backgroundBanner")
 const User = require("./models/User");
 const BackgroundBanner = require("./models/BackgroundBanner");
 
+
 // Create an instance of Express
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.json());
 
 const corsOptions = {
   origin: 'http://localhost:3001',
+  allowedHeaders: ['Content-Type', 'Authorization'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
@@ -44,8 +46,22 @@ mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PuConnect', {
     useNewUrlParser: true,
   })
-  .then(() => {
+  .then(async () => {
+    try {
+      const defaultBanner = new BackgroundBanner({
+        userId: user._id,
+        bg_image: '/backend/image/defaultBanner.jpg',
+        isDefault: true,
+      });
+      await defaultBanner.save();
+      pino.info('Default Banner saved successfully');
+    } catch (error) {
+      pino.error('Error saving default Banner');
+      pino.error(error);
+    }
+
     pino.info("Connected to MongoDB");
+
   })
   .catch((err) => {
     pino.error("Error occurred while connecting to MongoDB");
@@ -85,6 +101,7 @@ app.use("/connection", connectionRoutes);
 app.use("/profile-picture", profilePicRoutes)
 app.use("/job-postings", jobPostingRoutes)
 app.use("/bg-banner", backgroundBannerRoutes)
+
 
 // Serve static files from the React build folder
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
