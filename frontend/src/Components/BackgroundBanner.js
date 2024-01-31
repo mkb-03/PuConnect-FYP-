@@ -3,7 +3,7 @@ import UploadImageComponent from './UploadImageComponent';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaPen } from 'react-icons/fa';
+import {  FaPen } from 'react-icons/fa';
 
 const BackgroundBanner = () => {
   const navigate = useNavigate();
