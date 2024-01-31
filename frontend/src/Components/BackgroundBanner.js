@@ -112,7 +112,7 @@ const BackgroundBanner = () => {
             <FaPen
               className="position-absolute top-0 end-0"
               size={24}
-              style={{ cursor: 'pointer', backgroundColor: 'white' , paddingBottom: '4px',  paddingLeft: '4px' }}
+              style={{ cursor: 'pointer', backgroundColor: 'white' , padding: '4px' }}
               onClick={handleDefaultBannerClick}
             />
 
