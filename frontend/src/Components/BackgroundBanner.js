@@ -13,6 +13,7 @@ const BackgroundBanner = () => {
   const [bannerData, setBannerData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state)=> state.auth.user);
   const serverBaseUrl = 'http://localhost:3000';
 
   useEffect(() => {
@@ -93,8 +94,8 @@ const BackgroundBanner = () => {
   return (
     <div className='container'>
 
-      <div class="row mt-5">
-        <div class="col-8">
+      <div className="row mt-4">
+        <div className="col-9">
 
           <div className="card mb-3">
             <img
@@ -117,14 +118,14 @@ const BackgroundBanner = () => {
             />
 
             <div className="card-body">
-              <h5 className="card-title">Card title</h5>
-              <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+              <h5 className="card-title">{user.name}</h5>
+              <p className="card-text">{user && user.semester >= 1 && user.semester <= 8? `Student | ${user.rollNo} ` : `Alumni | ${user.experiences}`}</p>
+              <p className="card-text"></p>
             </div>
           </div>
 
         </div>
-        <div class="col-4">Recommendation System</div>
+        <div className="col-3">Recommendation System</div>
       </div>
 
 
