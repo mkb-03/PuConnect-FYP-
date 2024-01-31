@@ -3,6 +3,7 @@ import UploadImageComponent from './UploadImageComponent';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { FaEdit, FaPen } from 'react-icons/fa';
 
 const BackgroundBanner = () => {
   const navigate = useNavigate();
@@ -95,30 +96,38 @@ const BackgroundBanner = () => {
       <div class="row mt-5">
         <div class="col-8">
 
-        <div className="card mb-3">
-        <img
-          key={bannerData?.bg_image} // Ensure key changes when the image changes
-          src={
-            bannerData && bannerData.bg_image && !bannerData.isDefault
-              ? `data:image/png;base64,${bannerData.bg_image}`
-              : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
-          }
-          alt="Background Banner"
-          style={{ maxWidth: '100%', marginBottom: '20px', cursor: 'pointer' }}
-          onClick={handleDefaultBannerClick}
-        />
-        <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
+          <div className="card mb-3">
+            <img
+              key={bannerData?.bg_image} // Ensure key changes when the image changes
+              src={
+                bannerData && bannerData.bg_image && !bannerData.isDefault
+                  ? `data:image/png;base64,${bannerData.bg_image}`
+                  : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
+              }
+              alt="Background Banner"
+              style={{ maxWidth: '100%', marginBottom: '20px' }}
+              
+            />
+
+            <FaPen
+              className="position-absolute top-0 end-0"
+              size={24}
+              style={{ cursor: 'pointer', backgroundColor: 'white' , paddingBottom: '4px',  paddingLeft: '4px' }}
+              onClick={handleDefaultBannerClick}
+            />
+
+            <div className="card-body">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
 
         </div>
         <div class="col-4">Recommendation System</div>
       </div>
 
-    
+
 
       {/* Bootstrap Modal */}
       {showModal && (
