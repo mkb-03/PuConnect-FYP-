@@ -124,7 +124,7 @@ const BackgroundBanner = () => {
               <div className="modal-footer">
 
                 <UploadImageComponent
-                  className="brownbtn mt-2"
+                  className="btn btn-secondary mt-2"
                   type="Banner"
                   onUpload={(formData) => handleImageUpload(formData, 'bg-banner/update')}
                   loading={loading}
@@ -134,7 +134,7 @@ const BackgroundBanner = () => {
 
                 <button
                   type="button"
-                  className="brownbtn"
+                  className="btn btn-secondary"
                   onClick={() => setShowModal(false)}
                 >
                   Save
