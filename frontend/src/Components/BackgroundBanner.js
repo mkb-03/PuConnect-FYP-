@@ -13,7 +13,7 @@ const BackgroundBanner = () => {
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const serverBaseUrl = 'http://localhost:3000';
-    
+
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
@@ -48,7 +48,7 @@ const BackgroundBanner = () => {
 
       console.log('Updated Banner Data:', response.data);
 
-      
+
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate('/login');
@@ -103,8 +103,8 @@ const BackgroundBanner = () => {
         onClick={handleDefaultBannerClick}
       />
 
-     {/* Bootstrap Modal */}
-     {showModal && (
+      {/* Bootstrap Modal */}
+      {showModal && (
         <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
           <div className="modal-dialog" role="document">
             <div className="modal-content">
@@ -119,18 +119,22 @@ const BackgroundBanner = () => {
                 ></button>
               </div>
               <div className="modal-body">
+
+              </div>
+              <div className="modal-footer">
+
                 <UploadImageComponent
+                  className="brownbtn mt-2"
                   type="Banner"
                   onUpload={(formData) => handleImageUpload(formData, 'bg-banner/update')}
                   loading={loading}
                   successMessage={successMessage}
                   errorMessage={errorMessage}
                 />
-              </div>
-              <div className="modal-footer">
+
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="brownbtn"
                   onClick={() => setShowModal(false)}
                 >
                   Save

@@ -60,6 +60,16 @@ body, html {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
+.brownbtn{
+  background-color: #85231b;
+  color: white;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid #85231b; /* Use 1px border */
+  padding: 5px 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
 /* brown button hover */
 .brownButton:hover {
   background-color: #e5e5e5;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UploadImageComponent = ({ type, onUpload }) => {
+const UploadImageComponent = ({ type, onUpload, className }) => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -36,7 +36,7 @@ const UploadImageComponent = ({ type, onUpload }) => {
     <div>
       <input type="file" accept="image/jpeg, image/png" onChange={handleImageChange} />
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleUpload}>Upload {type} Picture</button>
+      <button className={className} onClick={handleUpload}>Upload {type}</button>
     </div>
   );
 };
