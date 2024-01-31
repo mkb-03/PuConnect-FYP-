@@ -119,7 +119,7 @@ const BackgroundBanner = () => {
 
             <div className="card-body">
               <h5 className="card-title">{user.name}</h5>
-              <p className="card-text">{user && user.semester >= 1 && user.semester <= 8? `Student | ${user.rollNo} ` : `Alumni | ${user.experiences}`}</p>
+              <p className="card-text">{user && user.semester >= 1 && user.semester <= 8? `Student | ${user.rollNo} ` : `Alumni | ${user.rollNo}`}</p>
               <p className="card-text"></p>
             </div>
           </div>

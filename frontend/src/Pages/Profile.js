@@ -1,6 +1,7 @@
 // Profile.js
 import React from 'react';
 import BackgroundBanner from '../Components/BackgroundBanner';
+import Projects from '../Components/Projects';
 
 const Profile = () => {
   return (
@@ -8,6 +9,7 @@ const Profile = () => {
      
       {/* Background Banner Component */}
       <BackgroundBanner />
+      <Projects/>
     </div>
   );
 };
