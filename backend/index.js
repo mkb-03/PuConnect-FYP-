@@ -48,35 +48,26 @@ mongoose
   })
   .then(async () => {
     try {
+      const defaultProfilePic = new ProfilePicture({
+        userId: user._id,
+        image: '/backend/image/defaultProfile.png',
+        isDefault: true,
+      });
+
       const defaultBanner = new BackgroundBanner({
         userId: user._id,
         bg_image: '/backend/image/defaultBanner.jpg',
         isDefault: true,
       });
+     
       await defaultBanner.save();
+      await defaultProfilePic.save();
       pino.info('Default Banner saved successfully');
     } catch (error) {
       pino.error('Error saving default Banner');
       pino.error(error);
-    }
-
-    pino.info("Connected to MongoDB");
-
-  })
-  .then(async () => {
-    try {
-      const defaultProfilePic = new ProfilePicture({
-        userId: user._id,
-        image: '/backend/image/defaultProfile.jpg',
-        isDefault: true,
-      });
-      await defaultProfilePic.save();
-      pino.info('Default Profile picture saved successfully');
-    } catch (error) {
-      pino.error('Error saving default profile picture');
-      pino.error(error);
-    }
-
+    } 
+   
     pino.info("Connected to MongoDB");
 
   })
