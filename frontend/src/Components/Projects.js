@@ -12,14 +12,14 @@ const Projects = () => {
     description: "",
     links: [],
   });
-  const token = useSelector((state) => state.auth.token)
+  const token = useSelector((state) => state.auth.token);
 
   const fetchProjects = async () => {
     try {
       const response = await axios.get("http://localhost:3000/project/all", {
         headers: {
-          Authorization : `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       setProjects(response.data);
     } catch (error) {
@@ -33,12 +33,16 @@ const Projects = () => {
 
   const handleAddProject = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/project/create", newProject , {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      
+      const response = await axios.post(
+        "http://localhost:3000/project/create",
+        newProject,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       setProjects([...projects, response.data]);
       setNewProject({
         projectName: "",
@@ -52,7 +56,6 @@ const Projects = () => {
   };
 
   const handleOpenModal = () => {
-    console.log("modal opened");
     setModalOpen(true);
   };
 
@@ -89,18 +92,19 @@ const Projects = () => {
                   />
                 </div>
               </div>
-              
-              <p className="card-text mt-4">Add projects</p>
-            </div>
-            {/* Display existing projects */}
-            <div>
-              {projects.map((project) => (
-                <div key={project._id}>
-                  <h6>{project.projectName}</h6>
-                  <p>{project.description}</p>
-                  {/* Add more details as needed */}
+              {projects.length === 0 ? (
+                <p className="card-text mt-4">Add projects</p>
+              ) : (
+                <div className="mt-4">
+                  {projects.map((project) => (
+                    <div key={project._id} >
+                      <h6>{project.projectName}</h6>
+                      <p>{project.description}</p>
+                      {/* Add more details as needed */}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -115,13 +119,11 @@ const Projects = () => {
         content={
           <form>
             <div className="mb-3">
-              <label htmlFor="projectName" className="form-label">
-                Project Name
-              </label>
               <input
                 type="text"
                 className="form-control"
                 id="projectName"
+                placeholder="Project Name"
                 value={newProject.projectName}
                 onChange={(e) =>
                   setNewProject({ ...newProject, projectName: e.target.value })
@@ -129,10 +131,8 @@ const Projects = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="description" className="form-label">
-                Description
-              </label>
               <textarea
+                placeholder="Description"
                 className="form-control"
                 id="description"
                 rows="3"
@@ -147,7 +147,7 @@ const Projects = () => {
         }
         actions={
           <button className="btn btn-secondary" onClick={handleAddProject}>
-            Add Project
+            Save
           </button>
         }
       />
