@@ -272,6 +272,16 @@ select.error-input:focus {
 }
 
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for desired transparency */
+  backdrop-filter: blur(5px); /* Adjust the blur value for desired effect */
+  z-index: 1000; /* Adjust the z-index to be higher than the modal */
+}
 
 
 /* Media queries for responsive design */
