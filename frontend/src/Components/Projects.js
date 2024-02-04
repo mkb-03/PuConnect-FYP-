@@ -33,7 +33,12 @@ const Projects = () => {
 
   const handleAddProject = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/project/create", newProject);
+      const response = await axios.post("http://localhost:3000/project/create", newProject , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
       setProjects([...projects, response.data]);
       setNewProject({
         projectName: "",
@@ -141,7 +146,7 @@ const Projects = () => {
           </form>
         }
         actions={
-          <button className="btn btn-primary" onClick={handleAddProject}>
+          <button className="btn btn-secondary" onClick={handleAddProject}>
             Add Project
           </button>
         }
