@@ -11,20 +11,20 @@ const cookieParser = require('cookie-parser'); // Added
 // Load environment variables
 require("dotenv").config();
 
-// Import authentication routes
-const authRoutes = require("./routes/authentication");
-const experienceRoutes = require("./routes/experience");
-const skillRoutes = require("./routes/skill");
-const projectRoutes = require("./routes/project");
-const postRoutes = require("./routes/post");
-const connectionRoutes = require("./routes/connection")
-const profilePicRoutes = require("./routes/profilePicture")
-const jobPostingRoutes = require("./routes/jobPostings")
-const backgroundBannerRoutes = require("./routes/backgroundBanner")
+const authRoutes = require("./routes/authentication");  // Import authentication routes
+const experienceRoutes = require("./routes/experience"); // Import experience routes
+const skillRoutes = require("./routes/skill");  // Import skill routes
+const projectRoutes = require("./routes/project"); // Import project routes
+const postRoutes = require("./routes/post");  // Import project routes
+const connectionRoutes = require("./routes/connection"); // Import project routes
+const profilePicRoutes = require("./routes/profilePicture"); // Import project routes
+const jobPostingRoutes = require("./routes/jobPostings"); // Import project routes
+const backgroundBannerRoutes = require("./routes/backgroundBanner"); // Import project routes
 
-// Import User model
-const User = require("./models/User");
-const BackgroundBanner = require("./models/BackgroundBanner");
+
+const User = require("./models/User"); // Import User model
+const BackgroundBanner = require("./models/BackgroundBanner");  // Import BackgroundBanner model
+const ProfilePicture = require("./models/ProfilePicture");  // Import ProfilePicture model
 
 
 // Create an instance of Express
@@ -48,18 +48,26 @@ mongoose
   })
   .then(async () => {
     try {
+      const defaultProfilePic = new ProfilePicture({
+        userId: user._id,
+        image: '/backend/image/defaultProfile.png',
+        isDefault: true,
+      });
+
       const defaultBanner = new BackgroundBanner({
         userId: user._id,
         bg_image: '/backend/image/defaultBanner.jpg',
         isDefault: true,
       });
+     
       await defaultBanner.save();
+      await defaultProfilePic.save();
       pino.info('Default Banner saved successfully');
     } catch (error) {
       pino.error('Error saving default Banner');
       pino.error(error);
-    }
-
+    } 
+   
     pino.info("Connected to MongoDB");
 
   })

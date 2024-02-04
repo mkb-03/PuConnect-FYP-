@@ -72,7 +72,8 @@ router.get('/get', passport.authenticate('jwt', { session: false }), async (req,
 
       // 3. Check if a profile picture is found
       if (!latestProfilePicture) {
-          return res.status(404).json({ error: 'Profile picture not found' });
+        const defaultProfile = await ProfilePicture.findOrCreateDefault(user._id);
+        return res.status(200).json(defaultProfile);
       }
 
       // 4. Return the profile picture data
@@ -102,6 +103,7 @@ router.put('/update', passport.authenticate('jwt', { session: false }), upload.s
       const profilePictureObj = {
           userId: user._id,
           image: imageBuffer,
+          isDefault: false,
       };
 
       // 5. If a profile picture exists, update it; otherwise, create a new one
