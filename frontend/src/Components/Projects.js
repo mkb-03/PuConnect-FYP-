@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPen, FaPlus } from "react-icons/fa";
-
+import Modal from "./Modals/Modal";
 const Projects = () => {
+
+  const [isAddProjectModalOpen, setAddProjectModalOpen ] = useState(false);
+  const [projectName, setProjectName] = useState("")
+  const [projectDescription, setProjectDescription] = useState("")
+
   return (
     <div className="container">
       <div className="row">
