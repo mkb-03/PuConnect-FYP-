@@ -23,9 +23,9 @@ const Projects = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       setProjects(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
@@ -54,7 +54,7 @@ const Projects = () => {
         link: "",
       });
 
-      console.log("Sending Data", response.data)
+      console.log("Sending Data", response.data);
       setAddModalOpen(false);
     } catch (error) {
       console.error("Error adding project:", error);
@@ -66,7 +66,7 @@ const Projects = () => {
     setNewProject({
       projectName: project.projectName,
       description: project.description,
-      link: project.link, 
+      link: project.link,
     });
     setEditModalOpen(true);
   };
@@ -84,7 +84,9 @@ const Projects = () => {
       );
 
       const updatedProjects = projects.map((project) =>
-        project._id === selectedProjectForEdit._id ? response.data.project : project
+        project._id === selectedProjectForEdit._id
+          ? response.data.project
+          : project
       );
 
       setProjects(updatedProjects);
@@ -106,7 +108,7 @@ const Projects = () => {
         console.error("No project selected for deletion");
         return;
       }
-  
+
       await axios.delete(
         `http://localhost:3000/project/delete/${selectedProjectForEdit._id}`,
         {
@@ -115,11 +117,11 @@ const Projects = () => {
           },
         }
       );
-  
+
       const updatedProjects = projects.filter(
         (project) => project._id !== selectedProjectForEdit._id
       );
-  
+
       setProjects(updatedProjects);
       setEditModalOpen(false);
       setSelectedProjectForEdit(null);
@@ -147,7 +149,6 @@ const Projects = () => {
     });
     setEditModalOpen(true);
   };
-  
 
   const handleCloseModal = () => {
     setAddModalOpen(false);
@@ -174,39 +175,38 @@ const Projects = () => {
                     }}
                     onClick={handleOpenAddModal}
                   />
-                  
                 </div>
               </div>
               {projects.length === 0 ? (
                 <p className="card-text mt-4">Add projects</p>
               ) : (
                 <div className="mt-4">
-                {projects.map((project) => (
-                  <div key={project._id}>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h6 className="mt-3">{project.projectName}</h6>
-                      <FaPen
-                        size={22}
-                        style={{
-                          cursor: "pointer",
-                          backgroundColor: "white",
-                          padding: "4px",
-                        }}
-                        onClick={() => handleOpenEditModal(project)}
-                      />
+                  {projects.map((project) => (
+                    <div key={project._id}>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h6 className="mt-3">{project.projectName}</h6>
+                        <FaPen
+                          size={22}
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "white",
+                            padding: "4px",
+                          }}
+                          onClick={() => handleOpenEditModal(project)}
+                        />
+                      </div>
+                      <p>{project.description}</p>
+                      <a
+                        className="projectLink"
+                        href={project.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Show Project
+                      </a>
                     </div>
-                    <p>{project.description}</p>
-                    <a
-                      className="projectLink"
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Show Project
-                    </a>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -337,10 +337,7 @@ const Projects = () => {
             >
               Delete
             </button>
-            <button
-              className="btn btn-secondary"
-              onClick={handleUpdateProject}
-            >
+            <button className="btn btn-secondary" onClick={handleUpdateProject}>
               Update
             </button>
           </div>
