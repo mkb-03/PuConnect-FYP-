@@ -9,7 +9,7 @@ const Projects = () => {
   const [newProject, setNewProject] = useState({
     projectName: "",
     description: "",
-    links: [],
+    link: "",
   });
   const [selectedProject, setSelectedProject] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -23,7 +23,9 @@ const Projects = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      
       setProjects(response.data);
+      console.log(response.data)
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
@@ -31,7 +33,7 @@ const Projects = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, []); // Fetch projects on component mount
+  }, [token]); // Fetch projects on component mount
 
   const handleAddProject = async () => {
     try {
@@ -49,8 +51,10 @@ const Projects = () => {
       setNewProject({
         projectName: "",
         description: "",
-        links: [],
+        link: "",
       });
+
+      console.log("Sending Data", response.data)
       setAddModalOpen(false);
     } catch (error) {
       console.error("Error adding project:", error);
@@ -62,7 +66,7 @@ const Projects = () => {
     setNewProject({
       projectName: project.projectName,
       description: project.description,
-      links: project.links.join(", "), // Assuming links is an array of strings
+      link: project.link, 
     });
     setEditModalOpen(true);
   };
@@ -87,7 +91,7 @@ const Projects = () => {
       setNewProject({
         projectName: "",
         description: "",
-        links: [],
+        link: "",
       });
       setEditModalOpen(false);
       setSelectedProject(null);
@@ -123,7 +127,7 @@ const Projects = () => {
     setNewProject({
       projectName: "",
       description: "",
-      links: [],
+      link: "",
     });
     setAddModalOpen(true);
   };
@@ -174,8 +178,9 @@ const Projects = () => {
                 <div className="mt-4">
                   {projects.map((project) => (
                     <div key={project._id}>
-                      <h6>{project.projectName}</h6>
+                      <h6 className="mt-3">{project.projectName}</h6>
                       <p>{project.description}</p>
+                      <a className="projectLink" href={project.link} target="_blank" rel="noreferrer">Show Project</a>
                       {/* Add more details as needed */}
                     </div>
                   ))}
@@ -228,13 +233,13 @@ const Projects = () => {
               <input
                 type="text"
                 className="form-control"
-                id="links"
+                id="link"
                 placeholder="Add link"
-                value={newProject.links}
+                value={newProject.link}
                 onChange={(e) =>
                   setNewProject({
                     ...newProject,
-                    links: e.target.value,
+                    link: e.target.value,
                   })
                 }
               />
@@ -289,13 +294,13 @@ const Projects = () => {
               <input
                 type="text"
                 className="form-control"
-                id="links"
+                id="link"
                 placeholder="Add link"
-                value={newProject.links}
+                value={newProject.link}
                 onChange={(e) =>
                   setNewProject({
                     ...newProject,
-                    links: e.target.value,
+                    link: e.target.value,
                   })
                 }
               />

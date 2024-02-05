@@ -290,6 +290,23 @@ select.error-input:focus {
   z-index: 1000; /* Adjust the z-index to be higher than the modal */
 }
 
+.projectLink {
+  display: inline-block;
+  padding: 3px 10px;
+  background-color: #85231b; /* LinkedIn blue color */
+  color: #fff; /* White text color */
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.688rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.projectLink:hover {
+  background-color: #b73428; /* Darker shade on hover */
+  color: #fff;
+}
+
 /* Media queries for responsive design */
 
 @media (max-width: 480px) and (min-width: 320px) {
