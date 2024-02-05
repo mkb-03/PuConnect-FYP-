@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
 const SkillSchema = new mongoose.Schema({
-    name:{
-        type:String,
+    name: {
+        type: String,
         required: false,
         unique: false,
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
         required: false,
     },
-    links:[
-        {
+    link:
+    {
         type: String,
-        },
-    ],
+        required: false,
+    },
 });
 
 const Skill = new mongoose.model("Skill", SkillSchema);

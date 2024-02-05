@@ -11,13 +11,13 @@ router.post("/create", passport.authenticate("jwt", {session:false}), async (req
     const user = req.user;
 
     // 2. Create the experience object
-    const {projectName, description, links} = req.body;
+    const {projectName, description, link} = req.body;
 
     if(!projectName){
         return res.status(402).json({err: "Invalid details"})
     }
 
-    const projectObj = {projectName, description, links};
+    const projectObj = {projectName, description, link};
 
     const project = await Project.create(projectObj);
 
@@ -111,7 +111,7 @@ router.put("/update/:projectId", passport.authenticate("jwt", { session: false }
         }
 
         // 5. Update the project with the new data if provided
-        const { projectName, description, links } = req.body;
+        const { projectName, description, link } = req.body;
 
         // Only update attributes that are provided in the request
         if (projectName !== undefined) {
@@ -122,8 +122,8 @@ router.put("/update/:projectId", passport.authenticate("jwt", { session: false }
             project.description = description;
         }
 
-        if (links !== undefined) {
-            project.links = links;
+        if (link !== undefined) {
+            project.link = link;
         }
 
         // 6. Save the updated project

@@ -10,13 +10,13 @@ router.post("/create", passport.authenticate("jwt", {session:false}), async (req
     const user = req.user;
 
     // 2. Create the skill object
-    const {name, description, links} = req.body;
+    const {name, description, link} = req.body;
 
     if(!name){
         return res.status(402).json({err: "Invalid details"})
     }
 
-    const skillObj = {name, description, links};
+    const skillObj = {name, description, link};
 
     const skill = await Skill.create(skillObj);
 
@@ -89,7 +89,7 @@ router.put("/update/:skillId", passport.authenticate("jwt", { session: false }),
         }
 
         // 5. Update the skill with the new data if provided
-        const {name, description, links } = req.body;
+        const {name, description, link } = req.body;
 
         // Only update attributes that are provided in the request
         if (name !== undefined) {
@@ -100,8 +100,8 @@ router.put("/update/:skillId", passport.authenticate("jwt", { session: false }),
             skill.description = description;
         }
 
-        if (links !== undefined) {
-            skill.links = links;
+        if (link !== undefined) {
+            skill.link = link;
         }
 
         // 6. Save the updated skill
