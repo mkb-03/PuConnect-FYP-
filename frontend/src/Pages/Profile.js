@@ -8,8 +8,8 @@ const Profile = () => {
   return (
     <div>
       <BackgroundBanner />
-      <Projects/>
       <Experience/>
+      <Projects/>
     </div>
   );
 };
