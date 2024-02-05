@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FaPen, FaPlus } from "react-icons/fa";
 import Modal from "./Modals/Modal";
-import axios from "axios"; // Import Axios for making API requests
+import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [newProject, setNewProject] = useState({
     projectName: "",
     description: "",
     links: [],
   });
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const token = useSelector((state) => state.auth.token);
 
   const fetchProjects = async () => {
@@ -49,18 +51,91 @@ const Projects = () => {
         description: "",
         links: [],
       });
-      setModalOpen(false);
+      setAddModalOpen(false);
     } catch (error) {
       console.error("Error adding project:", error);
     }
   };
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
+  const handleEditProject = (project) => {
+    setSelectedProject(project);
+    setNewProject({
+      projectName: project.projectName,
+      description: project.description,
+      links: project.links.join(", "), // Assuming links is an array of strings
+    });
+    setEditModalOpen(true);
+  };
+
+  const handleUpdateProject = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/project/update/${selectedProject._id}`,
+        newProject,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const updatedProjects = projects.map((project) =>
+        project._id === selectedProject._id ? response.data.project : project
+      );
+
+      setProjects(updatedProjects);
+      setNewProject({
+        projectName: "",
+        description: "",
+        links: [],
+      });
+      setEditModalOpen(false);
+      setSelectedProject(null);
+    } catch (error) {
+      console.error("Error updating project:", error);
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    try {
+      await axios.delete(
+        `http://localhost:3000/project/delete/${selectedProject._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const updatedProjects = projects.filter(
+        (project) => project._id !== selectedProject._id
+      );
+
+      setProjects(updatedProjects);
+      setEditModalOpen(false);
+      setSelectedProject(null);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+    }
+  };
+
+  const handleOpenAddModal = () => {
+    setNewProject({
+      projectName: "",
+      description: "",
+      links: [],
+    });
+    setAddModalOpen(true);
+  };
+
+  const handleOpenEditModal = () => {
+    setEditModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false);
+    setAddModalOpen(false);
+    setEditModalOpen(false);
+    setSelectedProject(null);
   };
 
   return (
@@ -80,7 +155,7 @@ const Projects = () => {
                       backgroundColor: "white",
                       padding: "4px",
                     }}
-                    onClick={handleOpenModal}
+                    onClick={handleOpenAddModal}
                   />
                   <FaPen
                     size={22}
@@ -89,6 +164,7 @@ const Projects = () => {
                       backgroundColor: "white",
                       padding: "4px",
                     }}
+                    onClick={handleOpenEditModal}
                   />
                 </div>
               </div>
@@ -97,7 +173,7 @@ const Projects = () => {
               ) : (
                 <div className="mt-4">
                   {projects.map((project) => (
-                    <div key={project._id} >
+                    <div key={project._id}>
                       <h6>{project.projectName}</h6>
                       <p>{project.description}</p>
                       {/* Add more details as needed */}
@@ -113,7 +189,7 @@ const Projects = () => {
 
       {/* Add Project Modal */}
       <Modal
-        isOpen={isModalOpen}
+        isOpen={isAddModalOpen}
         onClose={handleCloseModal}
         title="Add Project"
         content={
@@ -126,7 +202,10 @@ const Projects = () => {
                 placeholder="Project Name"
                 value={newProject.projectName}
                 onChange={(e) =>
-                  setNewProject({ ...newProject, projectName: e.target.value })
+                  setNewProject({
+                    ...newProject,
+                    projectName: e.target.value,
+                  })
                 }
               />
             </div>
@@ -138,17 +217,106 @@ const Projects = () => {
                 rows="3"
                 value={newProject.description}
                 onChange={(e) =>
-                  setNewProject({ ...newProject, description: e.target.value })
+                  setNewProject({
+                    ...newProject,
+                    description: e.target.value,
+                  })
                 }
               ></textarea>
             </div>
-            {/* Add more form fields as needed */}
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="links"
+                placeholder="Add link"
+                value={newProject.links}
+                onChange={(e) =>
+                  setNewProject({
+                    ...newProject,
+                    links: e.target.value,
+                  })
+                }
+              />
+            </div>
           </form>
         }
         actions={
           <button className="btn btn-secondary" onClick={handleAddProject}>
             Save
           </button>
+        }
+      />
+
+      {/* Edit Project Modal */}
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseModal}
+        title="Edit Project"
+        content={
+          <form>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="projectName"
+                placeholder="Project Name"
+                value={newProject.projectName}
+                onChange={(e) =>
+                  setNewProject({
+                    ...newProject,
+                    projectName: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="mb-3">
+              <textarea
+                placeholder="Description"
+                className="form-control"
+                id="description"
+                rows="3"
+                value={newProject.description}
+                onChange={(e) =>
+                  setNewProject({
+                    ...newProject,
+                    description: e.target.value,
+                  })
+                }
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="links"
+                placeholder="Add link"
+                value={newProject.links}
+                onChange={(e) =>
+                  setNewProject({
+                    ...newProject,
+                    links: e.target.value,
+                  })
+                }
+              />
+            </div>
+          </form>
+        }
+        actions={
+          <div>
+            <button
+              className="btn btn-danger me-2"
+              onClick={handleDeleteProject}
+            >
+              Delete
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={handleUpdateProject}
+            >
+              Update
+            </button>
+          </div>
         }
       />
     </div>
