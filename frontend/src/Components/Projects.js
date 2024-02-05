@@ -11,7 +11,7 @@ const Projects = () => {
     description: "",
     link: "",
   });
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectForEdit, setSelectedProjectForEdit] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const token = useSelector((state) => state.auth.token);
@@ -62,7 +62,7 @@ const Projects = () => {
   };
 
   const handleEditProject = (project) => {
-    setSelectedProject(project);
+    setSelectedProjectForEdit(project);
     setNewProject({
       projectName: project.projectName,
       description: project.description,
@@ -74,7 +74,7 @@ const Projects = () => {
   const handleUpdateProject = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/project/update/${selectedProject._id}`,
+        `http://localhost:3000/project/update/${selectedProjectForEdit._id}`,
         newProject,
         {
           headers: {
@@ -84,7 +84,7 @@ const Projects = () => {
       );
 
       const updatedProjects = projects.map((project) =>
-        project._id === selectedProject._id ? response.data.project : project
+        project._id === selectedProjectForEdit._id ? response.data.project : project
       );
 
       setProjects(updatedProjects);
@@ -94,7 +94,7 @@ const Projects = () => {
         link: "",
       });
       setEditModalOpen(false);
-      setSelectedProject(null);
+      setSelectedProjectForEdit(null);
     } catch (error) {
       console.error("Error updating project:", error);
     }
@@ -102,22 +102,27 @@ const Projects = () => {
 
   const handleDeleteProject = async () => {
     try {
+      if (!selectedProjectForEdit) {
+        console.error("No project selected for deletion");
+        return;
+      }
+  
       await axios.delete(
-        `http://localhost:3000/project/delete/${selectedProject._id}`,
+        `http://localhost:3000/project/delete/${selectedProjectForEdit._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
+  
       const updatedProjects = projects.filter(
-        (project) => project._id !== selectedProject._id
+        (project) => project._id !== selectedProjectForEdit._id
       );
-
+  
       setProjects(updatedProjects);
       setEditModalOpen(false);
-      setSelectedProject(null);
+      setSelectedProjectForEdit(null);
     } catch (error) {
       console.error("Error deleting project:", error);
     }
@@ -132,14 +137,22 @@ const Projects = () => {
     setAddModalOpen(true);
   };
 
-  const handleOpenEditModal = () => {
+  const handleOpenEditModal = (project) => {
+    console.log("Selected Project for Edit:", project);
+    setSelectedProjectForEdit(project);
+    setNewProject({
+      projectName: project.projectName,
+      description: project.description,
+      link: project.link,
+    });
     setEditModalOpen(true);
   };
+  
 
   const handleCloseModal = () => {
     setAddModalOpen(false);
     setEditModalOpen(false);
-    setSelectedProject(null);
+    setSelectedProjectForEdit(null);
   };
 
   return (
@@ -161,30 +174,39 @@ const Projects = () => {
                     }}
                     onClick={handleOpenAddModal}
                   />
-                  <FaPen
-                    size={22}
-                    style={{
-                      cursor: "pointer",
-                      backgroundColor: "white",
-                      padding: "4px",
-                    }}
-                    onClick={handleOpenEditModal}
-                  />
+                  
                 </div>
               </div>
               {projects.length === 0 ? (
                 <p className="card-text mt-4">Add projects</p>
               ) : (
                 <div className="mt-4">
-                  {projects.map((project) => (
-                    <div key={project._id}>
+                {projects.map((project) => (
+                  <div key={project._id}>
+                    <div className="d-flex justify-content-between align-items-center">
                       <h6 className="mt-3">{project.projectName}</h6>
-                      <p>{project.description}</p>
-                      <a className="projectLink" href={project.link} target="_blank" rel="noreferrer">Show Project</a>
-                      {/* Add more details as needed */}
+                      <FaPen
+                        size={22}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "white",
+                          padding: "4px",
+                        }}
+                        onClick={() => handleOpenEditModal(project)}
+                      />
                     </div>
-                  ))}
-                </div>
+                    <p>{project.description}</p>
+                    <a
+                      className="projectLink"
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Show Project
+                    </a>
+                  </div>
+                ))}
+              </div>
               )}
             </div>
           </div>
