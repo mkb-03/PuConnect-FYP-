@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { FaPen, FaPlus } from 'react-icons/fa';
-import Modal from './Modals/Modal';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { FaPen, FaPlus } from "react-icons/fa";
+import Modal from "./Modals/Modal";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState({
-    name: '',
-    description: '',
-    link: '',
+    name: "",
+    description: "",
+    link: "",
   });
   const [selectedSkillForEdit, setSelectedSkillForEdit] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -18,14 +18,14 @@ const Skills = () => {
 
   const fetchSkills = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/skill/all', {
+      const response = await axios.get("http://localhost:3000/skill/all", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setSkills(response.data);
     } catch (error) {
-      console.error('Error fetching skills:', error);
+      console.error("Error fetching skills:", error);
     }
   };
 
@@ -36,7 +36,7 @@ const Skills = () => {
   const handleAddSkill = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/skill/create',
+        "http://localhost:3000/skill/create",
         newSkill,
         {
           headers: {
@@ -47,13 +47,13 @@ const Skills = () => {
 
       setSkills([...skills, response.data]);
       setNewSkill({
-        name: '',
-        description: '',
-        link: '',
+        name: "",
+        description: "",
+        link: "",
       });
       setAddModalOpen(false);
     } catch (error) {
-      console.error('Error adding skill:', error);
+      console.error("Error adding skill:", error);
     }
   };
 
@@ -85,21 +85,21 @@ const Skills = () => {
 
       setSkills(updatedSkills);
       setNewSkill({
-        name: '',
-        description: '',
-        link: '',
+        name: "",
+        description: "",
+        link: "",
       });
       setEditModalOpen(false);
       setSelectedSkillForEdit(null);
     } catch (error) {
-      console.error('Error updating skill:', error);
+      console.error("Error updating skill:", error);
     }
   };
 
   const handleDeleteSkill = async () => {
     try {
       if (!selectedSkillForEdit) {
-        console.error('No skill selected for deletion');
+        console.error("No skill selected for deletion");
         return;
       }
 
@@ -120,15 +120,15 @@ const Skills = () => {
       setEditModalOpen(false);
       setSelectedSkillForEdit(null);
     } catch (error) {
-      console.error('Error deleting skill:', error);
+      console.error("Error deleting skill:", error);
     }
   };
 
   const handleOpenAddModal = () => {
     setNewSkill({
-      name: '',
-      description: '',
-      link: '',
+      name: "",
+      description: "",
+      link: "",
     });
     setAddModalOpen(true);
   };
@@ -162,13 +162,12 @@ const Skills = () => {
                     className="me-2"
                     size={22}
                     style={{
-                      cursor: 'pointer',
-                      backgroundColor: 'white',
-                      padding: '4px',
+                      cursor: "pointer",
+                      backgroundColor: "white",
+                      padding: "4px",
                     }}
                     onClick={handleOpenAddModal}
                   />
-                 
                 </div>
               </div>
               {skills.length === 0 ? (
@@ -182,22 +181,25 @@ const Skills = () => {
                         <FaPen
                           size={22}
                           style={{
-                            cursor: 'pointer',
-                            backgroundColor: 'white',
-                            padding: '4px',
+                            cursor: "pointer",
+                            backgroundColor: "white",
+                            padding: "4px",
                           }}
                           onClick={() => handleOpenEditModal(skill)}
                         />
                       </div>
                       <p>{skill.description}</p>
-                      <a
-                        className="projectLink"
-                        href={skill.link}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                       Show Certificate
-                      </a>
+
+                      {skill.link ? (
+                        <a
+                          className="projectLink"
+                          href={skill.link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Show Certificate
+                        </a>
+                      ) : null}
                     </div>
                   ))}
                 </div>
@@ -325,16 +327,10 @@ const Skills = () => {
         }
         actions={
           <div>
-            <button
-              className="btn btn-danger me-2"
-              onClick={handleDeleteSkill}
-            >
+            <button className="btn btn-danger me-2" onClick={handleDeleteSkill}>
               Delete
             </button>
-            <button
-              className="btn btn-secondary"
-              onClick={handleUpdateSkill}
-            >
+            <button className="btn btn-secondary" onClick={handleUpdateSkill}>
               Update
             </button>
           </div>
