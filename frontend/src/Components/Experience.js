@@ -8,7 +8,7 @@ const Experience = () => {
           <div className="card mb-3">
             <div className="card-body">
               <div className="">
-                <h5 className="mb-0">Experience</h5>
+                <h5 className="mb-0">Experiences</h5>
                 <p>To do</p>
               </div>
             </div>
