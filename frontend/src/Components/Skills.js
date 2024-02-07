@@ -7,11 +7,11 @@ import { useSelector } from 'react-redux';
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState({
-    name: "",
-    description: "",
-    link: "",
+    name: '',
+    description: '',
+    link: '',
   });
-  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [selectedSkillForEdit, setSelectedSkillForEdit] = useState(null);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const token = useSelector((state) => state.auth.token);
@@ -31,7 +31,7 @@ const Skills = () => {
 
   useEffect(() => {
     fetchSkills();
-  }, []); // Fetch skills on component mount
+  }, [token]); // Fetch skills on component mount or when the token changes
 
   const handleAddSkill = async () => {
     try {
@@ -58,7 +58,7 @@ const Skills = () => {
   };
 
   const handleEditSkill = (skill) => {
-    setSelectedSkill(skill);
+    setSelectedSkillForEdit(skill);
     setNewSkill({
       name: skill.name,
       description: skill.description,
@@ -70,7 +70,7 @@ const Skills = () => {
   const handleUpdateSkill = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/skill/update/${selectedSkill._id}`,
+        `http://localhost:3000/skill/update/${selectedSkillForEdit._id}`,
         newSkill,
         {
           headers: {
@@ -80,7 +80,7 @@ const Skills = () => {
       );
 
       const updatedSkills = skills.map((skill) =>
-        skill._id === selectedSkill._id ? response.data.skill : skill
+        skill._id === selectedSkillForEdit._id ? response.data.skill : skill
       );
 
       setSkills(updatedSkills);
@@ -90,7 +90,7 @@ const Skills = () => {
         link: '',
       });
       setEditModalOpen(false);
-      setSelectedSkill(null);
+      setSelectedSkillForEdit(null);
     } catch (error) {
       console.error('Error updating skill:', error);
     }
@@ -98,8 +98,13 @@ const Skills = () => {
 
   const handleDeleteSkill = async () => {
     try {
+      if (!selectedSkillForEdit) {
+        console.error('No skill selected for deletion');
+        return;
+      }
+
       await axios.delete(
-        `http://localhost:3000/skill/delete/${selectedSkill._id}`,
+        `http://localhost:3000/skill/delete/${selectedSkillForEdit._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -108,12 +113,12 @@ const Skills = () => {
       );
 
       const updatedSkills = skills.filter(
-        (skill) => skill._id !== selectedSkill._id
+        (skill) => skill._id !== selectedSkillForEdit._id
       );
 
       setSkills(updatedSkills);
       setEditModalOpen(false);
-      setSelectedSkill(null);
+      setSelectedSkillForEdit(null);
     } catch (error) {
       console.error('Error deleting skill:', error);
     }
@@ -128,14 +133,20 @@ const Skills = () => {
     setAddModalOpen(true);
   };
 
-  const handleOpenEditModal = () => {
+  const handleOpenEditModal = (skill) => {
+    setSelectedSkillForEdit(skill);
+    setNewSkill({
+      name: skill.name,
+      description: skill.description,
+      link: skill.link,
+    });
     setEditModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setAddModalOpen(false);
     setEditModalOpen(false);
-    setSelectedSkill(null);
+    setSelectedSkillForEdit(null);
   };
 
   return (
@@ -144,45 +155,53 @@ const Skills = () => {
         <div className="col col-9">
           <div className="card mb-3">
             <div className="card-body">
-              <div className="">
-                <div className="d-flex justify-content-between align-items-center">
-                  <h5 className="mb-0">Skills</h5>
-                  <div className="d-flex">
-                    <FaPlus
-                      className="me-2"
-                      size={22}
-                      style={{
-                        cursor: 'pointer',
-                        backgroundColor: 'white',
-                        padding: '4px',
-                      }}
-                      onClick={handleOpenAddModal}
-                    />
-                    <FaPen
-                      size={22}
-                      style={{
-                        cursor: 'pointer',
-                        backgroundColor: 'white',
-                        padding: '4px',
-                      }}
-                      onClick={handleOpenEditModal}
-                    />
-                  </div>
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="mb-0">Skills</h5>
+                <div className="d-flex">
+                  <FaPlus
+                    className="me-2"
+                    size={22}
+                    style={{
+                      cursor: 'pointer',
+                      backgroundColor: 'white',
+                      padding: '4px',
+                    }}
+                    onClick={handleOpenAddModal}
+                  />
+                 
                 </div>
-                {skills.length === 0 ? (
-                  <p className="card-text mt-4">Add skills</p>
-                ) : (
-                  <div className="mt-4">
-                    {skills.map((skill) => (
-                      <div key={skill._id}>
-                        <h6>{skill.name}</h6>
-                        <p>{skill.description}</p>
-                        {/* Add more details as needed */}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
+              {skills.length === 0 ? (
+                <p className="card-text mt-4">Add skills</p>
+              ) : (
+                <div className="mt-4">
+                  {skills.map((skill) => (
+                    <div key={skill._id}>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h6 className="mt-3">{skill.name}</h6>
+                        <FaPen
+                          size={22}
+                          style={{
+                            cursor: 'pointer',
+                            backgroundColor: 'white',
+                            padding: '4px',
+                          }}
+                          onClick={() => handleOpenEditModal(skill)}
+                        />
+                      </div>
+                      <p>{skill.description}</p>
+                      <a
+                        className="projectLink"
+                        href={skill.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                       Show Certificate
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -201,7 +220,7 @@ const Skills = () => {
                 type="text"
                 className="form-control"
                 id="name"
-                placeholder="Skill Name"
+                placeholder="Skill"
                 value={newSkill.name}
                 onChange={(e) =>
                   setNewSkill({
@@ -231,7 +250,7 @@ const Skills = () => {
                 type="text"
                 className="form-control"
                 id="link"
-                placeholder="Add link"
+                placeholder="Certificate Link"
                 value={newSkill.link}
                 onChange={(e) =>
                   setNewSkill({

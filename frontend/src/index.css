@@ -293,18 +293,19 @@ select.error-input:focus {
 .projectLink {
   display: inline-block;
   padding: 3px 10px;
-  background-color: #85231b; /* LinkedIn blue color */
-  color: #fff; /* White text color */
+  background-color: #e5e5e5; /* LinkedIn blue color */
+  color: black; /* White text color */
   text-decoration: none;
   border-radius: 20px;
   font-size: 0.688rem;
   font-weight: bold;
+  border: 1px solid #000;
   transition: background-color 0.3s ease;
 }
 
 .projectLink:hover {
-  background-color: #b73428; /* Darker shade on hover */
-  color: #fff;
+  background-color: #b6b6b6; /* Darker shade on hover */
+  color: black;
 }
 
 /* Media queries for responsive design */
