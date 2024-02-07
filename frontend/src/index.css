@@ -29,6 +29,9 @@ html {
   color: #fff !important; /* Set the desired text color on hover */
 }
 
+.backgroundColor{
+  background-color: rgba(229, 229, 229, 0.848);
+}
 .brownColor {
   color: #85231b;
   font-weight: bold;
@@ -307,6 +310,8 @@ select.error-input:focus {
   background-color: #b6b6b6; /* Darker shade on hover */
   color: black;
 }
+
+
 
 /* Media queries for responsive design */
 

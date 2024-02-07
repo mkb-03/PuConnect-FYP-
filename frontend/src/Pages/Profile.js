@@ -7,7 +7,7 @@ import Skills from '../Components/Skills';
 
 const Profile = () => {
   return (
-    <div>
+    <div className='backgroundColor'>
       <BackgroundBanner />
       <Experience/>
       <Projects/>
