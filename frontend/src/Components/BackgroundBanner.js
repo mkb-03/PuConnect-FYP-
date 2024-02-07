@@ -94,7 +94,7 @@ const BackgroundBanner = () => {
   return (
     <div className='container'>
 
-      <div className="row mt-4">
+      <div className="row pt-4">
         <div className="col-9">
 
           <div className="card mb-3">
