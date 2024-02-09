@@ -180,7 +180,7 @@ const Projects = () => {
               {projects.length === 0 ? (
                 <p className="card-text mt-4">Add projects</p>
               ) : (
-                <div className="mt-4">
+                <div className="mt-4 pb-4">
                   {projects.map((project) => (
                     <div key={project._id}>
                       <div className="d-flex justify-content-between align-items-center">
@@ -197,7 +197,7 @@ const Projects = () => {
                       </div>
                       <p>{project.description}</p>
                       <a
-                        className="projectLink"
+                        className="projectLink "
                         href={project.link}
                         target="_blank"
                         rel="noreferrer"

@@ -170,74 +170,75 @@ const Experience = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: "-6px" }}>
-    <div className="row">
-      <div className="col col-9">
-        <div className="card mb-3">
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0">Experiences</h5>
-              <div className="d-flex">
-                <FaPlus
-                  className="me-2"
-                  size={22}
-                  style={{
-                    cursor: "pointer",
-                    backgroundColor: "white",
-                    padding: "4px",
-                  }}
-                  onClick={handleOpenAddModal}
-                />
+    <div className="container">
+      <div className="row">
+        <div className="col col-9">
+          <div className="card mb-3">
+            <div className="card-body">
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="mb-0">Experiences</h5>
+                <div className="d-flex">
+                  <FaPlus
+                    className="me-2"
+                    size={22}
+                    style={{
+                      cursor: "pointer",
+                      backgroundColor: "white",
+                      padding: "4px",
+                    }}
+                    onClick={handleOpenAddModal}
+                  />
+                </div>
               </div>
-            </div>
-            {experiences.length === 0 ? (
-              <p className="card-text mt-4">Add experiences</p>
-            ) : (
-              <div className="mt-4">
-                {experiences.map((experience) => (
-                  <div key={experience._id} className="mb-4">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6 className="mt-3">{experience.companyName}</h6>
-                        <p className="text-secondary">
-                          {experience.position} |{" "}
-                          {experience.startDate
-                            ? new Date(experience.startDate).toLocaleString(
-                                "default",
-                                { month: "short", year: "numeric" }
-                              )
-                            : "N/A"}{" "}
-                          -{" "}
-                          {experience.endDate
-                            ? new Date(experience.endDate).toLocaleString(
-                                "default",
-                                { month: "short", year: "numeric" }
-                              )
-                            : "Present"}
-                        </p>
+              {experiences.length === 0 ? (
+                <p className="card-text mt-4">Add experiences</p>
+              ) : (
+                <div className="mt-4">
+                  {experiences.map((experience) => (
+                    <div key={experience._id} className="mb-4">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <h6 className="mt-3 mb-1">{experience.companyName}</h6>
+                          <p className="text-secondary mb-1">
+                            {experience.position} |{" "}
+                            {experience.startDate
+                              ? new Date(experience.startDate).toLocaleString(
+                                  "default",
+                                  { month: "short", year: "numeric" }
+                                )
+                              : "N/A"}{" "}
+                            -{" "}
+                            {experience.endDate
+                              ? new Date(experience.endDate).toLocaleString(
+                                  "default",
+                                  { month: "short", year: "numeric" }
+                                )
+                              : "Present"}
+                          </p>
+                        </div>
+                        <FaPen
+                          size={20}
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "white",
+                            padding: "4px",
+                          }}
+                          onClick={() => handleOpenEditModal(experience)}
+                        />
                       </div>
-                      <FaPen
-                        size={20}
-                        style={{
-                          cursor: "pointer",
-                          backgroundColor: "white",
-                          padding: "4px",
-                        }}
-                        onClick={() => handleOpenEditModal(experience)}
-                      />
+
+                      {experience.description && (
+                        <p className="mb-0">{experience.description}</p>
+                      )}
                     </div>
-                    <p className="" style={{ marginTop: "-6px" }}>
-                      {experience.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <div className="col col-3"></div>
       </div>
-      <div className="col col-3"></div>
-    </div>
 
       {/* Add Experience Modal */}
       <Modal

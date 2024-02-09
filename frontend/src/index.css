@@ -30,7 +30,8 @@ html {
 }
 
 .backgroundColor{
-  background-color: rgba(229, 229, 229, 0.848);
+  /* background-color: rgba(229, 229, 229, 0.848); */
+  background-color: #f2f2f2;
 }
 .brownColor {
   color: #85231b;
