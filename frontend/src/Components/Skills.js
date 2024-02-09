@@ -150,7 +150,7 @@ const Skills = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: "-6px" }}>
       <div className="row">
         <div className="col col-9">
           <div className="card mb-3">
