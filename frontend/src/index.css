@@ -75,7 +75,7 @@ html {
   color: white;
   font-weight: 400;
   border-radius: 5px;
-  border: 1px solid #85231b; /* Use 1px border */
+  border: 1px solid #85231b; 
   padding: 5px 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
@@ -84,9 +84,9 @@ html {
 .brownButton:hover {
   background-color: #e5e5e5;
   color: #85231b;
-  outline: 1px solid #85231b; /* Use 1px outline */
+  outline: 1px solid #85231b; 
   font-weight: 500;
-  border-radius: 1px; /* Adjust border-radius on hover */
+  border-radius: 1px; 
 }
 
 .greyButton:hover {
