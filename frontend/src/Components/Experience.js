@@ -196,26 +196,39 @@ const Experience = () => {
                 <div className="mt-4">
                   {experiences.map((experience) => (
                     <div key={experience._id} className="mb-4">
-                      <div>
-                        <h6 className="mt-3">{experience.companyName}</h6>
-                        <p className="text-secondary">
-                          {experience.position} |{" "}
-                          {experience.startDate
-                            ? new Date(experience.startDate).toLocaleString(
-                                "default",
-                                { month: "short", year: "numeric" }
-                              )
-                            : "N/A"}{" "}
-                          -{" "}
-                          {experience.endDate
-                            ? new Date(experience.endDate).toLocaleString(
-                                "default",
-                                { month: "short", year: "numeric" }
-                              )
-                            : "Present"}
-                        </p>
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <h6 className="mt-3">{experience.companyName}</h6>
+                          <p className="text-secondary">
+                            {experience.position} |{" "}
+                            {experience.startDate
+                              ? new Date(experience.startDate).toLocaleString(
+                                  "default",
+                                  { month: "short", year: "numeric" }
+                                )
+                              : "N/A"}{" "}
+                            -{" "}
+                            {experience.endDate
+                              ? new Date(experience.endDate).toLocaleString(
+                                  "default",
+                                  { month: "short", year: "numeric" }
+                                )
+                              : "Present"}
+                          </p>
+                        </div>
+                        <FaPen
+                          size={18}
+                          style={{
+                            cursor: "pointer",
+                            backgroundColor: "white",
+                            padding: "4px",
+                          }}
+                          onClick={() => handleOpenEditModal(experience)}
+                        />
                       </div>
-                      <p className="" style={{marginTop : '-6px'}}>{experience.description}</p>
+                      <p className="" style={{ marginTop: "-6px" }}>
+                        {experience.description}
+                      </p>
                     </div>
                   ))}
                 </div>
