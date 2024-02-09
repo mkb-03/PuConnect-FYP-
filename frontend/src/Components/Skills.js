@@ -160,7 +160,7 @@ const Skills = () => {
                 <div className="d-flex">
                   <FaPlus
                     className="me-2"
-                    size={22}
+                    size={20}
                     style={{
                       cursor: "pointer",
                       backgroundColor: "white",
