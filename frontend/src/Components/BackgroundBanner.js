@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {  FaPen } from 'react-icons/fa';
+import ProfilePicture from './ProfilePicture';
 
 const BackgroundBanner = () => {
   const navigate = useNavigate();
@@ -117,6 +118,7 @@ const BackgroundBanner = () => {
               onClick={handleDefaultBannerClick}
             />
 
+            <ProfilePicture/>
             <div className="card-body">
               <h5 className="card-title">{user.name}</h5>
               <p className="card-text">{user && user.semester >= 1 && user.semester <= 8? `Student | ${user.rollNo} ` : `Alumni | ${user.rollNo}`}</p>
