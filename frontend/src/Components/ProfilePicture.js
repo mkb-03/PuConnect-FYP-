@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UploadImageComponent from './UploadImageComponent';
+import Modal from "./Modals/Modal";  // Import your Modal component
 
 const ProfilePicture = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const ProfilePicture = () => {
       setProfileData(response.data);
 
       console.log("Updated Profile Data:", response.data);
+      setShowModal(false);  // Close the modal after successful upload
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -78,6 +80,9 @@ const ProfilePicture = () => {
 
       setSuccessMessage("Profile Picture removed successfully");
       setProfileData(null);
+
+      console.log("Deleted Profile Picture");
+      setShowModal(false);  // Close the modal after successful deletion
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -93,7 +98,7 @@ const ProfilePicture = () => {
   return (
     <div className="container">
       <div className="row pt-4">
-      <img
+        <img
           key={profileData?.image}
           src={
             profileData && profileData.image && !profileData.isDefault
@@ -105,65 +110,51 @@ const ProfilePicture = () => {
             maxWidth: "20%",
             marginTop: "-120px",
             borderRadius: "150px",
+            cursor: "pointer",  // Add cursor pointer for the image
           }}
+          onClick={() => setShowModal(true)}  // Open the modal on image click
         />
       </div>
 
       {/* Bootstrap Modal */}
-      {showModal && (
-        <div
-          className="modal show"
-          tabIndex="-1"
-          role="dialog"
-          style={{ display: "block" }}
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Upload Profile Picture</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => setShowModal(false)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <UploadImageComponent
-                  className="btn btn-secondary mt-2"
-                  type="Profile Picture"
-                  onUpload={(formData) =>
-                    handleImageUpload(formData, "profile-picture/update")
-                  }
-                  loading={loading}
-                  successMessage={successMessage}
-                  errorMessage={errorMessage}
-                />
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-                {profileData && !profileData.isDefault && (
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={handleRemoveProfilePicture}
-                    disabled={loading}
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Profile Picture"
+        content={
+          <UploadImageComponent
+            className="btn btn-secondary mt-2"
+            type="Profile Picture"
+            onUpload={(formData) =>
+              handleImageUpload(formData, "profile-picture/update")
+            }
+            loading={loading}
+            successMessage={successMessage}
+            errorMessage={errorMessage}
+          />
+        }
+        actions={
+          <>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+            {profileData && !profileData.isDefault && (
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={handleRemoveProfilePicture}
+                disabled={loading}
+              >
+                Delete
+              </button>
+            )}
+          </>
+        }
+      />
     </div>
   );
 };
