@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import UploadImageComponent from "./UploadImageComponent";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FaPen } from "react-icons/fa";
+import UploadImageComponent from './UploadImageComponent';
 
 const ProfilePicture = () => {
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ const ProfilePicture = () => {
   const [profileData, setProfileData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
   const serverBaseUrl = "http://localhost:3000";
 
   useEffect(() => {
@@ -92,29 +90,23 @@ const ProfilePicture = () => {
     }
   };
 
-  const handleSetDefaultProfilePictureClick = () => {
-    // Logic to set the default profile picture
-  };
-
-  const handleDefaultProfilePictureClick = () => {
-    setShowModal(true);
-  };
-
   return (
     <div className="container">
       <div className="row pt-4">
-          <img
-            key={profileData?.image}
-            src={
-              profileData && profileData.image && !profileData.isDefault
-                ? `data:image/png;base64,${profileData.image}`
-                : `${process.env.PUBLIC_URL}/images/defaultProfile.jpg`
-            }
-            alt=""
-            style={{ maxWidth: "20%", marginTop: "-120px", borderRadius: '100px' }}
-          />
-
-
+      <img
+          key={profileData?.image}
+          src={
+            profileData && profileData.image && !profileData.isDefault
+              ? `data:image/png;base64,${profileData.image}`
+              : `${process.env.PUBLIC_URL}/images/defaultProfile.png`
+          }
+          alt="ProfilePic"
+          style={{
+            maxWidth: "20%",
+            marginTop: "-120px",
+            borderRadius: "150px",
+          }}
+        />
       </div>
 
       {/* Bootstrap Modal */}
@@ -137,8 +129,7 @@ const ProfilePicture = () => {
                   onClick={() => setShowModal(false)}
                 ></button>
               </div>
-              <div className="modal-body"></div>
-              <div className="modal-footer">
+              <div className="modal-body">
                 <UploadImageComponent
                   className="btn btn-secondary mt-2"
                   type="Profile Picture"
@@ -149,13 +140,14 @@ const ProfilePicture = () => {
                   successMessage={successMessage}
                   errorMessage={errorMessage}
                 />
-
+              </div>
+              <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-secondary"
                   onClick={() => setShowModal(false)}
                 >
-                  Save
+                  Close
                 </button>
                 {profileData && !profileData.isDefault && (
                   <button
@@ -165,15 +157,6 @@ const ProfilePicture = () => {
                     disabled={loading}
                   >
                     Delete
-                  </button>
-                )}
-                {!profileData.isDefault && (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleSetDefaultProfilePictureClick}
-                  >
-                    Set as Default
                   </button>
                 )}
               </div>
