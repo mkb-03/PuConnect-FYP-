@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { FaPen } from 'react-icons/fa';
-import UploadImageComponent from './UploadImageComponent';
-import Modal from './Modals/Modal';import ProfilePicture from './ProfilePicture';
-;
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { FaPen } from "react-icons/fa";
+import UploadImageComponent from "./UploadImageComponent";
+import Modal from "./Modals/Modal";
+import ProfilePicture from "./ProfilePicture";
 const BackgroundBanner = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -15,8 +14,9 @@ const BackgroundBanner = () => {
   const [bannerData, setBannerData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state)=> state.auth.user);
-  const serverBaseUrl = 'http://localhost:3000';
+  const user = useSelector((state) => state.auth.user);
+  const [uploadImageKey, setUploadImageKey] = useState(0);
+  const serverBaseUrl = "http://localhost:3000";
 
   useEffect(() => {
     const fetchBannerData = async () => {
@@ -27,34 +27,39 @@ const BackgroundBanner = () => {
           },
         });
 
-        console.log('Getting: ', response.data);
+        console.log("Getting: ", response.data);
         setBannerData(response.data);
       } catch (error) {
-        console.error('Error fetching banner data:', error);
+        console.error("Error fetching banner data:", error);
       }
     };
 
     fetchBannerData();
-  }, [token, successMessage]);
+  }, [token, successMessage, showModal]);
 
   const handleImageUpload = async (formData, endpoint) => {
     try {
       setLoading(true);
 
-      const response = await axios.put(`${serverBaseUrl}/${endpoint}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.put(
+        `${serverBaseUrl}/${endpoint}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setSuccessMessage(`${endpoint} uploaded successfully`);
       setBannerData(response.data);
 
-      console.log('Updated Banner Data:', response.data);
+      console.log("Updated Banner Data:", response.data);
       setShowModal(false); // Close the modal after successful upload
+      setUploadImageKey((prevKey) => prevKey + 1);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else {
         setErrorMessage(`Error uploading ${endpoint}. Please try again.`);
         console.error(error);
@@ -74,16 +79,17 @@ const BackgroundBanner = () => {
         },
       });
 
-      setSuccessMessage('Background Banner removed successfully');
+      setSuccessMessage("Background Banner removed successfully");
       setBannerData(null);
 
-      console.log('Deleted Background Banner');
+      console.log("Deleted Background Banner");
       setShowModal(false); // Close the modal after successful deletion
+      setUploadImageKey((prevKey) => prevKey + 1);
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else {
-        setErrorMessage('Error removing Background Banner. Please try again.');
+        setErrorMessage("Error removing Background Banner. Please try again.");
         console.error(error);
       }
     } finally {
@@ -108,13 +114,17 @@ const BackgroundBanner = () => {
                   : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
               }
               alt="Background Banner"
-              style={{ maxWidth: '100%', marginBottom: '20px' }}
+              style={{ maxWidth: "100%", marginBottom: "20px" }}
             />
 
             <FaPen
               className="position-absolute top-0 end-0"
               size={24}
-              style={{ cursor: 'pointer', backgroundColor: 'white', padding: '4px' }}
+              style={{
+                cursor: "pointer",
+                backgroundColor: "white",
+                padding: "4px",
+              }}
               onClick={handleDefaultBannerClick}
             />
 
@@ -125,9 +135,12 @@ const BackgroundBanner = () => {
               title="Background Banner"
               content={
                 <UploadImageComponent
+                  key={uploadImageKey} // Set the key for UploadImageComponent
                   className="btn btn-secondary mt-2"
                   type="Banner"
-                  onUpload={(formData) => handleImageUpload(formData, 'bg-banner/update')}
+                  onUpload={(formData) =>
+                    handleImageUpload(formData, "bg-banner/update")
+                  }
                   loading={loading}
                   successMessage={successMessage}
                   errorMessage={errorMessage}
@@ -156,7 +169,7 @@ const BackgroundBanner = () => {
               }
             />
 
-            <ProfilePicture/>
+            <ProfilePicture />
             <div className="card-body">
               <h5 className="card-title">{user.name}</h5>
               <p className="card-text">
