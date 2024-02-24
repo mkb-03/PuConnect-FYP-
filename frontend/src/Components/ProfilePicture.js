@@ -112,7 +112,8 @@ const ProfilePicture = () => {
           style={{
             maxWidth: "20%",
             marginTop: "-120px",
-            borderRadius: "150px",
+            // border: "5px white solid",
+            borderRadius: "50%",
             cursor: "pointer", // Add cursor pointer for the image
           }}
           onClick={() => setShowModal(true)} // Open the modal on image click

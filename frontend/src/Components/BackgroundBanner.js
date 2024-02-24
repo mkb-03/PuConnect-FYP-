@@ -114,7 +114,12 @@ const BackgroundBanner = () => {
                   : `${process.env.PUBLIC_URL}/images/defaultBanner.jpg`
               }
               alt="Background Banner"
-              style={{ maxWidth: "100%", marginBottom: "20px" }}
+              style={{
+                maxWidth: "100%", // Allow the image to shrink if necessary
+                maxHeight: "200px", // Set a fixed maximum height
+                objectFit: "cover",
+                marginBottom: "20px",
+              }}
             />
 
             <FaPen
