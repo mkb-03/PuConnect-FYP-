@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import UploadImageComponent from './UploadImageComponent';
-import Modal from "./Modals/Modal";  // Import your Modal component
+import UploadImageComponent from "./UploadImageComponent";
+import Modal from "./Modals/Modal"; // Import your Modal component
 
 const ProfilePicture = () => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const ProfilePicture = () => {
   const [profileData, setProfileData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const [uploadImageKey, setUploadImageKey] = useState(0); // Add key for resetting UploadImageComponent
   const serverBaseUrl = "http://localhost:3000";
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const ProfilePicture = () => {
     };
 
     fetchProfileData();
-  }, [token, successMessage]);
+  }, [token, successMessage, showModal]);
 
   const handleImageUpload = async (formData, endpoint) => {
     try {
@@ -55,7 +56,8 @@ const ProfilePicture = () => {
       setProfileData(response.data);
 
       console.log("Updated Profile Data:", response.data);
-      setShowModal(false);  // Close the modal after successful upload
+      setShowModal(false); // Close the modal after successful upload
+      setUploadImageKey((prevKey) => prevKey + 1); // Increment the key to reset UploadImageComponent
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -82,7 +84,8 @@ const ProfilePicture = () => {
       setProfileData(null);
 
       console.log("Deleted Profile Picture");
-      setShowModal(false);  // Close the modal after successful deletion
+      setShowModal(false); // Close the modal after successful deletion
+      setUploadImageKey((prevKey) => prevKey + 1);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         navigate("/login");
@@ -110,9 +113,9 @@ const ProfilePicture = () => {
             maxWidth: "20%",
             marginTop: "-120px",
             borderRadius: "150px",
-            cursor: "pointer",  // Add cursor pointer for the image
+            cursor: "pointer", // Add cursor pointer for the image
           }}
-          onClick={() => setShowModal(true)}  // Open the modal on image click
+          onClick={() => setShowModal(true)} // Open the modal on image click
         />
       </div>
 
@@ -123,6 +126,7 @@ const ProfilePicture = () => {
         title="Profile Picture"
         content={
           <UploadImageComponent
+            key={uploadImageKey} // Set the key for UploadImageComponent
             className="btn btn-secondary mt-2"
             type="Profile Picture"
             onUpload={(formData) =>
