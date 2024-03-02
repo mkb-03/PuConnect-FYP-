@@ -1,7 +1,9 @@
+// Home.js
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../Components/Alert';
+import Profile from './Profile';
 
 const Home = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -20,11 +22,14 @@ const Home = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <>
+    <div className="backgroundColor pb-5">
       {isAuthenticated ? (
-        <div className="container pt-5">
+        <div className="ps-3 pt-5">
           <div className="row">
-            <div className="col col-3">Column</div>
+            <div className="col col-3">
+              {/* Display only BackgroundBanner and Skills in the left column */}
+              <Profile  showHalfProfile={true} />
+            </div>
             <div className="col col-6">Column</div>
             <div className="col col-3">Column</div>
           </div>
@@ -33,7 +38,7 @@ const Home = () => {
         // Display an alert if the user is not authenticated
         showAlert && <Alert type="danger" message="Please login first." />
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,18 +1,26 @@
+// Profile.js
+import React from "react";
+import BackgroundBanner from "../Components/BackgroundBanner";
+import Skills from "../Components/Skills";
+import Projects from "../Components/Projects";
+import Experience from "../Components/Experience";
 
-import React from 'react';
-import BackgroundBanner from '../Components/BackgroundBanner';
-import Projects from '../Components/Projects';
-import Experience from '../Components/Experience';
-import Skills from '../Components/Skills';
-
-const Profile = () => {
+const Profile = ({ showHalfProfile }) => {
   return (
-    <div className='backgroundColor'>
-      <BackgroundBanner  />
-      
-      <Experience/>
-      <Projects/>
-      <Skills/>
+    <div className="backgroundColor">
+      {showHalfProfile ? (
+        <div>
+          <BackgroundBanner />
+          <Experience />
+        </div>
+      ) : (
+        <div>
+          <BackgroundBanner />
+          <Experience />
+          <Skills />
+          <Projects />
+        </div>
+      )}
     </div>
   );
 };

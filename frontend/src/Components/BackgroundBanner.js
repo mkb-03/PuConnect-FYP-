@@ -186,7 +186,7 @@ const BackgroundBanner = () => {
             </div>
           </div>
         </div>
-        <div className="col-3">Recommendation System</div>
+        
       </div>
     </div>
   );
