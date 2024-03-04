@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <div className="backgroundColor pb-5">
       {isAuthenticated ? (
-        <div className="ps-3 pt-5">
+        <div className="ps-3 pt-2">
           <div className="row">
             <div className="col col-3">
               {/* Display only BackgroundBanner and Skills in the left column */}

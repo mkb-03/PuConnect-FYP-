@@ -123,7 +123,7 @@ const BackgroundBanner = ({isHomePage}) => {
               }}
             />
 
-            <FaPen
+            {!isHomePage && <FaPen
               className="position-absolute top-0 end-0"
               size={24}
               style={{
@@ -132,7 +132,7 @@ const BackgroundBanner = ({isHomePage}) => {
                 padding: "4px",
               }}
               onClick={handleDefaultBannerClick}
-            />
+            />}
 
             {/* Reusable Modal component for CRUD operations */}
             <Modal

@@ -175,10 +175,10 @@ const Experience = ({ isHomePage }) => {
         <div className="col col-9">
           <div className="card mb-3">
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between ">
                 <h5 className="mb-0">Experiences</h5>
                 <div className="d-flex">
-                  <FaPlus
+                  { !isHomePage && <FaPlus
                     className="me-2"
                     size={22}
                     style={{
@@ -187,7 +187,7 @@ const Experience = ({ isHomePage }) => {
                       padding: "4px",
                     }}
                     onClick={handleOpenAddModal}
-                  />
+                  />}
                 </div>
               </div>
               {experiences.length === 0 ? (
@@ -218,7 +218,7 @@ const Experience = ({ isHomePage }) => {
                               : "Present"}
                           </p>
                         </div>
-                        <FaPen
+                        { !isHomePage && <FaPen
                           size={20}
                           style={{
                             cursor: "pointer",
@@ -226,7 +226,7 @@ const Experience = ({ isHomePage }) => {
                             padding: "4px",
                           }}
                           onClick={() => handleOpenEditModal(experience)}
-                        />
+                        />}
                       </div>
 
                       {experience.description && (

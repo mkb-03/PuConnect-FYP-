@@ -314,21 +314,31 @@ select.error-input:focus {
 
 /* Add this to your CSS file */
 .homePageStyles {
-   
+
   /* Reduce font size for h5 tag */
+  /* .card-body {
+    text-align: center;
+  } */
+
   .card-title {
     font-size: 1.063rem;
-    text-align: center;
+    /* text-align: center; */
   }
 
   /* Reduce font size for p tag */
   .card-text {
     font-size: 0.688rem;
-    text-align: center;
+    
   }
+
 
   .marginTop{
     margin-top: -20px;
+    
+  }
+
+  .homeProfile{
+    
   }
 
   h5{
