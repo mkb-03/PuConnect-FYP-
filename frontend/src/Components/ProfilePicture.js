@@ -102,6 +102,7 @@ const ProfilePicture = () => {
     <div className="container">
       <div className="row pt-4">
         <img
+          className="img-fluid"
           key={profileData?.image}
           src={
             profileData && profileData.image && !profileData.isDefault
