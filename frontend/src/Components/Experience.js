@@ -4,7 +4,7 @@ import Modal from "./Modals/Modal";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const Experience = () => {
+const Experience = ({ isHomePage }) => {
   const [experiences, setExperiences] = useState([]);
   const [newExperience, setNewExperience] = useState({
     companyName: "",
@@ -170,8 +170,8 @@ const Experience = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
+    <div className="container marginTop">
+      <div className={`row ${isHomePage ? 'homePageStyles' : ''}`}>
         <div className="col col-9">
           <div className="card mb-3">
             <div className="card-body">
@@ -198,7 +198,9 @@ const Experience = () => {
                     <div key={experience._id} className="mb-4">
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
-                          <h6 className="mt-3 mb-1">{experience.companyName}</h6>
+                          <h6 className="mt-3 mb-1">
+                            {experience.companyName}
+                          </h6>
                           <p className="text-secondary mb-1">
                             {experience.position} |{" "}
                             {experience.startDate

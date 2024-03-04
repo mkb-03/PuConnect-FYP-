@@ -317,18 +317,31 @@ select.error-input:focus {
    
   /* Reduce font size for h5 tag */
   .card-title {
-    font-size: 18px;
+    font-size: 1.063rem;
     text-align: center;
   }
 
   /* Reduce font size for p tag */
   .card-text {
-    font-size: 12px;
+    font-size: 0.688rem;
     text-align: center;
+  }
+
+  .marginTop{
+    margin-top: -20px;
+  }
+
+  h5{
+    font-size: 1.05rem;
+  }
+  h6{
+    font-size: 0.98rem;
+  }
+  p{
+    font-size: 0.8rem;
   }
 }
 
-/* Add any other global styles here */
 
 
 /* Media queries for responsive design */
