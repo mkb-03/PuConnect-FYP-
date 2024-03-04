@@ -6,7 +6,8 @@ import { FaPen } from "react-icons/fa";
 import UploadImageComponent from "./UploadImageComponent";
 import Modal from "./Modals/Modal";
 import ProfilePicture from "./ProfilePicture";
-const BackgroundBanner = () => {
+
+const BackgroundBanner = ({isHomePage}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -103,7 +104,7 @@ const BackgroundBanner = () => {
 
   return (
     <div className="container">
-      <div className="row pt-4">
+      <div className={`row pt-4 ${isHomePage? 'homePageStyles' : ''}`}>
         <div className="col-9">
           <div className="card mb-3">
             <img

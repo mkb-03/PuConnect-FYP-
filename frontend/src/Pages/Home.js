@@ -28,7 +28,7 @@ const Home = () => {
           <div className="row">
             <div className="col col-3">
               {/* Display only BackgroundBanner and Skills in the left column */}
-              <Profile  showHalfProfile={true} />
+              <Profile  showHalfProfile={true} isHomePage={true} />
             </div>
             <div className="col col-6">Column</div>
             <div className="col col-3">Column</div>

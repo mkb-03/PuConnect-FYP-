@@ -5,13 +5,13 @@ import Skills from "../Components/Skills";
 import Projects from "../Components/Projects";
 import Experience from "../Components/Experience";
 
-const Profile = ({ showHalfProfile }) => {
+const Profile = ({ showHalfProfile, isHomePage }) => {
   return (
-    <div className="backgroundColor">
+    <div className={`backgroundColor ${isHomePage? 'homePageStyles' : ''}`}>
       {showHalfProfile ? (
         <div>
-          <BackgroundBanner />
-          <Experience />
+          <BackgroundBanner isHomePage= {isHomePage}  />
+          <Experience isHomePage= {isHomePage} />
         </div>
       ) : (
         <div>

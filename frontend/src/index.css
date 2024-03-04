@@ -312,6 +312,23 @@ select.error-input:focus {
   color: black;
 }
 
+/* Add this to your CSS file */
+.homePageStyles {
+   
+  /* Reduce font size for h5 tag */
+  .card-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  /* Reduce font size for p tag */
+  .card-text {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+/* Add any other global styles here */
 
 
 /* Media queries for responsive design */
