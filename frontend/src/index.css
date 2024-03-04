@@ -338,7 +338,8 @@ select.error-input:focus {
   }
 
   .homeProfile{
-    
+    max-width: 10%;
+    margin-top: 0px;
   }
 
   h5{
@@ -351,7 +352,6 @@ select.error-input:focus {
     font-size: 0.8rem;
   }
 }
-
 
 
 /* Media queries for responsive design */

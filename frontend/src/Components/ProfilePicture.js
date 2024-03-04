@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UploadImageComponent from "./UploadImageComponent";
 import Modal from "./Modals/Modal"; // Import your Modal component
 
-const ProfilePicture = () => {
+const ProfilePicture = ({isHomePage}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -102,7 +102,6 @@ const ProfilePicture = () => {
     <div className="container">
       <div className="row pt-4">
         <img
-          className="img-fluid"
           key={profileData?.image}
           src={
             profileData && profileData.image && !profileData.isDefault
