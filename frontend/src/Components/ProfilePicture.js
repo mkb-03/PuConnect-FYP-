@@ -103,6 +103,7 @@ const ProfilePicture = ({isHomePage}) => {
       <div className="row pt-4">
         <img
           key={profileData?.image}
+       
           src={
             profileData && profileData.image && !profileData.isDefault
               ? `data:image/png;base64,${profileData.image}`
@@ -110,13 +111,15 @@ const ProfilePicture = ({isHomePage}) => {
           }
           alt="ProfilePic"
           style={{
-            maxWidth: "20%",
-            marginTop: "-120px",
-            // border: "5px white solid",
-            borderRadius: "50%",
-            cursor: "pointer", // Add cursor pointer for the image
+            // ... (other styles)
+            ...(isHomePage
+              ? { maxHeight: '50%', maxWidth: '50%', marginTop: '-70px' }
+              : { maxWidth: '20%', marginTop: '-120px' }),
+            cursor: 'pointer',
+            borderRadius: "100%"
           }}
-          onClick={() => setShowModal(true)} // Open the modal on image click
+          onClick={() => (isHomePage ? navigate('/profile') : setShowModal(true) )}
+         
         />
       </div>
 
