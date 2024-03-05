@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../Components/Alert';
 import Profile from './Profile';
+import Post from '../Components/Post';
 
 const Home = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -30,7 +31,9 @@ const Home = () => {
               {/* Display only BackgroundBanner and Skills in the left column */}
               <Profile  showHalfProfile={true} isHomePage={true} />
             </div>
-            <div className="col col-6">Column</div>
+            <div className="col col-6">
+              <Post/>
+            </div>
             <div className="col col-3">Recommendation System</div>
           </div>
         </div>
