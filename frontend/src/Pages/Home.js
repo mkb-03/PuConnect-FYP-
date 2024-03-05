@@ -31,7 +31,7 @@ const Home = () => {
               <Profile  showHalfProfile={true} isHomePage={true} />
             </div>
             <div className="col col-6">Column</div>
-            <div className="col col-3">Column</div>
+            <div className="col col-3">Recommendation System</div>
           </div>
         </div>
       ) : (
