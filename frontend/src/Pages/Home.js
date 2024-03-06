@@ -29,10 +29,11 @@ const Home = () => {
           <div className="row">
             <div className="col col-3">
               {/* Display only BackgroundBanner and Skills in the left column */}
-              <Profile  showHalfProfile={true} isHomePage={true} />
+              <Profile  showHalfProfile={true} isHomePage={true}
+               />
             </div>
             <div className="col col-6">
-              <Post/>
+              <Post isPostPic={true}/>
             </div>
             <div className="col col-3">Recommendation System</div>
           </div>

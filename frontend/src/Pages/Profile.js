@@ -10,7 +10,7 @@ const Profile = ({ showHalfProfile, isHomePage }) => {
     <div className={`backgroundColor ${isHomePage? 'homePageStyles' : ''}`}>
       {showHalfProfile ? (
         <div>
-          <BackgroundBanner isHomePage= {isHomePage}  />
+          <BackgroundBanner isHomePage= {isHomePage} isProfilePage={true} />
           <Experience isHomePage= {isHomePage} />
         </div>
       ) : (

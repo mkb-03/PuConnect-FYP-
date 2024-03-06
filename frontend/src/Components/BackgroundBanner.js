@@ -7,7 +7,7 @@ import UploadImageComponent from "./UploadImageComponent";
 import Modal from "./Modals/Modal";
 import ProfilePicture from "./ProfilePicture";
 
-const BackgroundBanner = ({isHomePage}) => {
+const BackgroundBanner = ({isHomePage, isProfilePage}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -175,7 +175,7 @@ const BackgroundBanner = ({isHomePage}) => {
               }
             />
 
-            <ProfilePicture isHomePage={isHomePage} />
+            <ProfilePicture isHomePage={isHomePage} isProfilePage={isProfilePage} />
             <div className="card-body">
               <h5 className="card-title">{user.name}</h5>
               <p className="card-text">

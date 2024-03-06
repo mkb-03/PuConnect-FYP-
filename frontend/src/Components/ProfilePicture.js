@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UploadImageComponent from "./UploadImageComponent";
 import Modal from "./Modals/Modal"; // Import your Modal component
 
-const ProfilePicture = ({isHomePage}) => {
+const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -98,28 +98,60 @@ const ProfilePicture = ({isHomePage}) => {
     }
   };
 
+  const getProfilePicStyle = () => {
+    let style = {
+      // Common styles
+      cursor: "pointer",
+      borderRadius: "100%",
+    };
+
+    if(isProfilePage)
+    {
+      style = {
+        ...style,
+        maxWidth: "20%",
+        maxHeight: "20%",
+        marginTop: "-120px",
+      }
+    }
+
+    // Apply different styles based on the context
+    if (isHomePage) {
+      style = {
+        ...style,
+        maxHeight: "auto",
+        maxWidth: "auto",
+        marginTop: "-70px",
+      };
+    }
+
+    if (isPostPic) {
+      style = {
+        ...style,
+        maxHeight: "13%",
+        maxWidth: "13%",
+      };
+    }
+
+    return style;
+  };
+
+
   return (
     <div className="container">
       <div className="row pt-4">
         <img
           key={profileData?.image}
-       
           src={
             profileData && profileData.image && !profileData.isDefault
               ? `data:image/png;base64,${profileData.image}`
               : `${process.env.PUBLIC_URL}/images/defaultProfile.png`
           }
           alt="ProfilePic"
-          style={{
-            // ... (other styles)
-            ...(isHomePage
-              ? { maxHeight: '50%', maxWidth: '50%', marginTop: '-70px' }
-              : { maxWidth: '20%', marginTop: '-120px' }),
-            cursor: 'pointer',
-            borderRadius: "100%"
-          }}
-          onClick={() => (isHomePage ? navigate('/profile') : setShowModal(true) )}
-         
+          style={getProfilePicStyle()}
+          onClick={() =>
+            isHomePage || isPostPic ? navigate("/profile") : setShowModal(true)
+          }
         />
       </div>
 
