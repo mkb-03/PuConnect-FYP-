@@ -113,7 +113,7 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
         marginTop: "-120px",
       };
     }
-    
+
     if (isHomePage) {
       style = {
         ...style,
@@ -126,8 +126,10 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
     if (isPostPic) {
       style = {
         ...style,
-        maxHeight: "13%",
-        maxWidth: "13%",
+        height: "100%",
+        width: "100%",
+        marginTop: "-20px",
+        lineHeight: "0"
       };
     }
 
@@ -145,7 +147,9 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
               : `${process.env.PUBLIC_URL}/images/defaultProfile.png`
           }
           alt="ProfilePic"
-          style={getProfilePicStyle()}
+          style={{
+            ...getProfilePicStyle(),
+          }}
           onClick={() =>
             isHomePage || isPostPic ? navigate("/profile") : setShowModal(true)
           }
