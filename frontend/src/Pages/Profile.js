@@ -15,7 +15,7 @@ const Profile = ({ showHalfProfile, isHomePage }) => {
         </div>
       ) : (
         <div>
-          <BackgroundBanner />
+          <BackgroundBanner isProfilePage={true} />
           <Experience />
           <Skills />
           <Projects />

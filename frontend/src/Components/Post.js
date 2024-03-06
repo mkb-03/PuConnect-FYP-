@@ -3,11 +3,11 @@ import ProfilePicture from "./ProfilePicture";
 
 const Post = ({isPostPic}) => {
   return (
-    <div>
-      <div class="card mt-4 me-5">
-        <div class="card-body">
-        <h5 class="card-title">New Post</h5>
-          <p class="card-text">
+    <>
+      <div className="card mt-4 me-5">
+        <div className="card-body">
+        <h5 className="card-title">New Post</h5>
+          <p className="card-text">
           <span>
               <ProfilePicture
                 isPostPic={isPostPic}
@@ -17,7 +17,7 @@ const Post = ({isPostPic}) => {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

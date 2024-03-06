@@ -105,22 +105,20 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
       borderRadius: "100%",
     };
 
-    if(isProfilePage)
-    {
+
+    if (isProfilePage) {
       style = {
         ...style,
         maxWidth: "20%",
-        maxHeight: "20%",
         marginTop: "-120px",
-      }
+      };
     }
-
-    // Apply different styles based on the context
+    
     if (isHomePage) {
       style = {
         ...style,
-        maxHeight: "auto",
-        maxWidth: "auto",
+        maxHeight: "55%",
+        maxWidth: "65%",
         marginTop: "-70px",
       };
     }
@@ -135,7 +133,6 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
 
     return style;
   };
-
 
   return (
     <div className="container">
