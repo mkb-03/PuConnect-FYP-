@@ -126,10 +126,10 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
     if (isPostPic) {
       style = {
         ...style,
-        height: "100%",
-        width: "100%",
-        marginTop: "-20px",
-        lineHeight: "0"
+        maxHeight: "90%",
+        maxWidth: "90%",
+        marginTop: "-30px",
+        padding: "0"
       };
     }
 
