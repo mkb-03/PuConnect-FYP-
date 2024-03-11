@@ -3,8 +3,8 @@ import ProfilePicture from "./ProfilePicture";
 
 const Post = ({ isPostPic }) => {
   return (
-    <div className="card mt-4 ">
-      <div className="card-body text-center">
+    <div className="card mt-4  ">
+      <div className="card-body ">
         <div className="row">
           <div className="col-sm-2">
             <ProfilePicture isPostPic={isPostPic} />
@@ -14,6 +14,7 @@ const Post = ({ isPostPic }) => {
               type="text"
               className="form-control mt-1 "
               placeholder="What's in your mind?"
+              
             />
           </div>
         </div>

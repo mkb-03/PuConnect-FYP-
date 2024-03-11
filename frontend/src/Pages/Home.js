@@ -26,14 +26,14 @@ const Home = () => {
       {isAuthenticated ? (
         <div className="ps-3 pt-2">
           <div className="row">
-            <div className="col col-3">
+            <div className="col ">
               {/* Display only BackgroundBanner and Skills in the left column */}
               <Profile showHalfProfile={true} isHomePage={true} />
             </div>
             <div className="col col-6">
               <Post isPostPic={true} />
             </div>
-            <div className="col col-3">Recommendation System</div>
+            <div className="col ">Recommendation System</div>
           </div>
         </div>
       ) : (

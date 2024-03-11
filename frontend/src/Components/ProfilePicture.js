@@ -128,7 +128,7 @@ const ProfilePicture = ({ isHomePage, isPostPic, isProfilePage }) => {
         ...style,
         maxHeight: "90%",
         maxWidth: "90%",
-        marginTop: "-30px",
+        marginTop: "-25px",
         padding: "0"
       };
     }
