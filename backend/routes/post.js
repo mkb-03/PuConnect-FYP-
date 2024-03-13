@@ -14,7 +14,7 @@ router.post("/create", passport.authenticate("jwt", { session: false }), async (
     const { description, picturePath } = req.body;
 
     if (!description) {
-        return res.status(402).json({ err: "Description should not be empty!" })
+        return res.status(400).json({ err: "Description should not be empty!" })
     }
 
     const postObj = {

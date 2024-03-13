@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Modal from "./Modals/Modal";
 import axios from "axios";
 import ProfilePicture from "./ProfilePicture";
+import { useSelector } from "react-redux";
 
 const DefaultPost = ({ isPostPic }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [picture, setPicture] = useState(null);
+  const token = useSelector((state) => state.auth.token);
 
   const handleInputChange = (e) => {
     setDescription(e.target.value);
@@ -18,16 +20,18 @@ const DefaultPost = ({ isPostPic }) => {
 
   const handlePost = async () => {
     try {
-      const formData = new FormData();
-      formData.append("description", description);
-      formData.append("picture", picture);
-
-      await axios.post("/post/create", formData, {
+      const postData = {
+        description,
+        picturePath: picture ? picture.name : "" // Send picture name or an empty string if no picture
+      };
+  
+      await axios.post("http://localhost:3000/post/create", postData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
-
+  
       setModalOpen(false);
     } catch (error) {
       console.error("Error creating post:", error);
@@ -38,10 +42,8 @@ const DefaultPost = ({ isPostPic }) => {
   const modalContent = (
     <div>
       <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description:
-        </label>
         <textarea
+          placeholder="Description"
           className="form-control"
           id="description"
           rows="3"
@@ -49,10 +51,8 @@ const DefaultPost = ({ isPostPic }) => {
         ></textarea>
       </div>
       <div className="mb-3">
-        <label htmlFor="picture" className="form-label">
-          Picture:
-        </label>
         <input
+          placeholder="Picture"
           type="file"
           className="form-control"
           id="picture"
@@ -62,8 +62,9 @@ const DefaultPost = ({ isPostPic }) => {
       </div>
     </div>
   );
+
   const modalActions = (
-    <button className="btn btn-primary" onClick={handlePost}>
+    <button className="btn btn-secondary" onClick={handlePost}>
       Post
     </button>
   );
