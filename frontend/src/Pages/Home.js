@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '../Components/Alert';
 import Profile from './Profile';
 import DefaultPost from '../Components/DefaultPost';
+import Posts from '../Components/Posts';
 
 const Home = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -32,6 +33,8 @@ const Home = () => {
             </div>
             <div className="col col-6">
               <DefaultPost isPostPic={true} />
+              <br/>
+              <Posts/>
             </div>
             <div className="col col-3">Recommendation System</div>
           </div>
