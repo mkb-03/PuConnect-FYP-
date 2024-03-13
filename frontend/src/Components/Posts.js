@@ -5,50 +5,53 @@ import { useSelector } from "react-redux";
 const Posts = () => {
   const token = useSelector((state) => state.auth.token);
   const [allPosts, setAllPosts] = useState([]);
-  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
-    const fetchAllPosts = async () => {
+    const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/post/getAll", {
+        // Fetch all posts and user's posts
+        const allPostsResponse = await axios.get("http://localhost:3000/post/getAll", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setAllPosts(response.data);
-        console.log(response.data)
+
+        const userPostsResponse = await axios.get("http://localhost:3000/post/get", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }); 
+
+        console.log("All posts", allPostsResponse )
+        console.log("User posts", userPostsResponse )
+        // Combine all posts and user's posts into a single array
+        const mergedPosts = [...allPostsResponse.data, ...userPostsResponse.data];
+
+        // Sort the merged array by date or any other criteria if needed
+        // mergedPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
+        // Set the merged array to the state
+        setAllPosts(mergedPosts);
       } catch (error) {
-        console.log("Error fetching all posts", error);
+        console.log("Error fetching posts", error);
       }
     };
 
-    const fetchUserPosts = async ()=>{
-        try {
-            const response = await axios.get("http://localhost:3000/post/getAll", {
-                headers : {
-                    Authorization : `Bearer ${token}`
-                }
-            })
-
-            setUserPosts(response.data)
-            console.log("User Posts: " , response.data);
-            
-        } catch (error) {
-            console.log("Error fetching user posts", error);
-        }
-    }
-
-    fetchAllPosts();
+    fetchPosts();
   }, [token]);
 
-
-  return <div>
-    {allPosts.map((post)=>(
+  return (
+    <div>
+      {allPosts.map((post) => (
         <div key={post._id}>
-            <div>{post.description}</div>
+          <div>{post.description}</div>
+          {post.picturePath && (
+            <img src={`http://localhost:3000/images/${post.picturePath}`} alt="Post" />
+          )}
         </div>
-    ))}
-  </div>;
+      ))}
+    </div>
+  );
 };
 
 export default Posts;
