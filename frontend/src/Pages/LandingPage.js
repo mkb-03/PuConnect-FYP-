@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
     <>
       <section>
-        <div className='background'>
+        <div className="background">
           <div className="container">
             <div className="row pt-5">
               <div className="col-md-6 ps-3 pt-5 ms-5">
@@ -15,8 +15,7 @@ const LandingPage = () => {
                 <h1 className="tagLine">Your Networking Gateway</h1>
               </div>
               <div className="col-md-6 ps-4 pt-4 ms-5">
-                <Link  to="/signup" className='pointerCursor'>
-
+                <Link to="/signup" className="pointerCursor">
                   <span className="getStartedButton ">Get Started</span>
                 </Link>
               </div>
@@ -25,8 +24,13 @@ const LandingPage = () => {
         </div>
       </section>
 
+      <section>
+        <div className="container  pt-5 pb-5">
+          <div className="headings">Why PuConnect?</div>
+        </div>
+      </section>
     </>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

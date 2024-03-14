@@ -29,7 +29,7 @@ html {
   color: #fff !important; /* Set the desired text color on hover */
 }
 
-.backgroundColor{
+.backgroundColor {
   /* background-color: rgba(229, 229, 229, 0.848); */
   background-color: #f2f2f2;
 }
@@ -76,7 +76,7 @@ html {
   color: white;
   font-weight: 400;
   border-radius: 5px;
-  border: 1px solid #85231b; 
+  border: 1px solid #85231b;
   padding: 5px 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
@@ -85,9 +85,9 @@ html {
 .brownButton:hover {
   background-color: #e5e5e5;
   color: #85231b;
-  outline: 1px solid #85231b; 
+  outline: 1px solid #85231b;
   font-weight: 500;
-  border-radius: 1px; 
+  border-radius: 1px;
 }
 
 .greyButton:hover {
@@ -314,7 +314,6 @@ select.error-input:focus {
 
 /* Add this to your CSS file */
 .homePageStyles {
-
   /* Reduce font size for h5 tag */
   /* .card-body {
     text-align: center;
@@ -328,27 +327,24 @@ select.error-input:focus {
   /* Reduce font size for p tag */
   .card-text {
     font-size: 0.688rem;
-    
   }
 
-
-  .marginTop{
+  .marginTop {
     margin-top: -20px;
-    
   }
 
-  .homeProfile{
+  .homeProfile {
     max-width: 10%;
     margin-top: 0px;
   }
 
-  h5{
+  h5 {
     font-size: 1.05rem;
   }
-  h6{
+  h6 {
     font-size: 0.98rem;
   }
-  p{
+  p {
     font-size: 0.8rem;
   }
 }
@@ -392,6 +388,11 @@ select.error-input:focus {
     text-shadow: 2.5px 2px 2px #000;
   }
 
+  .headings{
+    font-family: "Playfair Display", serif;
+    text-shadow: 2.5px 2px 2px #000;
+    font-size: 2rem;
+  }
   .getStartedButton {
     font-size: 0.8rem;
     padding: 5px 12px 5px 12px;
