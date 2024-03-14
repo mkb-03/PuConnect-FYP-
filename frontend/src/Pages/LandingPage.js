@@ -25,8 +25,18 @@ const LandingPage = () => {
       </section>
 
       <section>
-        <div className="container  pt-5 pb-5">
-          <div className="headings">Why PuConnect?</div>
+        <div className="container pt-5 pb-5 ">
+          <div className="headings brownColor">Why PuConnect?</div>
+          <div class="container  ">
+            <div class="row pt-5  ">
+              <div class="col">
+                <img src="" alt="whyPic"/>
+              </div>
+              <div class="col">
+                
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

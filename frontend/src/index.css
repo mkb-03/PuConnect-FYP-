@@ -135,6 +135,12 @@ html {
   text-shadow: 2px 2px 2px #000;
 }
 
+.headings{
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
 .getStartedButton {
   font-size: 0.938rem;
   font-weight: 500;
@@ -388,11 +394,7 @@ select.error-input:focus {
     text-shadow: 2.5px 2px 2px #000;
   }
 
-  .headings{
-    font-family: "Playfair Display", serif;
-    text-shadow: 2.5px 2px 2px #000;
-    font-size: 2rem;
-  }
+
   .getStartedButton {
     font-size: 0.8rem;
     padding: 5px 12px 5px 12px;
