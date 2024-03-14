@@ -92,12 +92,12 @@ const LandingPage = () => {
             let’s get started!
           </p>
         </div>
-        <div>
+        <div className="pt-2">
           <button className="brownButton me-1" type="button">
             SignUp
           </button>
 
-          <button className="brownButton ms-1" type="button">
+          <button className="blackButton ms-1" type="button">
             Learn More
           </button>
         </div>

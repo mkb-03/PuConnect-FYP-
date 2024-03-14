@@ -59,6 +59,24 @@ html {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
+.blackButton{
+  background-color: #000000;
+  color: white;
+  font-weight: 400;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  padding: 5px 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.blackButton:hover {
+  background-color: #e5e5e5;
+  color: #85231b;
+  outline: 1px solid #85231b;
+  font-weight: 500;
+  border-radius: 1px;
+}
+
 /* Buttons with hover */
 .greyButton {
   background-color: #e5e5e5;
