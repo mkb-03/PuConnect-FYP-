@@ -71,7 +71,7 @@ const LandingPage = () => {
               </div>
               <div className="col pe-5">
                 <div>
-                  <p className="pt-1 " style={{ fontWeight: "600", fontSize :"1.05rem" }}>
+                  <p className="pt-1  " style={{ fontWeight: "600", fontSize :"1.05rem" }}>
                     We're not just a portal, we're the launchpad for your next
                     big discovery. Connect with classmates, participate in
                     stimulating discussions, find study groups, and even career
