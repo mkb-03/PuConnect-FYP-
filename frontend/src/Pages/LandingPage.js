@@ -84,25 +84,40 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <div className="container mt-5 pt-5 pb-5 text-center">
-        <div className="headings brownColor ps-3">Join Today!</div>
-        <div>
-          <p className="pt-2  " style={{ fontWeight: "600" }}>
-            Ready to supercharge your student life? Just hit that button and
-            let’s get started!
-          </p>
-        </div>
-        <div className="pt-2">
-          <button className="brownButton me-1" type="button">
-            SignUp
-          </button>
 
-          <button className="blackButton ms-1" type="button">
-            Learn More
-          </button>
+      <section>
+        <div className="container mt-5 pt-5 pb-5 ">
+          <div className="headings brownColor ps-3">Job Board </div>
+          <div>
+            <p className="pt-2 col-5 ps-3 " style={{ fontWeight: "600" }}>
+            Find and apply to job opportunities posted by employers and alumni. Get inspired by real success stories of PuConnect members.
+            </p>
+          </div>
+          <div className="pt-2">
+            
+          </div>
         </div>
-      </div>
-      <section></section>
+      </section>
+      <section>
+        <div className="container mt-5 pt-5 pb-5 text-center">
+          <div className="headings brownColor ps-3">Join Today!</div>
+          <div>
+            <p className="pt-2  " style={{ fontWeight: "600" }}>
+              Ready to supercharge your student life? Just hit that button and
+              let’s get started!
+            </p>
+          </div>
+          <div className="pt-2">
+            <button className="brownButton me-1" type="button">
+              SignUp
+            </button>
+
+            <button className="blackButton ms-1" type="button">
+              Learn More
+            </button>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
