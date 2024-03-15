@@ -98,30 +98,54 @@ const LandingPage = () => {
       </section>
 
       <section>
-        <div className="container mt-5 pt-5 pb-5 ps-3">
-          <div className="col-6 ">
-          <div className="headings  brownColor ps-3">Job Board </div>
-            <p
-              className=" ps-3 pt-5 "
-              style={{ fontWeight: "600", fontSize: "1.05rem" }}
-            >
-              Find and apply to job opportunities posted by employers and
-              alumni. Get inspired by real success stories of PuConnect members.
-            </p>
+        <div className="container  mt-5 pt-5 pb-5 ps-3 ">
+          <div className="row">
+            <div className="col-6 ">
+              <div className="headings brownColor pt-5 ps-3">Job Board </div>
+              <p
+                className=" ps-3 pt-5"
+                style={{ fontWeight: "600", fontSize: "1.05rem" }}
+              >
+                Find and apply to job opportunities posted by employers and
+                alumni. Get inspired by real success stories of PuConnect
+                members.
+              </p>
 
-            <div className="row align-items-center text-center ps-3 pt-4">
-              <h4 className="col brownColor">600+</h4>
-              <h4 className="col brownColor">300+</h4>
-              <h4 className="col brownColor">1000+</h4>
+              <div className="row align-items-center mt-2 ps-5 pt-4">
+                <h4 className="col brownColor">600+</h4>
+                <h4 className="col brownColor">300+</h4>
+                <h4 className="col brownColor">1000+</h4>
+              </div>
+              <div className="row align-items-center ps-3 pt-4">
+                <p
+                  className="col "
+                  style={{ fontWeight: "600", fontSize: "1.05rem" }}
+                >
+                  Job Opportunities
+                </p>
+                <p
+                  className="col"
+                  style={{ fontWeight: "600", fontSize: "1.05rem" }}
+                >
+                  Success Stories
+                </p>
+                <p
+                  className="col"
+                  style={{ fontWeight: "600", fontSize: "1.05rem" }}
+                >
+                  Companies
+                </p>
+              </div>
             </div>
-            <div className="row align-items-center text-center ps-3 pt-4">
-              <p className="col " style={{ fontWeight: "600", fontSize: "1.05rem" }} >Job Opportunities</p>
-              <p className="col" style={{ fontWeight: "600", fontSize: "1.05rem" }}>Success Stories</p>
-              <p className="col" style={{ fontWeight: "600", fontSize: "1.05rem" }}>Companies</p>
+
+            <div className="pt-2 col-6 text-center">
+              <img
+                className="whyPuC "
+                src={process.env.PUBLIC_URL + "/images/whyPuConnect.jpg"}
+                alt="whyPic"
+              />
             </div>
           </div>
-
-          <div className="pt-2"></div>
         </div>
       </section>
       <section>
