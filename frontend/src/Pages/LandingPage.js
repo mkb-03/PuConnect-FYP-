@@ -38,20 +38,20 @@ const LandingPage = () => {
               </div>
               <div className="col">
                 <div>
-                  <h5 className="brownColor pt-4">Strong Comunity</h5>
-                  <p className="pt-1" style={{ fontWeight: "500" }}>
+                  <h4 className="brownColor pt-5 mt-2">Strong Comunity</h4>
+                  <p className="pt-1" style={{ fontWeight: "500", fontSize :"1rem" }}>
                     Join an interactive group of talented and creative minds.
                   </p>
                 </div>
                 <div>
-                  <h5 className="brownColor pt-3">Innovative Tools</h5>
-                  <p className="pt-1" style={{ fontWeight: "500" }}>
+                  <h4 className="brownColor pt-3">Innovative Tools</h4>
+                  <p className="pt-1" style={{ fontWeight: "500", fontSize :"1rem" }}>
                     Harness the power of our premium collaborative resources.
                   </p>
                 </div>
                 <div>
-                  <h5 className="brownColor pt-3">Career Opportunities</h5>
-                  <p className="pt-1" style={{ fontWeight: "500" }}>
+                  <h4 className="brownColor pt-3">Career Opportunities</h4>
+                  <p className="pt-1" style={{ fontWeight: "500", fontSize :"1rem" }}>
                     Explore a wealth of work opportunities in leading
                     industries.
                   </p>
@@ -71,7 +71,7 @@ const LandingPage = () => {
               </div>
               <div className="col pe-5">
                 <div>
-                  <p className="pt-1 " style={{ fontWeight: "600" }}>
+                  <p className="pt-1 " style={{ fontWeight: "600", fontSize :"1.05rem" }}>
                     We're not just a portal, we're the launchpad for your next
                     big discovery. Connect with classmates, participate in
                     stimulating discussions, find study groups, and even career
@@ -89,7 +89,7 @@ const LandingPage = () => {
         <div className="container mt-5 pt-5 pb-5 ">
           <div className="headings brownColor ps-3">Job Board </div>
           <div>
-            <p className="pt-2 col-5 ps-3 " style={{ fontWeight: "600" }}>
+            <p className="pt-2 col-6 ps-3 pt-2 " style={{ fontWeight: "600", fontSize :"1.05rem" }}>
             Find and apply to job opportunities posted by employers and alumni. Get inspired by real success stories of PuConnect members.
             </p>
           </div>
@@ -102,7 +102,7 @@ const LandingPage = () => {
         <div className="container mt-5 pt-5 pb-5 text-center">
           <div className="headings brownColor ps-3">Join Today!</div>
           <div>
-            <p className="pt-2  " style={{ fontWeight: "600" }}>
+            <p className="pt-2  " style={{ fontWeight: "600", fontSize :"1.05rem" }}>
               Ready to supercharge your student life? Just hit that button and
               let’s get started!
             </p>
