@@ -77,6 +77,11 @@ const LandingPage = () => {
             <div className="row pt-5  ">
               <div className="col ">
                 <div className="headings ps-3">Get to Know Us</div>
+                <div className=" pt-4 ps-5 ms-5">
+                <button className="brownButton " type="button">
+                  About Us
+                </button>
+              </div>
               </div>
               <div className="col pe-5">
                 <div>
@@ -101,7 +106,9 @@ const LandingPage = () => {
         <div className="container  mt-5 pt-5 pb-5 ps-3 ">
           <div className="row">
             <div className="col-6 ">
-              <div className="headings brownColor pt-5 ps-3">Jobs & Success Stories </div>
+              <div className="headings brownColor pt-3 ps-3">
+                Jobs & Success Stories{" "}
+              </div>
               <p
                 className=" ps-3 pt-5"
                 style={{ fontWeight: "600", fontSize: "1.05rem" }}
@@ -136,12 +143,18 @@ const LandingPage = () => {
                   Companies
                 </p>
               </div>
+
+              <div className="text-center pt-4 pe-5 me-1">
+                <button className="blackButton " type="button">
+                  Find Jobs 
+                </button>
+              </div>
             </div>
 
             <div className="pt-2 col-6 text-center">
               <img
                 className="jobPic "
-                src={process.env.PUBLIC_URL + "/images/job2.jpg"}
+                src={process.env.PUBLIC_URL + "/images/job.jpg"}
                 alt="whyPic"
               />
             </div>
