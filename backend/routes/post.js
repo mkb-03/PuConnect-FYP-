@@ -2,27 +2,37 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const Post = require('../models/Post');
+const ProfilePicture = require('../models/ProfilePicture');
+const multer = require('multer'); // Import multer for handling file uploads
+const upload = multer(); // Initialize multer
 
-
-//Route to create a post
-router.post("/create", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.post("/create", passport.authenticate("jwt", { session: false }), upload.single('picture'), async (req, res) => {
 
     // 1. Identify the user who is calling it
     const user = req.user;
 
+    // Fetch user's profile picture
+    const profilePicture = await ProfilePicture.findOrCreateDefault(user._id);
+
+
     // 2. Create the post object
-    const { description, picturePath } = req.body;
+    const { description } = req.body;
+    const pictureData = req.file; // Get the picture file data
 
     if (!description) {
-        return res.status(400).json({ err: "Description should not be empty!" })
+        return res.status(400).json({ err: "Description is required!" })
     }
+
+    // Convert picture data to base64 string
+    const picturePath = pictureData.buffer.toString('base64');
+    const userPicturePath = profilePicture.image;
 
     const postObj = {
         userId: user._id,
         userName: user.name,
         description,
         picturePath,
-        userPicturePath: "",
+        userPicturePath,
         likes: {},
     };
 
@@ -150,7 +160,7 @@ router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), a
 });
 
 //Route to update a post
-router.patch("/update/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.patch("/update/:id", passport.authenticate("jwt", { session: false }), upload.single('picture'), async (req, res) => {
     try {
         const postId = req.params.id;
         const userId = req.user._id;
@@ -167,13 +177,20 @@ router.patch("/update/:id", passport.authenticate("jwt", { session: false }), as
         }
 
         // Update the post
-        const { description, picturePath } = req.body;
-        if (description) {
-            post.description = description;
+        const { description } = req.body;
+        const pictureData = req.file;
+
+        if (!description) {
+            return res.status(400).json({ message: "Description is required!" });
         }
-        if (picturePath) {
+
+        if (pictureData) {
+            // Convert picture data to base64 string
+            const picturePath = pictureData.buffer.toString('base64');
             post.picturePath = picturePath;
         }
+
+        post.description = description;
 
         // Save the updated post
         const updatedPost = await post.save();
