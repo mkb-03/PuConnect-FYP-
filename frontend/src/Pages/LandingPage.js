@@ -139,11 +139,11 @@ const LandingPage = () => {
             </div>
 
             <div className="pt-2 col-6 text-center">
-              {/* <img
+              <img
                 className="whyPuC "
-                src={process.env.PUBLIC_URL + "/images/job1.jpg"}
+                src={process.env.PUBLIC_URL + "/images/whyPuConnect.jpg"}
                 alt="whyPic"
-              /> */}
+              />
             </div>
           </div>
         </div>
