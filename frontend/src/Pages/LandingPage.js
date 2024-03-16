@@ -101,7 +101,7 @@ const LandingPage = () => {
         <div className="container  mt-5 pt-5 pb-5 ps-3 ">
           <div className="row">
             <div className="col-6 ">
-              <div className="headings brownColor pt-5 ps-3">Job Board </div>
+              <div className="headings brownColor pt-5 ps-3">Jobs & Success Stories </div>
               <p
                 className=" ps-3 pt-5"
                 style={{ fontWeight: "600", fontSize: "1.05rem" }}
@@ -140,8 +140,8 @@ const LandingPage = () => {
 
             <div className="pt-2 col-6 text-center">
               <img
-                className="whyPuC "
-                src={process.env.PUBLIC_URL + "/images/whyPuConnect.jpg"}
+                className="jobPic "
+                src={process.env.PUBLIC_URL + "/images/job2.jpg"}
                 alt="whyPic"
               />
             </div>
