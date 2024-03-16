@@ -8,6 +8,7 @@ import Home from './Pages/Home';
 import ProtectedRoute from './Components/ProtectedRoute';  // Import ProtectedRoute directly
 import Jobs from './Pages/Jobs';
 import Profile from './Pages/Profile';
+import Footer from './Components/Footer';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           element={<ProtectedRoute element={<Profile />} />} />
 
       </Routes>
-
+      <Footer/>
     </Router>
   );
 }
