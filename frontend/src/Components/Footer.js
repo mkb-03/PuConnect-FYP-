@@ -4,13 +4,13 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="navbarBackground mt-5 text-white pt-5 pb-5">
-      <div className="container activeLink">
+      <div className="container">
         <div className="row">
           {/* Quick Links */}
-          <div className="col-md-3">
-            <h5 className="fw-bold ">Quick Links</h5>
-            <ul className="list-unstyled pt-3 ">
-              <li className="pt-2 ">
+          <div className="col-md-3 mb-3 mb-md-0">
+            <h5 className="fw-bold">Quick Links</h5>
+            <ul className="list-unstyled pt-3">
+              <li className="pt-2">
                 <a className="activeLink" href="/">
                   Home
                 </a>
@@ -28,7 +28,7 @@ const Footer = () => {
             </ul>
           </div>
           {/* Help */}
-          <div className="col-md-3">
+          <div className="col-md-3 mb-3 mb-md-0">
             <h5 className="fw-bold">Help</h5>
             <ul className="list-unstyled pt-3">
               <li className="pt-2">
@@ -49,7 +49,7 @@ const Footer = () => {
             </ul>
           </div>
           {/* Learn */}
-          <div className="col-md-3">
+          <div className="col-md-3 mb-3 mb-md-0">
             <h5 className="fw-bold">Learn</h5>
             <ul className="list-unstyled pt-3">
               <li className="pt-2">
@@ -91,14 +91,17 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+        <hr className="mt-4" />
         <div className="row align-items-center">
           {/* Left corner */}
-          <div className="col-md-6">
-            <p className="fw-bold pt-3">&copy; 2024 PuConnect</p>
+          <div className="col-md-6 pt-2 text-center text-md-start mb-3 mb-md-0">
+            <p className="fw-bold">&copy; 2024 PuConnect</p>
           </div>
           {/* Right corner */}
-          <div className="col-md-6 d-flex justify-content-end">
-            <span className="fw-bold me-2 pt-1">Find Us: </span>
+          <div className="col-md-6 text-center text-md-end">
+            <span className="fw-bold me-2 pt-1 d-none d-md-inline-block">
+              Find Us:{" "}
+            </span>
             <a className="activeLink me-3" href="https://facebook.com">
               <FaFacebook />
             </a>
