@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -88,6 +89,25 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+          </div>
+        </div>
+        <div className="row align-items-center">
+          {/* Left corner */}
+          <div className="col-md-6">
+            <p className="fw-bold pt-3">&copy; 2024 PuConnect</p>
+          </div>
+          {/* Right corner */}
+          <div className="col-md-6 d-flex justify-content-end">
+            <span className="fw-bold me-2 pt-1">Find Us: </span>
+            <a className="activeLink me-3" href="https://facebook.com">
+              <FaFacebook />
+            </a>
+            <a className="activeLink me-3" href="https://instagram.com">
+              <FaInstagram />
+            </a>
+            <a className="activeLink" href="https://linkedin.com">
+              <FaLinkedin />
+            </a>
           </div>
         </div>
       </div>
