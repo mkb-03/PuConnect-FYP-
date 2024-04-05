@@ -1,9 +1,18 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-
+import { useLocation } from 'react-router-dom';
 const Footer = () => {
+
+  const location = useLocation();
+  const hiddenPaths = ['/signup', '/login'];
+  const isFooterHidden = hiddenPaths.includes(location.pathname);
+
+  if (isFooterHidden) {
+    return null
+  }
+  
   return (
-    <footer className="navbarBackground mt-5 text-white pt-5 pb-5">
+    <footer className="navbarBackground text-white pt-5 pb-5">
       <div className="container">
         <div className="row">
           {/* Quick Links */}
