@@ -22,21 +22,36 @@ const DefaultPost = ({ isPostPic }) => {
     try {
       const postData = {
         description,
-        picturePath: picture ? picture.name : "" // Send picture name or an empty string if no picture
       };
-  
-      await axios.post("http://localhost:3000/post/create", postData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
+
+      // If picture is selected, include it in postData
+      if (picture) {
+        const formData = new FormData();
+        formData.append("description", description);
+        formData.append("picture", picture);
+
+        await axios.post("http://localhost:3000/post/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } else {
+        // If no picture is selected, send only description
+        await axios.post("http://localhost:3000/post/create", postData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+
       setModalOpen(false);
     } catch (error) {
       console.error("Error creating post:", error);
     }
   };
+
 
   const modalTitle = "Create Post";
   const modalContent = (

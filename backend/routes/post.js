@@ -24,7 +24,8 @@ router.post("/create", passport.authenticate("jwt", { session: false }), upload.
     }
 
     // Convert picture data to base64 string
-    const picturePath = pictureData.buffer.toString('base64');
+    const picturePath = pictureData ? pictureData.buffer.toString('base64') : "";
+
     const userPicturePath = profilePicture.image;
 
     const postObj = {
