@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 const Posts = () => {
   const token = useSelector((state) => state.auth.token);
   const [allPosts, setAllPosts] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Fetch all posts and user's posts
         const allPostsResponse = await axios.get("http://localhost:3000/post/getAll", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -20,20 +20,19 @@ const Posts = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }); 
+        });
 
-        console.log("All posts", allPostsResponse )
-        console.log("User posts", userPostsResponse )
-        // Combine all posts and user's posts into a single array
-        const mergedPosts = [...allPostsResponse.data, ...userPostsResponse.data];
-
-        // Sort the merged array by date or any other criteria if needed
-        // mergedPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
-
-        // Set the merged array to the state
-        setAllPosts(mergedPosts);
+        // Check if both requests were successful
+        if (allPostsResponse.status === 200 && userPostsResponse.status === 200) {
+          const mergedPosts = [...allPostsResponse.data, ...userPostsResponse.data];
+          setAllPosts(mergedPosts);
+          setError(null); // Reset error if data is fetched successfully
+        } else {
+          setError("Failed to fetch posts");
+        }
       } catch (error) {
-        console.log("Error fetching posts", error);
+        setError("Error fetching posts");
+        console.error("Error fetching posts:", error);
       }
     };
 
@@ -42,6 +41,7 @@ const Posts = () => {
 
   return (
     <div>
+      {error && <div>Error: {error}</div>}
       {allPosts.map((post) => (
         <div key={post._id}>
           <div>{post.description}</div>

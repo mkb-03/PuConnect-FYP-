@@ -5,7 +5,7 @@ import SignUp from './Pages/SignUp';
 import LogIn from './Pages/LogIn';
 import LandingPage from './Pages/LandingPage';
 import Home from './Pages/Home';
-import ProtectedRoute from './Components/ProtectedRoute';  // Import ProtectedRoute directly
+import ProtectedRoute from './Components/ProtectedRoute';  
 import Jobs from './Pages/Jobs';
 import Profile from './Pages/Profile';
 import Footer from './Components/Footer';
